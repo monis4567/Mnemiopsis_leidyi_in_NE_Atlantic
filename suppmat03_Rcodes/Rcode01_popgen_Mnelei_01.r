@@ -91,12 +91,14 @@ if(!require("pals")){
   library("pals")
 }
 # strataG package can calculate Tajimas D,
+
 #But the 'strata' package is not available for R v3.6.2
 # The strataG package works for R v4.0.2
-if(!require("strataG")){
-  install.packages("strataG", dependencies = TRUE, INSTALL_opts = '--no-lock')
-  library("strataG")
-}
+# if(!require("strataG")){
+#   install.packages("strataG", dependencies = TRUE, INSTALL_opts = '--no-lock')
+#   library("strataG")
+# }
+
 #read in libraries
 library("apex")
 library("adegenet")
@@ -352,6 +354,61 @@ dev.off()
 # end - Plot haplotype network:
 #________________________________________________________________
 
+
+#_______________________________________________________________________________
+#_______________________________________________________________________________
+#_______________________________________________________________________________
+flnm <- c(paste("haplotype_network_",inp.f.fnm,"02.pdf",  sep = ""))
+#paste output directory and filename together in a string
+outflnm <- paste(wd00_wd05,"/",flnm,sep="")
+# Exporting PFD files via postscript()           
+pdf(outflnm,
+    width=(1*1.0*8.2677),height=(4*1.0*2.9232))
+#define lpot arrangement
+tbt.par <- par(mfrow=c(2, 1))
+#_______________________________________________________________________________
+#make a haplotype network
+pipNet <- pegas::haploNet(pipHaps)
+#make a haplotype network
+pipNet <- pegas::haploNet(pipHaps)
+#plot the network
+plot(pipNet, size = attr(pipNet,"freq"), 
+     scale.ratio = 0.6, cex = 0.1, 
+     #bg= colfpl1, 
+     pie = new.hap.smplloc, 
+     show.mutation = 0, threshold = 0, labels(FALSE))
+#add a legend to the plot
+legend("bottomleft",colnames(new.hap.smplloc), 
+       #col=colfpl1,
+       col=rainbow(ncol(new.hap.smplloc)), 
+       pch=19, ncol=1, cex=0.5)
+title(main = "A",
+      cex.main = 1.4,   font.main= 2, col.main= "black",
+      adj = 0.01, line = 0.1)
+#_______________________________________________________________________________
+#make a haplotype network
+pipNet <- pegas::haploNet(pipHaps)
+#plot the network
+plot(pipNet, size = attr(pipNet,"freq"), 
+     scale.ratio = 0.6, cex = 0.1, pie = new.hap.smplye, 
+     show.mutation = 0, threshold = 0, labels(FALSE))
+#add a legend to the plot
+legend("bottomleft",colnames(new.hap.smplye), 
+       col=rainbow(ncol(new.hap.smplye)), 
+       pch=19, ncol=1, cex=0.6)
+title(main = "B",
+      cex.main = 1.4,   font.main= 2, col.main= "black",
+      adj = 0.01, line = 0.1)
+#_______________________________________________________________________________
+par(tbt.par)
+# end svg file to save as
+dev.off()  
+#reset this parameter
+par(mfrow = c(1, 1)) 
+#_______________________________________________________________________________
+#_______________________________________________________________________________
+#_______________________________________________________________________________
+
 #________________________________________________________________
 # Try and plot a neighbour join tree
 #
@@ -359,13 +416,14 @@ mtr_dd_pip <- ape::dist.dna(pip)
 tre_pip <- ape::nj(mtr_dd_pip)
 #sort the branches in the tree
 tre_pipr <- ape::ladderize(tre_pip, right = TRUE)
+
 #https://joey711.github.io/phyloseq/plot_tree-examples.html
 plot(tre_pipr, cex=0.4)
 
 
 #define variable
 inp.f.fnm <- "Mnelei"
-flnm <- c(paste("NJ_tree_",inp.f.fnm,".pdf",  sep = ""))
+flnm <- c(paste("Fig03_NJ_tree_",inp.f.fnm,".pdf",  sep = ""))
 #paste output directory and filename together in a string
 outflnm <- paste(wd00_wd05,"/",flnm,sep="")
 # Exporting PFD files via postscript()           
@@ -655,12 +713,30 @@ df_pw_wc_pip_2 <- df_pw_wc_pip %>%
   rownames_to_column() %>%
   gather(colname, value, -rowname)
 # see first header lines
+
+
+df_clo$locality
+#make a data frame for abbreviated sampling locations
+locnm <- c("FynBogense","FynKerteminde","JyllandMariagerfjord",
+           "NGermanyKielFjord","NGermanyMecklenburgerBuchtWismarBucht",
+           "NJyllandLimfjord","NJyllandLimfjordLogstoer",
+           "NWGermanyNSeaHelgolandRds","NWGermanyWaddenSeaBussumHaupstr",
+           "SamsoeBallen","SEDenmarkMecklenburgerBucht","SjaellandSkovshoved")
+locabb <- c("FBo","FKe","JMa","GKi","GMe","JLi","JLo","GHe","GWa","SBa","DMe","SSk")
+df_abloc <- as.data.frame(cbind(locnm,locabb))
+
 #head(df_pw_wc_pip_2)
 #get the library 'pals' to be able to make use of colour gradients
 library("pals")
 #replace column names
 colnames(df_pw_wc_pip_2) <- c("rwnm_spcs","clnm_spcs","value")
-
+#replace with abbreviated location names
+locnm2 <- df_abloc$locabb[match(df_pw_wc_pip_2$clnm_spcs, df_abloc$locnm)]
+# assign back NCBI codes
+locnm2[is.na(locnm2)]  <- df_pw_wc_pip_2$clnm_spcs[is.na(match(df_pw_wc_pip_2$clnm_spcs, df_abloc$locnm))]
+#replace 'clnm_spcs' column
+df_pw_wc_pip_2$clnm_spcs <- locnm2
+#prepare plot
 h<-ggplot(df_pw_wc_pip_2, aes(x = rwnm_spcs, 
                               y= reorder(clnm_spcs,
                                          desc(clnm_spcs)))) +
@@ -720,6 +796,22 @@ df_pw_wc_pip_2 <- df_pw_wc_pip %>%
 library("pals")
 #replace column names
 colnames(df_pw_wc_pip_2) <- c("rwnm_spcs","clnm_spcs","value")
+
+#replace with abbreviated location names
+locnm2 <- df_abloc$locabb[match(df_pw_wc_pip_2$clnm_spcs, df_abloc$locnm)]
+# assign back NCBI codes
+locnm2[is.na(locnm2)]  <- df_pw_wc_pip_2$clnm_spcs[is.na(match(df_pw_wc_pip_2$clnm_spcs, df_abloc$locnm))]
+#replace 'clnm_spcs' column
+df_pw_wc_pip_2$clnm_spcs <- locnm2
+
+#replace with abbreviated location names
+locnm2 <- df_abloc$locabb[match(df_pw_wc_pip_2$rwnm_spcs, df_abloc$locnm)]
+# assign back NCBI codes
+locnm2[is.na(locnm2)]  <- df_pw_wc_pip_2$rwnm_spcs[is.na(match(df_pw_wc_pip_2$rwnm_spcs, df_abloc$locnm))]
+#replace 'clnm_spcs' column
+df_pw_wc_pip_2$rwnm_spcs <- locnm2
+
+#prepare plot
 h2<-ggplot(df_pw_wc_pip_2, aes(x = rwnm_spcs, 
                               y= reorder(clnm_spcs,
                                          desc(clnm_spcs)))) +
@@ -790,6 +882,69 @@ pdf(c(pth_outpfl02)
     ,width=(1.6*8.2677),height=(1.6*2.9232*2))
 print(h2)
 dev.off()
+
+#h
+#h2
+
+
+#_______________________________________________________________________________
+# Make table 02 and table 03
+#_______________________________________________________________________________
+#copy plots
+h01 <- h
+h02 <- h2
+#change labels on axis
+h01 <- h01 + ylab("sample year") + xlab("sample year") 
+h02 <- h02 + ylab("sample location") + xlab("sample location") 
+#change labels on legend
+h01 <- h01 + labs(fill='PhiST')
+h02 <- h02 + labs(fill='PhiST')
+# Add titles
+# see this example: https://www.datanovia.com/en/blog/ggplot-title-subtitle-and-caption/
+#h01t <- h01 + labs(title = "A")#,
+h01t <- h01 + labs(title = "")#,
+# Add titles
+#h02t <- h02 + labs(title = "B")#,
+h02t <- h02 + labs(title = "")#,
+# ------------- plot Combined figure -------------
+library(patchwork)
+# set a variable to TRUE to determine whether to save figures
+bSaveFigures <- T
+#see this website: https://www.rdocumentation.org/packages/patchwork/versions/1.0.0
+# on how to arrange plots in patchwork
+ph <-   h01t +
+  #h02t +
+  
+  plot_layout(nrow=1,byrow=T) + #xlab(xlabel) +
+  plot_layout(guides = "collect") +
+  plot_annotation(caption=inpf01) #& theme(legend.position = "bottom")
+#p
+#make filename to save plot to
+figname01 <- paste0("Table03_PhiST_year_02",inpf01,".png")
+
+figname02 <- paste(wd00_wd05,"/",figname01,sep="")
+if(bSaveFigures==T){
+  ggsave(ph,file=figname02,width=210,height=297,
+         units="mm",dpi=300)
+}
+#_______________________________________________________________________________
+#_______________________________________________________________________________
+ph <-   #h01t +
+  h02t +
+  
+  plot_layout(nrow=1,byrow=T) + #xlab(xlabel) +
+  plot_layout(guides = "collect") +
+  plot_annotation(caption=inpf01) #& theme(legend.position = "bottom")
+#p
+#make filename to save plot to
+figname01 <- paste0("Table02_PhiST_locality_02",inpf01,".png")
+
+figname02 <- paste(wd00_wd05,"/",figname01,sep="")
+if(bSaveFigures==T){
+  ggsave(ph,file=figname02,width=210,height=297,
+         units="mm",dpi=300)
+}
+#_______________________________________________________________________________
 #_________________________________________________________________
 #
 # end - Make Phist table with numbers in cells 
@@ -1005,9 +1160,491 @@ if(bSaveFigures==T){
   ggsave(p,file=figname02,width=210,height=297,
          units="mm",dpi=300)
 }
+
+#make filename to save plot to
+figname01 <- paste0("Fig04_map_haplotype_pie_diagr",inpf01,".png")
+
+figname02 <- paste(wd00_wd05,"/",figname01,sep="")
+if(bSaveFigures==T){
+  ggsave(p,file=figname02,width=210,height=297,
+         units="mm",dpi=300)
+}
+
 #_________________________________________________________________
 # end - plot pies on map with ggplot
 #_________________________________________________________________
 
+#_________________________________________________________________
+#_________________________________________________________________
+# plot collection points
+#_________________________________________________________________
+
+
+#df_clo
+
+#install.packages("rnaturalearthhires", repos = "http://packages.ropensci.org", type = "source")
+# # 
+library("rnaturalearth")
+library("rnaturalearthdata")
+library("rnaturalearthhires")
+# # Get a map, use a high number for 'scale' for a coarse resolution
+# use a low number for scale for a high resolution
+# if the map 'world' does not exist, then download it
+if (!exists("denm_map"))
+{  
+  denm_map <- ne_countries(country=c("denmark","sweden","germany", 
+                                     "norway", "poland"),scale = 10, returnclass = "sf")
+  #wor_map <- ne_countries(country="world",scale = 10, returnclass = "sf")
+}
+
+
+#df_clo$locality
+jitlvl <- 0.24
+dev.off()
+#http://www.cookbook-r.com/Graphs/Colors_(ggplot2)/
+# The palette with black:
+cbbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73",
+                "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+cbbPalette2 <- c("black","purple","blue","green","yellowgreen",
+                 "yellow","white")
+colfunc <- colorRampPalette(cbbPalette2)
+
+cl <- cbbPalette
+# subset to exclude NCBI sequences
+df_clo2 <- df_clo[!grepl("NCBI",df_clo$locality),]
+#identify unique localities
+nloc <- length(unique(df_clo2$locality))
+#https://stackoverflow.com/questions/13353213/gradient-of-n-colors-ranging-from-color-1-and-color-2
+#
+cl <- colfunc(nloc)
+# also see : https://github.com/tidyverse/ggplot2/issues/2037
+p04 <- 
+  ggplot(data = denm_map) +
+  #ggplot(st_transform(norw_map, 9122)) +
+  geom_sf(color = "black", fill = "azure3") +
+  geom_jitter(data = df_clo2, 
+              aes(x = dec_lon, y = dec_lat, #, 
+                  color=locality,
+                  fill=locality,
+                  shape=locality),
+              width = jitlvl, #0.07, jitter width 
+              height = jitlvl, #0.07, # jitter height
+              size = 6) +
+  #manually set the pch shape of the points
+  scale_shape_manual(values=c(rep(21,nloc))) +
+  #set the color of the points
+  #here it is black, and repeated the number of times
+  #matching the number of species listed
+  scale_color_manual(values=c(rep("black",nloc))) +
+  #set the color of the points
+  #use alpha to scale the intensity of the color
+  scale_fill_manual(values=alpha(
+    c(cl),
+    c(0.7)
+  ))+
+  #define limits of the plot
+  ggplot2::coord_sf(xlim = c(4, 16),
+                    ylim = c(53.4, 58.4),
+                    expand = FALSE)
+p04 <- p04 + xlab("longitude") + ylab("latitude")
+# see the plot
+p04
+
+#make filename to save plot to
+figname06 <- paste0("map_samples_",inpf01,".png")
+
+figname02 <- paste(wd00_wd05,"/",figname06,sep="")
+if(bSaveFigures==T){
+  ggsave(p04,file=figname02,width=210,height=297,
+         units="mm",dpi=300)
+}
+
+
+#make filename to save plot to
+figname06 <- paste0("Fig01_map_samples_",inpf01,".png")
+
+figname02 <- paste(wd00_wd05,"/",figname06,sep="")
+if(bSaveFigures==T){
+  ggsave(p04,file=figname02,width=210,height=297,
+         units="mm",dpi=300)
+}
+
+
+#
+
+
+# # 
+library("rnaturalearth")
+library("rnaturalearthdata")
+library("rnaturalearthhires")
+# # Get a map, use a high number for 'scale' for a coarse resolution
+# use a low number for scale for a high resolution
+# if the map 'world' does not exist, then download it
+if (!exists("world"))
+{  
+  world <- ne_countries(scale = 10, returnclass = "sf")
+}
+
+# also see : https://github.com/tidyverse/ggplot2/issues/2037
+p05 <- ggplot(data = world) +
+  geom_sf(color = "black", fill = "azure3") +
+  #geom_sf(color = "black", fill = "azure3") +
+  #https://ggplot2.tidyverse.org/reference/position_jitter.html
+  # use 'geom_jitter' instead of 'geom_point' 
+  scatterpie::geom_scatterpie(aes(x=dec_lon, y=dec_lat, 
+                                  #group = country, 
+                                  r = rws*0.10), 
+                              data = df_hap_loc04, 
+                              cols = colnames(df_hap_loc04[,c(2:enc)])) +
+  
+  scale_color_manual(values=c(rep("black",
+                                  length(unique(df_hap_loc04[,c(2:enc)]))))) +
+  
+  scale_fill_manual(values=alpha(
+    c(cl03),
+    c(0.7)
+  ))+
+  #scale_colour_viridis_d(breaks=11) +
+  #scale_color_brewer(palette="Dark2") +
+  #https://stackoverflow.com/questions/54078772/ggplot-scale-color-manual-with-breaks-does-not-match-expected-order
+  
+  geom_scatterpie_legend(df_hap_loc04$rws*0.10, x=-10, y=47) +
+  # set alpha values for color intensity of fill color in point
+  #https://ggplot2.tidyverse.org/reference/aes_colour_fill_alpha.html
+  #define limits of the plot
+  ggplot2::coord_sf(xlim = c(-12, 16),
+                    ylim = c(34.8, 58.0),
+                    expand = FALSE) +
+  theme(aspect.ratio=7/8)
+# change labels on axis
+p05 <- p05 + xlab("longitude") + ylab("latitude")
+#dev.off()
+# change label for legend
+p05 <- p05 + labs(fill='haplotype')
+# see the plot
+p05
+#make a viridis colour range
+#cl03 <- pals::viridis(length(unique(df_hap_loc03[,c(2:enc)])))
+# also see : https://github.com/tidyverse/ggplot2/issues/2037
+p06 <-  ggplot(data = world) +
+  geom_sf(color = "black", fill = "azure3") +
+  
+  #  geom_sf(color = "black", fill = "azure3") +
+  #https://ggplot2.tidyverse.org/reference/position_jitter.html
+  # use 'geom_jitter' instead of 'geom_point' 
+  
+  
+  scatterpie::geom_scatterpie(aes(x=dec_lon, y=dec_lat, 
+                                  #group = country, 
+                                  r = rws*0.04), 
+                              data = df_hap_loc03, 
+                              cols = colnames(df_hap_loc04[,c(2:enc)])) +
+  
+  
+  scale_color_manual(values=c(rep("black",
+                                  length(unique(df_hap_loc04[,c(2:enc)]))))) +
+  
+  scale_fill_manual(values=alpha(
+    c(cl03),
+    c(0.7)
+  ))+
+  #scale_colour_viridis_d(breaks=11) +
+  #scale_color_brewer(palette="Dark2") +
+  geom_scatterpie_legend(df_hap_loc04$rws*0.04, x=14, y=57) +
+  
+  #https://stackoverflow.com/questions/54078772/ggplot-scale-color-manual-with-breaks-does-not-match-expected-order
+  # set alpha values for color intensity of fill color in point
+  #https://ggplot2.tidyverse.org/reference/aes_colour_fill_alpha.html
+  #define limits of the plot
+  ggplot2::coord_sf(xlim = c(4, 15.4),
+                    ylim = c(53.8, 58.0),
+                    expand = FALSE) +
+  theme(aspect.ratio=2/7)
+# see the plot
+p06
+#dev.off()
+#change labels on axis
+p06 <- p06 + xlab("longitude") + ylab("latitude")
+#change labels on legend
+p06 <- p06 + labs(fill='haplotype')
+p06
+# Add titles
+# see this example: https://www.datanovia.com/en/blog/ggplot-title-subtitle-and-caption/
+#caption = "Data source: ToothGrowth")
+p05t <- p05 + labs(title = "A")#,
+# Add titles
+# p06t <- p06 + labs(title = "eDNA samples attempted",
+#                    subtitle = "at least approv controls and 1 or 2 pos repl")#,
+p06t <- p06 + labs(title = "B")#,
+
+
+# ------------- plot Combined figure -------------
+library(patchwork)
+# set a variable to TRUE to determine whether to save figures
+bSaveFigures <- T
+#see this website: https://www.rdocumentation.org/packages/patchwork/versions/1.0.0
+# on how to arrange plots in patchwork
+p <-  p05t +
+  p06t +
+  
+  plot_layout(nrow=2,byrow=T) + #xlab(xlabel) +
+  plot_layout(guides = "collect") +
+  plot_annotation(caption=inpf01) #& theme(legend.position = "bottom")
+#p
+#make filename to save plot to
+figname01 <- paste0("map_haplotype_pie_diagr_02",inpf01,".png")
+
+figname02 <- paste(wd00_wd05,"/",figname01,sep="")
+if(bSaveFigures==T){
+  ggsave(p,file=figname02,width=210,height=297,
+         units="mm",dpi=300)
+}
+#_________________________________________________________________
+# end - plot pies on map with ggplot
+#_________________________________________________________________
+csvf <- paste0(wd00_wd05,"/df_haplo03.csv")
+write.csv(df_hap_loc03, file = csvf)
+#
+
+
+
+# The palette with black:
+cbbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73",
+                "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+cbbPalette2 <- c("black","purple","blue","green","yellowgreen",
+                 "yellow","white")
+cbbPalette1 <- c("firebrick4","firebrick2",#"orange",
+                 "gold3")
+colfunc2 <- colorRampPalette(cbbPalette2)
+colfunc1 <- colorRampPalette(cbbPalette1)
+cl <- cbbPalette
+# subset to include NCBI sequences
+cloc1 <-  unique(colnames(new.hap.smplloc)[grepl("NCBI",colnames(new.hap.smplloc))])
+lcloc1 <- length(cloc1)
+# subset to exclude NCBI sequences
+cloc2 <-  unique(colnames(new.hap.smplloc)[!grepl("NCBI",colnames(new.hap.smplloc))])
+lcloc2 <- length(cloc2)
+#https://stackoverflow.com/questions/13353213/gradient-of-n-colors-ranging-from-color-1-and-color-2
+#
+#for NCBI categories
+colfpl1 <- colfunc1(lcloc1)
+#for non-NCBI categories
+colfpl2 <- colfunc2(lcloc2)
+# bind to dataframes
+df_Cl1 <- as.data.frame(cbind(cloc1,colfpl1))
+df_Cl2 <- as.data.frame(cbind(cloc2,colfpl2))
+colnames(df_Cl1) <- c("coll_loc","colfcol_loc")
+colnames(df_Cl2) <- c("coll_loc","colfcol_loc")
+df_cll <- rbind(df_Cl1,df_Cl2)
+#match to get same order of colors as for collection localities
+colfh <- df_cll$colfcol_loc[match((colnames(new.hap.smplloc)),df_cll$coll_loc)]
+# uncomment to see colours
+#plot(rep(1,20),col=colfunc(20),pch=19,cex=3) #check colors for species
+
+NCBIsmpl <- colnames(new.hap.smplye)[grepl("NCBI",colnames(new.hap.smplye))]
+yearsmpl <- colnames(new.hap.smplye)[!grepl("NCBI",colnames(new.hap.smplye))]
+clfy1 <- df_cll$colfcol_loc[match(NCBIsmpl,df_cll$coll_loc)]
+
+cbbPalette3 <- c("black","cyan","white")
+colfunc3 <- colorRampPalette(cbbPalette3)
+clfy2 <- colfunc3(length(yearsmpl))
+
+df_cfy3 <- as.data.frame(cbind(yearsmpl,clfy2))
+df_cfy4 <- as.data.frame(cbind(NCBIsmpl,clfy1))
+colnames(df_cfy3) <- c("smplnm","colour")
+colnames(df_cfy4) <- c("smplnm","colour")
+df_cfy5 <- as.data.frame(rbind(df_cfy3,df_cfy4))
+
+clrf6 <- df_cfy5$colour[match(colnames(new.hap.smplye),df_cfy5$smplnm)]
+#_______________________________________________________________________________
+#_______________________________________________________________________________
+#_______________________________________________________________________________
+flnm <- c(paste("Fig02_haplotype_network_",inp.f.fnm,"02.pdf",  sep = ""))
+#paste output directory and filename together in a string
+outflnm <- paste(wd00_wd05,"/",flnm,sep="")
+# Exporting PFD files via postscript()           
+pdf(outflnm,
+    width=(1*1.0*8.2677),height=(4*1.0*2.9232))
+#define lpot arrangement
+tbt.par <- par(mfrow=c(2, 1))
+#_______________________________________________________________________________
+#make a haplotype network
+pipNet <- pegas::haploNet(pipHaps)
+#make a haplotype network
+pipNet <- pegas::haploNet(pipHaps)
+#plot the network
+plot(pipNet, size = attr(pipNet,"freq"), 
+     scale.ratio = 0.6, cex = 0.1, 
+     bg= colfh, 
+     pie = new.hap.smplloc, 
+     show.mutation = 0, threshold = 0, labels(FALSE))
+#add a legend to the plot
+legend("bottomleft",colnames(new.hap.smplloc), 
+       col=colfh,
+       #col=rainbow(ncol(new.hap.smplloc)), 
+       pch=19, ncol=1, cex=0.5)
+title(main = "A",
+      cex.main = 1.4,   font.main= 2, col.main= "black",
+      adj = 0.01, line = 0.1)
+#_______________________________________________________________________________
+#make a haplotype network
+pipNet <- pegas::haploNet(pipHaps)
+#plot the network
+plot(pipNet, size = attr(pipNet,"freq"), 
+     scale.ratio = 0.6, cex = 0.1, 
+     bg=clrf6,
+     pie = new.hap.smplye, 
+     show.mutation = 0, threshold = 0, labels(FALSE))
+#add a legend to the plot
+legend("bottomleft",colnames(new.hap.smplye), 
+       #col=rainbow(ncol(new.hap.smplye)), 
+       col=clrf6,
+       pch=19, ncol=1, cex=0.6)
+title(main = "B",
+      cex.main = 1.4,   font.main= 2, col.main= "black",
+      adj = 0.01, line = 0.1)
+#_______________________________________________________________________________
+par(tbt.par)
+# end svg file to save as
+dev.off()  
+#reset this parameter
+par(mfrow = c(1, 1)) 
+#_______________________________________________________________________________
+#_______________________________________________________________________________
+#_______________________________________________________________________________
+
+#______________________________________________________________________________
+# Make table for samples collected - start
+#______________________________________________________________________________
+# Get rownames from dataframe
+rwnm01 <- rownames(df_pip)
+# split by delimeter and make a new data frame
+df_r02 <- data.frame(do.call('rbind', strsplit(as.character(rwnm01),'_',fixed=TRUE)))
+#change column names on data frame
+colnames(df_r02) <- c("smplnm","collloc","collyear","collmnth")
+#replace in location names
+df_clo2$locality <- gsub(",","",df_clo2$locality)
+# get sampling position
+df_r02$lat_deg <- df_clo2$lat_deg[match(df_r02$collloc,df_clo2$locality)]
+df_r02$lat_min <- df_clo2$lat_min[match(df_r02$collloc,df_clo2$locality)]
+df_r02$lat_sec <- df_clo2$lat_sec[match(df_r02$collloc,df_clo2$locality)]
+df_r02$lat_sph <- df_clo2$lat_sph[match(df_r02$collloc,df_clo2$locality)]
+df_r02$lon_deg <- df_clo2$lon_deg[match(df_r02$collloc,df_clo2$locality)]
+df_r02$lon_min <- df_clo2$lon_min[match(df_r02$collloc,df_clo2$locality)]
+df_r02$lon_sec <- df_clo2$lon_sec[match(df_r02$collloc,df_clo2$locality)]
+df_r02$lon_sph <- df_clo2$lon_sph[match(df_r02$collloc,df_clo2$locality)]
+# make an empty column for accession numbers
+df_r02$NCBIaccsNo <- NA
+#replace in this column with accession numbers
+df_r02$NCBIaccsNo[grepl("Mnelei[A-Z]{2}",df_r02$smplnm)] <- gsub("Mnelei","",df_r02$smplnm[grepl("Mnelei[A-Z]{2}",df_r02$smplnm)])
+# make an empty column for species names
+df_r02$spcNm <- NA
+df_r02$spcNm[grepl("Mnelei",df_r02$smplnm)] <- "Mnemiopsis leidyi"
+#replace the non Mnemiopsis leidyi samples
+notMnelei <- df_r02$smplnm[!grepl("Mnelei",df_r02$smplnm)]
+notMnelei[grepl("^.*[A-Z]{2}.*$",notMnelei)] <- gsub("^(.*)([A-Z]{2}.*)$","\\1_\\2",notMnelei[grepl("^.*[A-Z]{2}.*$",notMnelei)])
+notMnelei[grepl("^.*\\.[A-Z]{1}.*$",notMnelei)] <- gsub("\\.","_",notMnelei[grepl("^.*\\.[A-Z]{1}.*$",notMnelei)])
+# split by delimeter and make a new data frame
+df_nMl <- data.frame(do.call('rbind', strsplit(as.character(notMnelei),'_',fixed=TRUE)))
+colnames(df_nMl) <- c("spcNm","NCBIaccsNos")
+#get non Mnemiopsis samples and modify
+df_r02$spcNm[!grepl("Mnelei",df_r02$smplnm)] <- df_nMl$spcNm
+df_r02$NCBIaccsNo[!grepl("Mnelei",df_r02$smplnm)] <- df_nMl$NCBIaccsNos
+#replace accession numbers
+df_r02$NCBIaccsNosmplnm <- df_r02$NCBIaccsNo
+df_r02$NCBIaccsNosmplnm[is.na(df_r02$NCBIaccsNosmplnm)] <- df_r02$smplnm[is.na(df_r02$NCBIaccsNosmplnm)]
+#replace species names
+df_r02$spcNm <- gsub("Bolinopsissp","Bolinopsis sp", df_r02$spcNm)
+df_r02$spcNm <- gsub("maculata"," maculata",df_r02$spcNm)
+df_r02$spcNm <- gsub("crystallina"," crystallina",df_r02$spcNm)
+#paste collection position in to one string
+df_r02$posloc <- paste(df_r02$lat_deg,"º",df_r02$lat_min,"'",df_r02$lat_sec,"''",df_r02$lat_sph,
+                       ";",
+                       df_r02$lon_deg,"º",df_r02$lon_min,"'",df_r02$lon_sec,"''",df_r02$lon_sph,
+                       sep="")
+#replace NA containing positions
+df_r02$posloc[grepl("NA",df_r02$posloc)] <- "NA"
+#copy columns
+df_r02$collmnth2 <- df_r02$collmnth
+df_r02$collloc2 <- df_r02$collloc
+# replace with NAs
+df_r02$collloc2[grepl("NCBI",df_r02$collloc2)] <- "NA"
+df_r02$collmnth2[grepl("NCBI",df_r02$collmnth2)] <- "NA"
+df_r02$collmnth2[grepl("^[A-Z]{1}[0-9]{+}",df_r02$collmnth2)] <- "NA"
+df_r02$collloc2[grepl("crystal",df_r02$collloc2)] <- "NA"
+df_r02$NCBIaccsNosmplnm[grepl("crystal",df_r02$NCBIaccsNosmplnm)] <- "NA"
+df_r02$collloc2[grepl("Bolinop",df_r02$collloc2)] <- "NA"
+#colnames(df_r02)
+#match to get abbreviated location name
+df_r02$collloc3 <- df_abloc$locabb[match(df_r02$collloc2,df_abloc$locnm)]
+# define columns to keep
+keeps <- c("spcNm",
+           "NCBIaccsNosmplnm",
+           "posloc",
+           "collmnth2",
+           "collloc3" )
+#keep defined columns
+df_r03 <-  df_r02[keeps]
+#rename columns
+colnames(df_r03) <- c("Genus species",
+                      "sample Number or NCBI Accession number",
+                      "Latitude longitude for sample collection",
+                      "Year and month collected",
+                      "Locality abbr.")
+
+#https://cran.r-project.org/web/packages/tableHTML/vignettes/tableHTML.html
+if(!require(tableHTML)){
+  install.packages("tableHTML")
+  library(tableHTML)
+}
+require(tableHTML)
+#try the tableHTML with no border
+tableHTMLt03 <- df_r03 %>% 
+  tableHTML(border = 0) 
+#paste path and file name together
+pth_fl02 <- paste(wd00_wd05,"/","Table01a_samples_collected.html",sep="")
+pth_fl03 <- paste(wd00_wd05,"/","Table01b_samples_collected.csv",sep="")
+#and to export in a file a html file
+write_tableHTML(tableHTMLt03, file = pth_fl02)
+# and to a csv file
+write.csv(df_r03,file=pth_fl03)
+
+
+# Sort by vector name [z] then [x]
+df_r03 <- df_r03[
+  with(df_r03, order(df_r03$`Genus species`, df_r03$`sample Number or NCBI Accession number`)),]
+
+row.names(df_r03) <- NULL
+# get package
+if(!require("kableExtra")){
+  # see https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html#Table_Styles
+  #For dev version
+  install.packages("devtools")
+  devtools::install_github("haozhu233/kableExtra")
+  
+  library("kableExtra")
+}
+Tbltxt01 <- "Table 1. List samples collected from warty comb jelly (Mnemiopsis leidyi) in the seas around Denmark. Sampled locations are abbreviated: Fyn Bogense (FBo), Fyn Kerteminde (FKe), Jylland Mariager fjord (JMa), N Germany Kiel Fjord (GKi), N Germany Mecklenburger Bucht Wismar Bucht (GMe), N Jylland Limfjord (JLi), N Jylland Limfjord Logstoer (JLo), NW Germany N Sea Helgoland Rds (GHe), NW Germany Wadden Sea Bussum Haupstr (GWa), Samsoe Ballen (SBa), SE Denmark Mecklenburger Bucht (DMe), Sjaelland Skovshoved (Ssk). Additional sequences was obtained from Mnemiopsis and other ctenophore species from NBCI GenBank database as indicated by accession numbers."
+df_r04 <- df_r03 %>%
+  kableExtra::kbl(caption = Tbltxt01) %>%
+  kableExtra::kable_classic(full_width = F, html_font = "Cambria") %>%
+  kableExtra::kable_styling(latex_options = c("striped"))  %>%
+  column_spec(1, italic = T) 
+#and to export in a file a html file
+kableExtra::save_kable(df_r04,file=pth_fl02)
+
+
+
+
+
+#______________________________________________________________________________
+# Make table for samples collected - end
+#______________________________________________________________________________
+#write.table()
+#head(df_r02,4)
+#head(df_clo2,4)
+
+#__________________
+#
 
 #
