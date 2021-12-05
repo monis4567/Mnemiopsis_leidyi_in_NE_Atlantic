@@ -715,7 +715,7 @@ df_pw_wc_pip_2 <- df_pw_wc_pip %>%
 # see first header lines
 
 
-df_clo$locality
+#df_clo$locality
 #make a data frame for abbreviated sampling locations
 locnm <- c("FynBogense","FynKerteminde","JyllandMariagerfjord",
            "NGermanyKielFjord","NGermanyMecklenburgerBuchtWismarBucht",
@@ -960,11 +960,12 @@ if(bSaveFigures==T){
 #this makes the data frame a table
 tbl_hap_loc01 <- t(new.hap.smplloc)
 # see the class of the object
-class(tbl_hap_loc01)
+#class(tbl_hap_loc01)
 #make it a data frame instead
 df_hap_loc01 <- as.data.frame(tbl_hap_loc01)
 #check the column names
-colnames(df_hap_loc01)
+#colnames(df_hap_loc01)
+#df_hap_loc01$smplloca
 # reshape the data frame for long to wide
 df_hap_loc02 <- reshape(data=df_hap_loc01,idvar="smplloca",
                           v.names = "Freq",
@@ -976,6 +977,7 @@ fl1 <- "collect_loc_Mnelei_smpls01.csv"
 pth_fl01 <- paste(wd00_wd01,"/",fl1,sep="")
 #read in a csv file with positions for sampling locations
 df_clo <- as.data.frame(read_delim(pth_fl01,delim = ";"))
+
 #use biogeo dms2dd funciton to convert to decimal degrees
 df_clo$dec_lat <- biogeo::dms2dd(df_clo$lat_deg,
                    df_clo$lat_min,
@@ -1640,6 +1642,148 @@ kableExtra::save_kable(df_r04,file=pth_fl02)
 #______________________________________________________________________________
 # Make table for samples collected - end
 #______________________________________________________________________________
+
+#______________________________________________________________________________
+# Make a second map with pies for haplotypes -start
+# Add jitter to the sample localities to see all sampling sites
+#______________________________________________________________________________
+df_hap_loc01 <- as.data.frame(tbl_hap_loc01)
+#check the column names
+#colnames(df_hap_loc01)
+#df_hap_loc01$smplloca
+# reshape the data frame for long to wide
+df_hap_loc02 <- reshape(data=df_hap_loc01,idvar="smplloca",
+                        v.names = "Freq",
+                        timevar = "Var2",
+                        direction="wide")
+#add a column with sampling locations to be able to 
+#match between data frames
+df_hap_loc02$dec_loc3 <- df_clo$locality[match(df_hap_loc02$smplloca,df_clo2$locality)]
+# sum for duplicated values in row
+# this is to add up the multiple entries row for the same 
+# localities
+# https://stackoverflow.com/questions/10180132/consolidate-duplicate-rows
+library(plyr)
+df_hap_loc03 <- plyr::ddply(df_hap_loc02,"smplloca",numcolwise(sum))
+#match between data frames
+df_hap_loc03$dec_lat <- df_clo2$dec_lat[match(df_hap_loc03$smplloca,df_clo2$locality)]
+df_hap_loc03$dec_lon <- df_clo2$dec_lon[match(df_hap_loc03$smplloca,df_clo2$locality)]
+# add jitter to points
+df_hap_loc03$dec_lat <- jitter(df_hap_loc03$dec_lat, factor = 20.12, amount = NULL)
+df_hap_loc03$dec_lon <- jitter(df_hap_loc03$dec_lon, factor = 20.12, amount = NULL)
+# limit the data frame to remove any rows that have NAs
+df_hap_loc03 <-  df_hap_loc03[complete.cases(df_hap_loc03), ] 
+#modify the colnames
+colnames(df_hap_loc03) <- (gsub("Freq\\.","",colnames(df_hap_loc03)))
+# https://towardsdatascience.com/using-ggplot-to-plot-pie-charts-on-a-geographical-map-bb54d22d6e13
+#count the number of columns, and subtract 2
+enc1 <- ncol(df_hap_loc03)-2
+#head(df_hap_loc03,3)
+#sum up for each row
+df_hap_loc03$rws <- rowSums(df_hap_loc03[,2:enc1])
+rws <- as.numeric(df_hap_loc03$rws)
+#count the columns and subtract 3
+enc <- ncol(df_hap_loc03)-3
+#install the package that allows for making pit charts in ggplot
+if(!require("scatterpie")){
+  install.packages("scatterpie", dependencies = TRUE, INSTALL_opts = '--no-lock')
+  library("scatterpie")
+}
+library(scatterpie)
+#make a viridis colour range
+cl03 <- pals::viridis(length(unique(df_hap_loc03[,c(2:enc)])))
+# https://towardsdatascience.com/using-ggplot-to-plot-pie-charts-on-a-geographical-map-bb54d22d6e13
+# Using map_data()
+# # Get a map, use a high number for 'scale' for a coarse resolution
+# use a low number for scale for a high resolution
+world <- rnaturalearth::ne_countries(scale = 10, returnclass = "sf")
+df_hap_loc03$rws2 <- df_hap_loc03$rws
+#replace NAs with zeros
+df_hap_loc04 <- df_hap_loc03[!is.na(df_hap_loc03$rws),]
+#https://guangchuangyu.github.io/2016/12/scatterpie-for-plotting-pies-on-ggplot/
+world <- ggplot2::map_data('world')
+jitlvl <- 0.017
+# also see : https://github.com/tidyverse/ggplot2/issues/2037
+p07 <- ggplot(data = world) +
+  geom_map(map=world, aes(map_id=region), fill="grey",
+           color="black") +
+  #geom_sf(color = "black", fill = "azure3") +
+  #https://ggplot2.tidyverse.org/reference/position_jitter.html
+  # use 'geom_jitter' instead of 'geom_point' 
+  scatterpie::geom_scatterpie(aes(x=dec_lon, y=dec_lat, 
+                                  #group = country, 
+                                  r = rws*0.10), 
+                              data = df_hap_loc04, 
+                              cols = colnames(df_hap_loc04[,c(2:enc)])) +
+  scale_color_manual(values=c(rep("black",
+                                  length(unique(df_hap_loc04[,c(2:enc)]))))) +
+  scale_fill_manual(values=alpha(
+    c(cl03),
+    c(0.7)
+  ))+
+  #https://stackoverflow.com/questions/54078772/ggplot-scale-color-manual-with-breaks-does-not-match-expected-order
+  geom_scatterpie_legend(df_hap_loc04$rws*0.10, x=-10, y=47) +
+  # set alpha values for color intensity of fill color in point
+  #https://ggplot2.tidyverse.org/reference/aes_colour_fill_alpha.html
+  #define limits of the plot
+  ggplot2::coord_sf(xlim = c(6, 14),
+                    ylim = c(52.8, 58.0),
+                    expand = FALSE)
+# change labels on axis
+p07 <- p07 + xlab("longitude") + ylab("latitude")
+# change label for legend
+p07 <- p07 + labs(fill='haplotype')
+# see the plot
+p07
+# Add titles
+# see this example: https://www.datanovia.com/en/blog/ggplot-title-subtitle-and-caption/
+#caption = "Data source: ToothGrowth")
+p07t <- p07 + labs(title = "A")#,
+# ------------- plot Combined figure -------------
+library(patchwork)
+# set a variable to TRUE to determine whether to save figures
+bSaveFigures <- T
+#see this website: https://www.rdocumentation.org/packages/patchwork/versions/1.0.0
+# on how to arrange plots in patchwork
+p <-  p07t +
+  plot_layout(nrow=1,byrow=T) + #xlab(xlabel) +
+  plot_layout(guides = "collect") +
+  plot_annotation(caption=inpf01) #& theme(legend.position = "bottom")
+#p
+#make filename to save plot to
+figname01 <- paste0("map_haplotype_pie_diagr",inpf01,"_02.png")
+
+figname02 <- paste(wd00_wd05,"/",figname01,sep="")
+if(bSaveFigures==T){
+  ggsave(p,file=figname02,width=210,height=297,
+         units="mm",dpi=300)
+}
+
+#make filename to save plot to
+figname01 <- paste0("Fig04_v02_map_haplotype_pie_diagr",inpf01,".png")
+
+figname02 <- paste(wd00_wd05,"/",figname01,sep="")
+if(bSaveFigures==T){
+  ggsave(p,file=figname02,width=210,height=297,
+         units="mm",dpi=300)
+}
+
+#______________________________________________________________________________
+# Make a second map with pies for haplotypes -end
+# Add jitter to the sample localities to see all sampling sites
+#______________________________________________________________________________
+
+
+
+#write.table()
+#head(df_r02,4)
+#head(df_clo2,4)
+
+#__________________
+#
+
+#
+
 #write.table()
 #head(df_r02,4)
 #head(df_clo2,4)
