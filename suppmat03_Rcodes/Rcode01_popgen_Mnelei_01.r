@@ -1080,10 +1080,12 @@ ggplot2::coord_sf(xlim = c(-12, 16),
                   ylim = c(34.8, 58.0),
                   expand = FALSE)
 # change labels on axis
-p01 <- p01 + xlab("longitude") + ylab("latitude")
+p01 <- p01 + xlab("Longitude") + ylab("Latitude")
 #dev.off()
 # change label for legend
 p01 <- p01 + labs(fill='haplotype')
+#https://www.statology.org/ggplot-background-color/
+p01 <- p01 + theme_minimal() #no background annotations
 # see the plot
 p01
 #make a viridis colour range
@@ -1127,18 +1129,18 @@ ggplot2::coord_sf(xlim = c(6, 15.4),
 #p02
 #dev.off()
 #change labels on axis
-p02 <- p02 + xlab("longitude") + ylab("latitude")
+p02 <- p02 + xlab("Longitude") + ylab("Latitude")
 #change labels on legend
 p02 <- p02 + labs(fill='haplotype')
 p02
 # Add titles
 # see this example: https://www.datanovia.com/en/blog/ggplot-title-subtitle-and-caption/
 #caption = "Data source: ToothGrowth")
-p01t <- p01 + labs(title = "A")#,
+p01t <- p01 + labs(title = "a")#,
 # Add titles
 # p02t <- p02 + labs(title = "eDNA samples attempted",
 #                    subtitle = "at least approv controls and 1 or 2 pos repl")#,
-p02t <- p02 + labs(title = "B")#,
+p02t <- p02 + labs(title = "b")#,
 
 
 # ------------- plot Combined figure -------------
@@ -1248,7 +1250,7 @@ p04 <-
   ggplot2::coord_sf(xlim = c(4, 16),
                     ylim = c(53.4, 58.4),
                     expand = FALSE)
-p04 <- p04 + xlab("longitude") + ylab("latitude")
+p04 <- p04 + xlab("Longitude") + ylab("Latitude")
 # see the plot
 p04
 
@@ -1319,7 +1321,7 @@ p05 <- ggplot(data = world) +
                     expand = FALSE) +
   theme(aspect.ratio=7/8)
 # change labels on axis
-p05 <- p05 + xlab("longitude") + ylab("latitude")
+p05 <- p05 + xlab("Longitude") + ylab("Latitude")
 #dev.off()
 # change label for legend
 p05 <- p05 + labs(fill='haplotype')
@@ -1366,18 +1368,25 @@ p06 <-  ggplot(data = world) +
 p06
 #dev.off()
 #change labels on axis
-p06 <- p06 + xlab("longitude") + ylab("latitude")
+p06 <- p06 + xlab("Longitude") + ylab("Latitude")
 #change labels on legend
 p06 <- p06 + labs(fill='haplotype')
+
+#https://www.statology.org/ggplot-background-color/
+p06 <- p06 + theme(panel.background = element_rect(fill = 'white', color = 'white')) #,
+# panel.grid.major = element_line(color = 'red', linetype = 'dotted'),
+# panel.grid.minor = element_line(color = 'green', size = 2))
+# 
+
 p06
 # Add titles
 # see this example: https://www.datanovia.com/en/blog/ggplot-title-subtitle-and-caption/
 #caption = "Data source: ToothGrowth")
-p05t <- p05 + labs(title = "A")#,
+p05t <- p05 + labs(title = "a")#,
 # Add titles
 # p06t <- p06 + labs(title = "eDNA samples attempted",
 #                    subtitle = "at least approv controls and 1 or 2 pos repl")#,
-p06t <- p06 + labs(title = "B")#,
+p06t <- p06 + labs(title = "b")#,
 
 
 # ------------- plot Combined figure -------------
@@ -1485,7 +1494,7 @@ legend("bottomleft",colnames(new.hap.smplloc),
        col=colfh,
        #col=rainbow(ncol(new.hap.smplloc)), 
        pch=19, ncol=1, cex=0.5)
-title(main = "A",
+title(main = "a",
       cex.main = 1.4,   font.main= 2, col.main= "black",
       adj = 0.01, line = 0.1)
 #_______________________________________________________________________________
@@ -1502,7 +1511,7 @@ legend("bottomleft",colnames(new.hap.smplye),
        #col=rainbow(ncol(new.hap.smplye)), 
        col=clrf6,
        pch=19, ncol=1, cex=0.6)
-title(main = "B",
+title(main = "b",
       cex.main = 1.4,   font.main= 2, col.main= "black",
       adj = 0.01, line = 0.1)
 #_______________________________________________________________________________
@@ -1590,7 +1599,7 @@ df_r03 <-  df_r02[keeps]
 #rename columns
 colnames(df_r03) <- c("Genus species",
                       "sample Number or NCBI Accession number",
-                      "Latitude longitude for sample collection",
+                      "Latitude Longitude for sample collection",
                       "Year and month collected",
                       "Locality abbr.")
 
@@ -1635,7 +1644,8 @@ df_r04 <- df_r03 %>%
 #and to export in a file a html file
 kableExtra::save_kable(df_r04,file=pth_fl02)
 
-
+# Get unique sampling times
+#unique(df_r03$`Year and month collected`)
 
 
 
@@ -1707,6 +1717,7 @@ jitlvl <- 0.017
 p07 <- ggplot(data = world) +
   geom_map(map=world, aes(map_id=region), fill="grey",
            color="black") +
+  #geom_sf(color = "black", fill = "azure3", lwd=0.4) +
   #geom_sf(color = "black", fill = "azure3") +
   #https://ggplot2.tidyverse.org/reference/position_jitter.html
   # use 'geom_jitter' instead of 'geom_point' 
@@ -1730,15 +1741,22 @@ p07 <- ggplot(data = world) +
                     ylim = c(52.8, 58.0),
                     expand = FALSE)
 # change labels on axis
-p07 <- p07 + xlab("longitude") + ylab("latitude")
+p07 <- p07 + xlab("Longitude") + ylab("Latitude")
 # change label for legend
 p07 <- p07 + labs(fill='haplotype')
+
+# #https://www.statology.org/ggplot-background-color/
+p07 <- p07 + theme(panel.background = element_rect(fill = 'white', color = 'black'),
+panel.grid.major = element_line(color = 'black', lwd=0.1)) #, linetype = 'dotted'))#,
+#panel.grid.minor = element_line(color = 'green', size = 2))
+
+#p07 <- p07 + theme_bw() #white background and grey gridlines
 # see the plot
 p07
 # Add titles
 # see this example: https://www.datanovia.com/en/blog/ggplot-title-subtitle-and-caption/
 #caption = "Data source: ToothGrowth")
-p07t <- p07 + labs(title = "A")#,
+p07t <- p07 + labs(title = "a")#,
 # ------------- plot Combined figure -------------
 library(patchwork)
 # set a variable to TRUE to determine whether to save figures
@@ -1774,6 +1792,69 @@ if(bSaveFigures==T){
 #______________________________________________________________________________
 
 
+
+library(ggplot2)
+library(sf)
+library(rnaturalearth)
+
+nSco <- length(cl03) 
+#http://www.cookbook-r.com/Graphs/Colors_(ggplot2)/
+# Information on colour blind colours
+#https://stackoverflow.com/questions/57153428/r-plot-color-combinations-that-are-colorblind-accessible
+# using only 14 colours
+safe_colorblind_palette <- c("#88CCEE", "#CC6677", "#DDCC77", "#117733", "#332288", "#AA4499", 
+                             "#44AA99", "#999933", "#882255", "#661100", "#6699CC", "#888888",
+                             "black","pink")
+scbpl <- safe_colorblind_palette
+#scales::show_col(safe_colorblind_palette)
+# see how to make a number of colurs along color range
+# https://stackoverflow.com/questions/15282580/how-to-generate-a-number-of-most-distinctive-colors-in-r
+cl2 <- colorRampPalette(c(scbpl))( nSco) 
+cl2 
+
+
+
+#https://www.r-bloggers.com/2019/04/zooming-in-on-maps-with-sf-and-ggplot2/
+worldmap <- ne_countries(scale = 10, type = 'map_units',
+                         returnclass = 'sf')
+#limit to Europe
+europe <- worldmap[worldmap$continent == 'Europe',]
+#begin plot
+europe <- worldmap[worldmap$continent == 'Europe',]
+p02 <- ggplot() + geom_sf(data = europe) + theme_bw() +
+  #https://ggplot2.tidyverse.org/reference/aes_colour_fill_alpha.html
+  
+  #define limits of the plot
+  ggplot2::coord_sf(xlim = c(6, 14),
+                    ylim = c(52.8, 58.0),
+                    expand = FALSE)
+
+
+p02 <- p02 + scatterpie::geom_scatterpie(aes(x=dec_lon, y=dec_lat, 
+                                             #group = country,
+                                             #pie_scale = 120),
+                                             r = rws*0.10), 
+                                         data = df_hap_loc04, 
+                                         #aspect.ratio=10/16,
+                                         cols = colnames(df_hap_loc04[,c(2:enc)])) +
+  #theme(aspect.ratio=10/16) +
+  scale_color_manual(values=c(rep("black",
+                                  length(unique(df_hap_loc04[,c(2:enc)]))))) +
+  scale_fill_manual(values=alpha(
+    c(cl2),
+    c(0.7)
+  ))+
+  #
+  #coord_equal() +
+  #https://stackoverflow.com/questions/54078772/ggplot-scale-color-manual-with-breaks-does-not-match-expected-order
+  geom_scatterpie_legend(df_hap_loc04$rws*0.040, x=12, y=57)
+
+# change labels on axis
+p02 <- p02 + xlab("Longitude") + ylab("Latitude")
+
+
+p02 <- p02 + theme(legend.key.size = unit(0.3, 'cm'))
+p02
 
 #write.table()
 #head(df_r02,4)
