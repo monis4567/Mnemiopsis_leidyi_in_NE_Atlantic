@@ -121,7 +121,6 @@ unlink(wd00_wd05, recursive = TRUE)
 dir.create(wd00_wd05)
 #set the working dir
 setwd(wd00_wd01)
-
 #check the working dir
 getwd()
 #define input file as variable
@@ -139,7 +138,6 @@ orig_rwnm <- row.names(df_pip)
 mdf_rnm01 <- gsub("_consensus_sequence","",orig_rwnm)
 mdf_rnm02 <- gsub("Mnelei","Mne_lei", mdf_rnm01)
 mdf_rnm03 <- gsub("Mnemiopsis_leidyi","Mne_lei", mdf_rnm02)
-
 #nms_index_1st2ndprt <- gsub("^([^_]*_[^_]*)_.*$", "\\1", nms_index)
 #nms_index_2ndprt <- gsub("^([^_]*)(_[^_]*)_.*$", "\\2", nms_index)
 #substitute to get year and month
@@ -161,6 +159,25 @@ df_pip$rwnm05 <- gsub("Mne_lei_","",df_pip$rwnm05)
 df_pip$rwnm05[grepl("_Limfjord", df_pip$rwnm05)] <- gsub("Limfjord","NJylland_Limfjord",df_pip$rwnm05[grepl("_Limfjord", df_pip$rwnm05)])
 df_pip$rwnm05[grepl("Limfjord", df_pip$rwnm05)] <- gsub("Limfjord_Loegstoer","NJylland_LimfjordLogstoer",df_pip$rwnm05[grepl("Limfjord", df_pip$rwnm05)])
 df_pip$rwnm05 <- gsub("lei[0-9]{3}_","",df_pip$rwnm05)
+# make the synonym sample locations identical in name
+df_pip$rwnm05 <- gsub("SEDenmark_MecklenburgerBucht","NGermany_MecklenburgerBuchtWismarBucht",df_pip$rwnm05)
+df_pip$rwnm05 <- gsub("NJyllandLimfjordLogstoer","NJyllandLimfjord",df_pip$rwnm05)
+df_pip$rwnm05 <- gsub("Limfjord_Loegstoer","Limfjord",df_pip$rwnm05)
+unique(df_pip$rwnm05)
+# #Modify location names
+# df_pip$rwnm05 <- gsub("FynBogense","Funen, Bogense", df_pip$rwnm05 )
+# df_pip$rwnm05 <- gsub("FynKerteminde","Funen, Kerteminde", df_pip$rwnm05 )
+# df_pip$rwnm05 <- gsub("JyllandMariagerfjord","Jutland, Mariager Fjord", df_pip$rwnm05 )
+# df_pip$rwnm05 <- gsub("NGermanyKielFjord","Germany, Kiel Fjord", df_pip$rwnm05 )
+# df_pip$rwnm05 <- gsub("NGermanyMecklenburgerBuchtWismarBucht","Germany, Wismar Bight", df_pip$rwnm05 )
+# df_pip$rwnm05 <- gsub("NJyllandLimfjord","Jutland, Limfjord-Aalborg", df_pip$rwnm05 )
+# df_pip$rwnm05 <- gsub("NJyllandLimfjordLogstoer","Jutland, Limfjord-Løgstør" , df_pip$rwnm05 )
+# df_pip$rwnm05 <- gsub("NWGermanyNSeaHelgolandRds", "North Sea, Helgoland Roads", df_pip$rwnm05 )
+# df_pip$rwnm05 <- gsub("NWGermanyWaddenSeaBussumHaupstr","Germany, Büsum", df_pip$rwnm05 )
+# df_pip$rwnm05 <- gsub("SamsoeBallen","Samsøe, Ballen", df_pip$rwnm05 )
+# df_pip$rwnm05 <- gsub("SEDenmarkMecklenburgerBucht","Germany, Wismar Bight", df_pip$rwnm05 )
+# df_pip$rwnm05 <- gsub("SjaellandSkovshoved","Sealand, Skovshoved", df_pip$rwnm05 )
+
 
 df_pip$rwnm04 <- gsub("_","",df_pip$rwnm04)
 df_pip$rwnm05 <- gsub("_","",df_pip$rwnm05)
@@ -191,8 +208,9 @@ df_pip$rwnm04 <- gsub("(AF)(.*)$","\\1NCBI",df_pip$rwnm04)
 #unique(df_pip$rwnm04)
 
 df_pip$rwnm08 <- paste(df_pip$rwnm07,df_pip$rwnm05,df_pip$rwnm06,df_pip$rwnm04,sep="_")
-df_pip$rwnm08
-
+#unique(df_pip$rwnm08)
+df_pip$rwnm08 <- gsub("NJyllandLimfjordLogstoer","NJyllandLimfjord",df_pip$rwnm08)
+#df_pip$rwnm08
 #replace the row names in the data frame
 row.names(df_pip) <- mdf_rnm03
 row.names(df_pip) <- df_pip$rwnm08
@@ -220,7 +238,7 @@ pip <- dnb_pip02
 #create haplotypes from dna.bin
 pipHaps <- pegas::haplotype(pip)
 #view haplotype 
-pipHaps
+as.matrix(pipHaps)
 #prepare hpt table
 ind.hap<-with(
 	stack(setNames(attr(pipHaps, "index"), rownames(pipHaps))),
@@ -251,6 +269,20 @@ locations <- strsplit(as.character(df_ihpt02$pop), "_")
 smplno <- sapply(locations, "[[", 1)
 #locality
 smplloca <- sapply(locations, "[[", 2)
+#unique(smplloca)
+#Modify location names
+smplloca <- gsub("FynBogense","Funen, Bogense", smplloca )
+smplloca <- gsub("FynKerteminde","Funen, Kerteminde", smplloca )
+smplloca <- gsub("JyllandMariagerfjord","Jutland, Mariager Fjord", smplloca )
+smplloca <- gsub("NGermanyKielFjord","Germany, Kiel Fjord", smplloca )
+smplloca <- gsub("NGermanyMecklenburgerBuchtWismarBucht","Germany, Wismar Bight", smplloca )
+smplloca <- gsub("NJyllandLimfjord","Jutland, Limfjord", smplloca )
+#smplloca <- gsub("NJyllandLimfjordLogstoer","Jutland, Limfjord-Løgstør" , smplloca )
+smplloca <- gsub("NWGermanyNSeaHelgolandRds", "North Sea, Helgoland Roads", smplloca )
+smplloca <- gsub("NWGermanyWaddenSeaBussumHaupstr","Germany, Büsum", smplloca )
+smplloca <- gsub("SamsoeBallen","Samsøe, Ballen", smplloca )
+#smplloca <- gsub("SEDenmarkMecklenburgerBucht","", smplloca )
+smplloca <- gsub("SjaellandSkovshoved","Sealand, Skovshoved", smplloca )
 # only year
 smplye <- sapply(locations, "[[", 3)
 # year and month
@@ -273,7 +305,7 @@ df_nhpt01.ye  <- as.data.frame(new.hap.smplye)
 df_nhpt02.loc <- reshape2::dcast(df_nhpt01.loc, Var1 ~ smplloca, value.var="Freq")
 df_nhpt02.ye <- reshape2::dcast(df_nhpt01.ye, Var1 ~ smplye, value.var="Freq")
 
-
+#dev.off()
 #make a haplotype network
 pipNet <- pegas::haploNet(pipHaps)
 #plot the network
@@ -309,7 +341,7 @@ plot(pipNet, size = attr(pipNet,"freq"),
 #add a legend to the plot
 legend("topleft",colnames(new.hap.smplloc), 
        col=rainbow(ncol(new.hap.smplloc)), 
-       pch=19, ncol=1, cex=0.3)
+       pch=19, ncol=1, cex=0.6)
 
 #end plot area
 par(op)
@@ -341,7 +373,7 @@ plot(pipNet, size = attr(pipNet,"freq"),
 #add a legend to the plot
 legend("topleft",colnames(new.hap.smplye), 
        col=rainbow(ncol(new.hap.smplye)), 
-       pch=19, ncol=1, cex=0.3)
+       pch=19, ncol=1, cex=0.6)
 
 #end plot area
 par(op)
@@ -382,7 +414,7 @@ legend("bottomleft",colnames(new.hap.smplloc),
        #col=colfpl1,
        col=rainbow(ncol(new.hap.smplloc)), 
        pch=19, ncol=1, cex=0.5)
-title(main = "A",
+title(main = "a",
       cex.main = 1.4,   font.main= 2, col.main= "black",
       adj = 0.01, line = 0.1)
 #_______________________________________________________________________________
@@ -396,7 +428,7 @@ plot(pipNet, size = attr(pipNet,"freq"),
 legend("bottomleft",colnames(new.hap.smplye), 
        col=rainbow(ncol(new.hap.smplye)), 
        pch=19, ncol=1, cex=0.6)
-title(main = "B",
+title(main = "a",
       cex.main = 1.4,   font.main= 2, col.main= "black",
       adj = 0.01, line = 0.1)
 #_______________________________________________________________________________
@@ -725,6 +757,7 @@ locnm <- c("FynBogense","FynKerteminde","JyllandMariagerfjord",
 locabb <- c("FBo","FKe","JMa","GKi","GMe","JLi","JLo","GHe","GWa","SBa","DMe","SSk")
 df_abloc <- as.data.frame(cbind(locnm,locabb))
 
+
 #head(df_pw_wc_pip_2)
 #get the library 'pals' to be able to make use of colour gradients
 library("pals")
@@ -978,22 +1011,45 @@ pth_fl01 <- paste(wd00_wd01,"/",fl1,sep="")
 #read in a csv file with positions for sampling locations
 df_clo <- as.data.frame(read_delim(pth_fl01,delim = ";"))
 
+df_clo$locality4 <-  df_clo$locality
+#Modify location names
+df_clo$locality4 <- gsub("FynBogense","Funen, Bogense", df_clo$locality4 )
+df_clo$locality4 <- gsub("FynKerteminde","Funen, Kerteminde", df_clo$locality4 )
+df_clo$locality4 <- gsub("JyllandMariagerfjord","Jutland, Mariager Fjord", df_clo$locality4 )
+df_clo$locality4 <- gsub("NGermanyKielFjord","Germany, Kiel Fjord", df_clo$locality4 )
+df_clo$locality4 <- gsub("NGermanyMecklenburgerBuchtWismarBucht","Germany, Wismar Bight", df_clo$locality4 )
+df_clo$locality4 <- gsub("NJyllandLimfjord","Jutland, Limfjord", df_clo$locality4 )
+df_clo$locality4 <- gsub("NJyllandLimfjordLogstoer","Jutland, Limfjord" , df_clo$locality4 )
+df_clo$locality4 <- gsub("NWGermanyNSeaHelgolandRds", "North Sea, Helgoland Roads", df_clo$locality4 )
+df_clo$locality4 <- gsub("NWGermanyWaddenSeaBussumHaupstr","Germany, Büsum", df_clo$locality4 )
+df_clo$locality4 <- gsub("SamsoeBallen","Samsøe, Ballen", df_clo$locality4 )
+#df_clo$locality4 <- gsub("SEDenmarkMecklenburgerBucht","", df_clo$locality4 )
+df_clo$locality4 <- gsub("SjaellandSkovshoved","Sealand, Skovshoved", df_clo$locality4 )
+
+# df_clo
 #use biogeo dms2dd funciton to convert to decimal degrees
 df_clo$dec_lat <- biogeo::dms2dd(df_clo$lat_deg,
                    df_clo$lat_min,
                    df_clo$lat_sec,
                    df_clo$lat_sph)
-#use biogeo dms2dd funciton to convert to decimal degrees
+#use biogeo dms2dd function to convert to decimal degrees
 df_clo$dec_lon <- biogeo::dms2dd(df_clo$lon_deg,
                                  df_clo$lon_min,
                                  df_clo$lon_sec,
                                  df_clo$lon_sph)
-
+#exclude the location: 'SEDenmarkMecklenburgerBucht'
+# as it is the same as "NGermanyMecklenburgerBuchtWismarBucht", and only
+#one of these are needed
+# same for the location 'NJyllandLimfjordLogstoer' which is identical to NJyllandLimfjord
+df_clo <- df_clo[!df_clo$locality=="SEDenmarkMecklenburgerBucht",]
+df_clo <- df_clo[!df_clo$locality=="NJyllandLimfjordLogstoer",]
 #add a column with sampling locations to be able to 
 # match the localities
 df_hap_loc02$smplloca
 #match between data frames
-df_hap_loc02$dec_loc2 <- df_clo$locality2[match(df_hap_loc02$smplloca,df_clo$locality)]
+df_hap_loc02$dec_loc2 <- df_clo$locality2[match(df_hap_loc02$smplloca,df_clo$locality4)]
+
+#df_clo$locality
 
 # sum for duplicated values in row
 # this is to add up the multiple entries row for the same 
@@ -1007,13 +1063,13 @@ df_hap_loc02 <-   df_hap_loc03
 df_hap_loc02$dec_lat <- df_clo$dec_lat[match(df_hap_loc02$dec_loc2,df_clo$locality2)]
 df_hap_loc02$dec_lon <- df_clo$dec_lon[match(df_hap_loc02$dec_loc2,df_clo$locality2)]
 
-df_hap_loc02$dec_loc2
+#df_hap_loc02$dec_loc2
 # limit the data frame to remove any rows that have NAs
 df_hap_loc03 <-  df_hap_loc02[complete.cases(df_hap_loc02), ] 
 #make a c
 df_hap_loc03 <- df_hap_loc02
 #modify the colnames
-colnames(df_hap_loc03) <- (gsub("Freq\\.","",colnames(df_hap_loc02)))
+colnames(df_hap_loc03) <- c(gsub("Freq\\.","",colnames(df_hap_loc02)))
 
 
 
@@ -1040,7 +1096,15 @@ cl03 <- pals::inferno(length(unique(df_hap_loc03[,c(2:enc)])))
 # Using map_data()
 # # Get a map, use a high number for 'scale' for a coarse resolution
 # use a low number for scale for a high resolution
-world <- rnaturalearth::ne_countries(scale = 10, returnclass = "sf")
+# if the map 'world' does not exist, then download it
+if (!exists("world"))
+{  
+  #world <- ne_countries(scale = 10, returnclass = "sf")
+  world <- rnaturalearth::ne_countries(scale = 10, returnclass = "sf")
+}
+
+# #____
+# world <- rnaturalearth::ne_countries(scale = 10, returnclass = "sf")
 
 df_hap_loc03$rws2 <- df_hap_loc03$rws
 #replace NAs with zeros
@@ -1083,9 +1147,12 @@ ggplot2::coord_sf(xlim = c(-12, 16),
 p01 <- p01 + xlab("Longitude") + ylab("Latitude")
 #dev.off()
 # change label for legend
-p01 <- p01 + labs(fill='haplotype')
+p01 <- p01 + labs(fill='Haplotype')
 #https://www.statology.org/ggplot-background-color/
-p01 <- p01 + theme_minimal() #no background annotations
+#p01 <- p01 + theme_minimal() #no background annotations
+# #https://www.statology.org/ggplot-background-color/
+p01 <- p01 + theme(panel.background = element_rect(fill = 'white', color = 'black'),
+                   panel.grid.major = element_line(color = 'azure3')) #, linetype = 'dotted'))#,
 # see the plot
 p01
 #make a viridis colour range
@@ -1125,13 +1192,19 @@ geom_scatterpie_legend(df_hap_loc04$rws*0.04, x=14, y=57) +
 ggplot2::coord_sf(xlim = c(6, 15.4),
                   ylim = c(53.8, 58.0),
                   expand = FALSE)
+#https://www.statology.org/ggplot-background-color/
+#p02 <- p02 + theme_minimal() #no background annotations
+# #https://www.statology.org/ggplot-background-color/
+p02 <- p02 + theme(panel.background = element_rect(fill = 'white', color = 'black'),
+                   panel.grid.major = element_line(color = 'azure3')) #, linetype = 'dotted'))#,
+
 # see the plot
 #p02
 #dev.off()
 #change labels on axis
 p02 <- p02 + xlab("Longitude") + ylab("Latitude")
 #change labels on legend
-p02 <- p02 + labs(fill='haplotype')
+p02 <- p02 + labs(fill='Haplotype')
 p02
 # Add titles
 # see this example: https://www.datanovia.com/en/blog/ggplot-title-subtitle-and-caption/
@@ -1204,6 +1277,7 @@ if (!exists("denm_map"))
 
 #df_clo$locality
 jitlvl <- 0.24
+jitlvl <- 0.024
 dev.off()
 #http://www.cookbook-r.com/Graphs/Colors_(ggplot2)/
 # The palette with black:
@@ -1216,6 +1290,21 @@ colfunc <- colorRampPalette(cbbPalette2)
 cl <- cbbPalette
 # subset to exclude NCBI sequences
 df_clo2 <- df_clo[!grepl("NCBI",df_clo$locality),]
+df_clo2$locality3 <- df_clo2$locality
+#Modify location names
+df_clo2$locality <- gsub("FynBogense","Funen, Bogense", df_clo2$locality )
+df_clo2$locality <- gsub("FynKerteminde","Funen, Kerteminde", df_clo2$locality )
+df_clo2$locality <- gsub("JyllandMariagerfjord","Jutland, Mariager Fjord", df_clo2$locality )
+df_clo2$locality <- gsub("NGermanyKielFjord","Germany, Kiel Fjord", df_clo2$locality )
+df_clo2$locality <- gsub("NGermanyMecklenburgerBuchtWismarBucht","Germany, Wismar Bight", df_clo2$locality )
+df_clo2$locality <- gsub("NJyllandLimfjord","Jutland, Limfjord", df_clo2$locality )
+#df_clo2$locality <- gsub("NJyllandLimfjordLogstoer","Jutland, Limfjord-Løgstør" , df_clo2$locality )
+df_clo2$locality <- gsub("NWGermanyNSeaHelgolandRds", "North Sea, Helgoland Roads", df_clo2$locality )
+df_clo2$locality <- gsub("NWGermanyWaddenSeaBussumHaupstr","Germany, Büsum", df_clo2$locality )
+df_clo2$locality <- gsub("SamsoeBallen","Samsøe, Ballen", df_clo2$locality )
+#df_clo2$locality <- gsub("SEDenmarkMecklenburgerBucht","", df_clo2$locality )
+df_clo2$locality <- gsub("SjaellandSkovshoved","Sealand, Skovshoved", df_clo2$locality )
+
 #identify unique localities
 nloc <- length(unique(df_clo2$locality))
 #https://stackoverflow.com/questions/13353213/gradient-of-n-colors-ranging-from-color-1-and-color-2
@@ -1250,7 +1339,16 @@ p04 <-
   ggplot2::coord_sf(xlim = c(4, 16),
                     ylim = c(53.4, 58.4),
                     expand = FALSE)
+# change label for legend - Notice that you need to change for all 3 variables
+# you called 'aes' in 'geom_jitter'
+p04 <- p04 + labs(fill='Location')
+p04 <- p04 + labs(color='Location')
+p04 <- p04 + labs(shape='Location')
 p04 <- p04 + xlab("Longitude") + ylab("Latitude")
+# #https://www.statology.org/ggplot-background-color/
+p04 <- p04 + theme(panel.background = element_rect(fill = 'white', color = 'black'),
+                     panel.grid.major = element_line(color = 'azure3')) #, linetype = 'dotted'))#,
+#panel.grid.minor = element_line(color = 'green', size = 2))
 # see the plot
 p04
 
@@ -1376,8 +1474,6 @@ p06 <- p06 + labs(fill='haplotype')
 p06 <- p06 + theme(panel.background = element_rect(fill = 'white', color = 'white')) #,
 # panel.grid.major = element_line(color = 'red', linetype = 'dotted'),
 # panel.grid.minor = element_line(color = 'green', size = 2))
-# 
-
 p06
 # Add titles
 # see this example: https://www.datanovia.com/en/blog/ggplot-title-subtitle-and-caption/
@@ -1387,8 +1483,6 @@ p05t <- p05 + labs(title = "a")#,
 # p06t <- p06 + labs(title = "eDNA samples attempted",
 #                    subtitle = "at least approv controls and 1 or 2 pos repl")#,
 p06t <- p06 + labs(title = "b")#,
-
-
 # ------------- plot Combined figure -------------
 library(patchwork)
 # set a variable to TRUE to determine whether to save figures
@@ -1477,7 +1571,10 @@ outflnm <- paste(wd00_wd05,"/",flnm,sep="")
 pdf(outflnm,
     width=(1*1.0*8.2677),height=(4*1.0*2.9232))
 #define lpot arrangement
-tbt.par <- par(mfrow=c(2, 1))
+tbt.par <- par(mfrow=c(2, 1),
+               oma=c(0,0,0,0), #define outer margins
+               mai=c(0,0,0,0), #define inner margins
+               mar=c(0,0,2,0))
 #_______________________________________________________________________________
 #make a haplotype network
 pipNet <- pegas::haploNet(pipHaps)
@@ -1485,34 +1582,36 @@ pipNet <- pegas::haploNet(pipHaps)
 pipNet <- pegas::haploNet(pipHaps)
 #plot the network
 plot(pipNet, size = attr(pipNet,"freq"), 
-     scale.ratio = 0.6, cex = 0.1, 
+     scale.ratio = 0.6, 
+     cex = 0.1, # set size of roman numerals on circles for haplotype ID
      bg= colfh, 
      pie = new.hap.smplloc, 
-     show.mutation = 0, threshold = 0, labels(FALSE))
+     show.mutation = 2, threshold = 0, labels(T))
 #add a legend to the plot
 legend("bottomleft",colnames(new.hap.smplloc), 
        col=colfh,
        #col=rainbow(ncol(new.hap.smplloc)), 
-       pch=19, ncol=1, cex=0.5)
+       pch=19, ncol=1, cex=0.8)
 title(main = "a",
-      cex.main = 1.4,   font.main= 2, col.main= "black",
+      cex.main = 1.8,   font.main= 2, col.main= "black",
       adj = 0.01, line = 0.1)
 #_______________________________________________________________________________
 #make a haplotype network
 pipNet <- pegas::haploNet(pipHaps)
 #plot the network
 plot(pipNet, size = attr(pipNet,"freq"), 
-     scale.ratio = 0.6, cex = 0.1, 
+     scale.ratio = 0.6, 
+     cex = 0.1, # set size of roman numerals on circles for haplotype ID
      bg=clrf6,
      pie = new.hap.smplye, 
-     show.mutation = 0, threshold = 0, labels(FALSE))
+     show.mutation = 2, threshold = 0, labels(TRUE))
 #add a legend to the plot
 legend("bottomleft",colnames(new.hap.smplye), 
        #col=rainbow(ncol(new.hap.smplye)), 
        col=clrf6,
-       pch=19, ncol=1, cex=0.6)
+       pch=19, ncol=1, cex=0.8)
 title(main = "b",
-      cex.main = 1.4,   font.main= 2, col.main= "black",
+      cex.main = 1.8,   font.main= 2, col.main= "black",
       adj = 0.01, line = 0.1)
 #_______________________________________________________________________________
 par(tbt.par)
@@ -1520,6 +1619,7 @@ par(tbt.par)
 dev.off()  
 #reset this parameter
 par(mfrow = c(1, 1)) 
+
 #_______________________________________________________________________________
 #_______________________________________________________________________________
 #_______________________________________________________________________________
@@ -1676,15 +1776,15 @@ df_hap_loc02$dec_loc3 <- df_clo$locality[match(df_hap_loc02$smplloca,df_clo2$loc
 library(plyr)
 df_hap_loc03 <- plyr::ddply(df_hap_loc02,"smplloca",numcolwise(sum))
 #match between data frames
-df_hap_loc03$dec_lat <- df_clo2$dec_lat[match(df_hap_loc03$smplloca,df_clo2$locality)]
-df_hap_loc03$dec_lon <- df_clo2$dec_lon[match(df_hap_loc03$smplloca,df_clo2$locality)]
+df_hap_loc03$dec_lat <- df_clo2$dec_lat[match(df_hap_loc03$smplloca,df_clo2$locality4)]
+df_hap_loc03$dec_lon <- df_clo2$dec_lon[match(df_hap_loc03$smplloca,df_clo2$locality4)]
 # add jitter to points
 df_hap_loc03$dec_lat <- jitter(df_hap_loc03$dec_lat, factor = 20.12, amount = NULL)
 df_hap_loc03$dec_lon <- jitter(df_hap_loc03$dec_lon, factor = 20.12, amount = NULL)
 # limit the data frame to remove any rows that have NAs
 df_hap_loc03 <-  df_hap_loc03[complete.cases(df_hap_loc03), ] 
 #modify the colnames
-colnames(df_hap_loc03) <- (gsub("Freq\\.","",colnames(df_hap_loc03)))
+colnames(df_hap_loc03) <- c(gsub("Freq\\.","",colnames(df_hap_loc03)))
 # https://towardsdatascience.com/using-ggplot-to-plot-pie-charts-on-a-geographical-map-bb54d22d6e13
 #count the number of columns, and subtract 2
 enc1 <- ncol(df_hap_loc03)-2
@@ -1706,7 +1806,12 @@ cl03 <- pals::viridis(length(unique(df_hap_loc03[,c(2:enc)])))
 # Using map_data()
 # # Get a map, use a high number for 'scale' for a coarse resolution
 # use a low number for scale for a high resolution
-world <- rnaturalearth::ne_countries(scale = 10, returnclass = "sf")
+if (!exists("world"))
+{  
+  #world <- ne_countries(scale = 10, returnclass = "sf")
+  world <- rnaturalearth::ne_countries(scale = 10, returnclass = "sf")
+}
+#
 df_hap_loc03$rws2 <- df_hap_loc03$rws
 #replace NAs with zeros
 df_hap_loc04 <- df_hap_loc03[!is.na(df_hap_loc03$rws),]
@@ -1747,9 +1852,8 @@ p07 <- p07 + labs(fill='haplotype')
 
 # #https://www.statology.org/ggplot-background-color/
 p07 <- p07 + theme(panel.background = element_rect(fill = 'white', color = 'black'),
-panel.grid.major = element_line(color = 'black', lwd=0.1)) #, linetype = 'dotted'))#,
+panel.grid.major = element_line(color = 'grey80')) #, linetype = 'dotted'))#,
 #panel.grid.minor = element_line(color = 'green', size = 2))
-
 #p07 <- p07 + theme_bw() #white background and grey gridlines
 # see the plot
 p07
@@ -1790,9 +1894,6 @@ if(bSaveFigures==T){
 # Make a second map with pies for haplotypes -end
 # Add jitter to the sample localities to see all sampling sites
 #______________________________________________________________________________
-
-
-
 library(ggplot2)
 library(sf)
 library(rnaturalearth)
@@ -1812,49 +1913,6 @@ scbpl <- safe_colorblind_palette
 cl2 <- colorRampPalette(c(scbpl))( nSco) 
 cl2 
 
-
-
-#https://www.r-bloggers.com/2019/04/zooming-in-on-maps-with-sf-and-ggplot2/
-worldmap <- ne_countries(scale = 10, type = 'map_units',
-                         returnclass = 'sf')
-#limit to Europe
-europe <- worldmap[worldmap$continent == 'Europe',]
-#begin plot
-europe <- worldmap[worldmap$continent == 'Europe',]
-p02 <- ggplot() + geom_sf(data = europe) + theme_bw() +
-  #https://ggplot2.tidyverse.org/reference/aes_colour_fill_alpha.html
-  
-  #define limits of the plot
-  ggplot2::coord_sf(xlim = c(6, 14),
-                    ylim = c(52.8, 58.0),
-                    expand = FALSE)
-
-
-p02 <- p02 + scatterpie::geom_scatterpie(aes(x=dec_lon, y=dec_lat, 
-                                             #group = country,
-                                             #pie_scale = 120),
-                                             r = rws*0.10), 
-                                         data = df_hap_loc04, 
-                                         #aspect.ratio=10/16,
-                                         cols = colnames(df_hap_loc04[,c(2:enc)])) +
-  #theme(aspect.ratio=10/16) +
-  scale_color_manual(values=c(rep("black",
-                                  length(unique(df_hap_loc04[,c(2:enc)]))))) +
-  scale_fill_manual(values=alpha(
-    c(cl2),
-    c(0.7)
-  ))+
-  #
-  #coord_equal() +
-  #https://stackoverflow.com/questions/54078772/ggplot-scale-color-manual-with-breaks-does-not-match-expected-order
-  geom_scatterpie_legend(df_hap_loc04$rws*0.040, x=12, y=57)
-
-# change labels on axis
-p02 <- p02 + xlab("Longitude") + ylab("Latitude")
-
-
-p02 <- p02 + theme(legend.key.size = unit(0.3, 'cm'))
-p02
 
 #write.table()
 #head(df_r02,4)

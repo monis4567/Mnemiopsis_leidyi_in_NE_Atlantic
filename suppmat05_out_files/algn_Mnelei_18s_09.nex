@@ -1,5 +1,5 @@
 #NEXUS
-[Data written by write.nexus.data.R, Mon Mar  7 14:12:03 2022]
+[Data written by write.nexus.data.R, Thu Mar 10 13:48:41 2022]
 BEGIN DATA;
   DIMENSIONS NTAX=89 NCHAR=59;
   FORMAT DATATYPE=DNA MISSING=? GAP=- INTERLEAVE=NO;
@@ -41,7 +41,7 @@ BEGIN DATA;
     Mnelei069_SjaellandSkovshoved_2017_2017Sep                        ccgtcgttcttccgggggagtccggtacgctcgccgcctataagg-cttcccgctagaa
     Mnelei155_NGermanyMecklenburgerBuchtWismarBucht_2018_2018Aug      ccgtcgttcttccgggggagtccggtacgctcgccgcctataaggccttcccgctagaa
     Mnelei162_NWGermanyNSeaHelgolandRds_2018_2018Aug                  ccgtcgttcttccgggggagtccggtacgctcgccgcctataaggccttcccgctagaa
-    Mnelei099_SEDenmarkMecklenburgerBucht_2017_2017Jul                ccgtcgttcttccgggggagtccggtacgctcgccgcctataaggccttcccgctagaa
+    Mnelei099_NGermanyMecklenburgerBuchtWismarBucht_2017_2017Jul      ccgtcgttcttccgggggagtccggtacgctcgccgcctataaggccttcccgctagaa
     Mnelei152_NGermanyMecklenburgerBuchtWismarBucht_2018_2018Aug      ccgtcgttcttccgggggagtccggtacgctcgccgcctataaggccttcccgctagaa
     Mnelei075_JyllandMariagerfjord_2017_2017Sep                       ccgtcgttcttccgggggagtccggtacgctcgccgcctataaggccttcccgctagaa
     Mnelei079_FynKerteminde_2017_2017Aug                              ccgtcgttcttccgggggagtccggtacgctcgccgcctataaggccttcccgctagaa
@@ -59,15 +59,15 @@ BEGIN DATA;
     Mnelei129_SamsoeBallen_2018_2018Aug                               ccgtcgttcttccgggggagtccggtacgctcgccgcctataagg-cttcccgctagaa
     Mnelei126_SamsoeBallen_2018_2018Aug                               ccgtcgttcttccgggggagtccggtacgctcgccgcctataagg-cttcccgctagaa
     Mnelei130_SamsoeBallen_2018_2018Aug                               ccgtcgttcttccgggggagtccggtacgctcgccgcctataaggccttcccgctagaa
-    Mnelei134_NJyllandLimfjordLogstoer_2018_2018Jul                   ccgtcgttcttccgggggagtccggtacgctcgccgcctataaggccttcccgctagaa
+    Mnelei134_NJyllandLimfjord_2018_2018Jul                           ccgtcgttcttccgggggagtccggtacgctcgccgcctataaggccttcccgctagaa
     Mnelei106_NGermanyKielFjord_2018_2018Feb                          ccgtcgttcttccgggggagtccggtacgctcgccgcctataaggccttcccgctagaa
-    Mnelei136_NJyllandLimfjordLogstoer_2018_2018Jul                   ccgtcgttcttccgggggagtccggtacgctcgccgccta-aagg-cttcccgctagaa
+    Mnelei136_NJyllandLimfjord_2018_2018Jul                           ccgtcgttcttccgggggagtccggtacgctcgccgccta-aagg-cttcccgctagaa
     Mnelei163_NWGermanyNSeaHelgolandRds_2018_2018Aug                  ccgtcgttcttccgggggagtccggtacgctcgccgcctataaggccttcccgctagaa
     Mnelei104_FynKerteminde_2017_2017Oct                              ccgtcgttcttccgggggagtccggtacgctcgccgcctataaggccttcccgctagaa
     Mnelei158_NWGermanyNSeaHelgolandRds_2018_2018Aug                  ccgtcgttcttccgggggagtccggtacgctcgccgcctataaggccttcccgctagaa
     Mnelei105_NGermanyKielFjord_2018_2018Feb                          ccgtcgttcttccgggggagtccggtacgctcgccgcct-a-agg-cttcccgctagaa
     Mnelei131_SamsoeBallen_2018_2018Aug                               ccgtcgttcttccgggggagtccggtacgctcgccgcctataaggccttcccgctagaa
-    Mnelei132_NJyllandLimfjordLogstoer_2018_2018Jul                   ccgtcgttcttccgggggagtccggtacgctcgccgcctataaggccttcccgctagaa
+    Mnelei132_NJyllandLimfjord_2018_2018Jul                           ccgtcgttcttccgggggagtccggtacgctcgccgcctataaggccttcccgctagaa
     Mnelei103_FynKerteminde_2017_2017Oct                              ccgtcgttcttccgggggagtccggtacgctcgccgcctataaggccttcccgctagaa
     Mnelei164_NWGermanyNSeaHelgolandRds_2018_2018Aug                  ccgtcgttcttccgggggagtccggtacgctcgccgcctataaggccttcccgctagaa
     Mnelei127_SamsoeBallen_2018_2018Aug                               ccgtcgttcttccgggggagtccggtacgctcgccgcctataaggccttcccgctagaa
@@ -75,7 +75,7 @@ BEGIN DATA;
     Mnelei154_NGermanyMecklenburgerBuchtWismarBucht_2018_2018Aug      ccgtcgttcttccgggggagtccggtacgctcgccgcctataaggccttcccgctagaa
     Mnelei102_FynKerteminde_2017_2017Oct                              ccgtcgttcttccgggggagtccggtacgctcgccgcctataaggccttcccgctagaa
     Mnelei151_NGermanyMecklenburgerBuchtWismarBucht_2018_2018Aug      ccgtcgttcttccgggggagtccggtacgctcgccgcctataaggccttcccgctagaa
-    Mnelei135_NJyllandLimfjordLogstoer_2018_2018Jul                   ccgtcgttcttccgggggagtccggtacgctcgccgcctataagg-cttcccgctagaa
+    Mnelei135_NJyllandLimfjord_2018_2018Jul                           ccgtcgttcttccgggggagtccggtacgctcgccgcctataagg-cttcccgctagaa
     Mnelei051_FynKerteminde_2017_2017May                              tagctagaacgtaaaatctccttgattaatccattgaacccggttttcctttatctgtt
     Mnelei052_FynKerteminde_2017_2017May                              tagctagaacgtaaaatccctttgattaatccattgaacccggttttcctttatctgtt
     Mnelei053_FynKerteminde_2017_2017May                              tagctagaacgtaaaatccctttgattaatccattgaacccggttttcctttatctgtt
