@@ -452,7 +452,52 @@ tre_pipr <- ape::ladderize(tre_pip, right = TRUE)
 #https://joey711.github.io/phyloseq/plot_tree-examples.html
 plot(tre_pipr, cex=0.4)
 
+# Try and plot a neighbour join tree
+#_______________________________________________________________________________
+# see this website for inspiration
+# https://aschuerch.github.io/posts/2017-04-24-blog-post-1
+#https://bioconductor.org/packages/release/bioc/html/ggtree.html
+if (!require("BiocManager", quietly = TRUE))
+  if(!require(BiocManager)){
+    install.packages("BiocManager")
+    library(BiocManager)
+  }
+library(BiocManager)
+if(!require(ggtree)){
+  BiocManager::install("ggtree")
+  library(ggtree)
+}
+library(ggtree)
+library("ggplot2")
+library("ggtree")
 
+p <- ggtree(tre_pipr) + 
+  xlim(0, 0.025) + # to allow more space for labels
+  geom_treescale() # adds the scale
+
+df_tiplb01 <- as.data.frame(cbind(c(tre_pipr$tip.label)))
+df_tiplb01$cat <- NA
+colnames(df_tiplb01) <- c("seqNm", "cat")
+df_tiplb01$cat[grepl("NCBI",df_tiplb01$seqNm)] <- "NCBI"
+df_tiplb01$cat[grepl("Germany",df_tiplb01$seqNm)] <- "Germany"
+df_tiplb01$cat[grepl("Jylland",df_tiplb01$seqNm)] <- "Jylland"
+df_tiplb01$cat[grepl("_Fyn",df_tiplb01$seqNm)] <- "Fyn"
+df_tiplb01$cat[grepl("SamsoeBallen_",df_tiplb01$seqNm)] <- "Samsoe"
+
+tipcategories <- df_tiplb01
+
+dd = as.data.frame(tipcategories)
+
+p %<+% dd + 
+  geom_tiplab(aes(fill = factor(cat)),
+              color = "black", # color for label font
+              geom = "label",  # labels not text
+              label.padding = unit(0.15, "lines"), # amount of padding around the labels
+              label.size = 0) + # size of label border
+  theme(legend.position = c(0.5,0.2), 
+        legend.title = element_blank(), # no title
+        legend.key = element_blank()) # no keys
+#_______________________________________________________________________________
 #define variable
 inp.f.fnm <- "Mnelei"
 flnm <- c(paste("Fig03_NJ_tree_",inp.f.fnm,".pdf",  sep = ""))
