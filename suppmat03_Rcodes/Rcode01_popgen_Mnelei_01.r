@@ -503,15 +503,15 @@ inp.f.fnm <- "Mnelei"
 flnm <- c(paste("Fig03_NJ_tree_",inp.f.fnm,".pdf",  sep = ""))
 #paste output directory and filename together in a string
 outflnm <- paste(wd00_wd05,"/",flnm,sep="")
-# Exporting PFD files via postscript()           
-pdf(outflnm,
-    width=(1*1.0*8.2677),height=(4*1.0*2.9232))
-#plot the tree
-plot(tre_pipr, cex=0.4)
-#end plot area
-par(op)
-# end svg file to save as
-dev.off()  
+# # Exporting PFD files via postscript()           
+# pdf(outflnm,
+#     width=(1*1.0*8.2677),height=(4*1.0*2.9232))
+# #plot the tree
+# plot(tre_pipr, cex=0.4)
+# #end plot area
+# par(op)
+# # end svg file to save as
+# dev.off()  
 
 #Make the dnabin a genind object
 gei_pip <- adegenet::DNAbin2genind(pip)
@@ -1974,5 +1974,211 @@ cl2
 
 #__________________
 #
+mtr_dd_pip <- ape::dist.dna(pip)
+tre_pip <- ape::nj(mtr_dd_pip)
+#sort the branches in the tree
+tre_pipr <- ape::ladderize(tre_pip, right = TRUE)
 
+#https://joey711.github.io/phyloseq/plot_tree-examples.html
+plot(tre_pipr, cex=0.4)
+# Try and plot a neighbour join tree
+#
+#https://joey711.github.io/phyloseq/plot_tree-examples.html
+#_______________________________________________________________________________
+# see this website for inspiration
+# https://aschuerch.github.io/posts/2017-04-24-blog-post-1
+#https://bioconductor.org/packages/release/bioc/html/ggtree.html
+if (!require("BiocManager", quietly = TRUE))
+  if(!require(BiocManager)){
+    install.packages("BiocManager")
+    library(BiocManager)
+  }
+library(BiocManager)
+if(!require(ggtree)){
+  BiocManager::install("ggtree")
+  library(ggtree)
+}
+library(ggtree)
+library("ggplot2")
+library("ggtree")
+
+p <- ggtree(tre_pipr,
+            # force the tree to be ladderized right
+            right = TRUE,
+            branch.length=0.000005,
+            #yscale_mapping=0.1,
+            # ignore negative branch lengths
+            options(ignore.negative.edge=TRUE)) + 
+  #xlim(0, 0.12) + # to allow more space for labels
+  #ylim(70,0) +
+  
+  geom_treescale() # adds the scale
+
+df_tiplb01 <- as.data.frame(cbind(c(tre_pipr$tip.label)))
+df_tiplb01$cat <- NA
+colnames(df_tiplb01) <- c("seqNm", "cat")
+df_tiplb01$cat[grepl("NCBI",df_tiplb01$seqNm)] <- "NCBI"
+df_tiplb01$cat[grepl("Germany",df_tiplb01$seqNm)] <- "Germany"
+df_tiplb01$cat[grepl("Jylland",df_tiplb01$seqNm)] <- "Jylland"
+df_tiplb01$cat[grepl("_Fyn",df_tiplb01$seqNm)] <- "Fyn"
+df_tiplb01$cat[grepl("Samsoe",df_tiplb01$seqNm)] <- "Samsoe"
+df_tiplb01$cat[grepl("Sjaelland",df_tiplb01$seqNm)] <- "Sjaelland"
+tipcategories <- df_tiplb01
+
+#http://www.cookbook-r.com/Graphs/Colors_(ggplot2)/
+# The palette with black:
+cbbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73",
+                "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+cbbPalette2 <- c("black","purple","blue","green","yellowgreen",
+                 "yellow","white")
+colfunc <- colorRampPalette(cbbPalette2)
+
+cl <- cbbPalette
+# subset to exclude NCBI sequences
+df_clo2 <- df_clo[!grepl("NCBI",df_clo$locality),]
+df_clo2$locality3 <- df_clo2$locality
+#Modify location names
+df_clo2$locality <- gsub("FynBogense","Funen, Bogense", df_clo2$locality )
+df_clo2$locality <- gsub("FynKerteminde","Funen, Kerteminde", df_clo2$locality )
+df_clo2$locality <- gsub("JyllandMariagerfjord","Jutland, Mariager Fjord", df_clo2$locality )
+df_clo2$locality <- gsub("NGermanyKielFjord","Germany, Kiel Fjord", df_clo2$locality )
+df_clo2$locality <- gsub("NGermanyMecklenburgerBuchtWismarBucht","Germany, Wismar Bight", df_clo2$locality )
+df_clo2$locality <- gsub("NJyllandLimfjord","Jutland, Limfjord", df_clo2$locality )
+#df_clo2$locality <- gsub("NJyllandLimfjordLogstoer","Jutland, Limfjord-Løgstør" , df_clo2$locality )
+df_clo2$locality <- gsub("NWGermanyNSeaHelgolandRds", "North Sea, Helgoland Roads", df_clo2$locality )
+df_clo2$locality <- gsub("NWGermanyWaddenSeaBussumHaupstr","Germany, Büsum", df_clo2$locality )
+df_clo2$locality <- gsub("SamsoeBallen","Samsøe, Ballen", df_clo2$locality )
+#df_clo2$locality <- gsub("SEDenmarkMecklenburgerBucht","", df_clo2$locality )
+df_clo2$locality <- gsub("SjaellandSkovshoved","Sealand, Skovshoved", df_clo2$locality )
+
+#identify unique localities
+nloc <- length(unique(df_clo2$locality))
+#https://stackoverflow.com/questions/13353213/gradient-of-n-colors-ranging-from-color-1-and-color-2
+#
+cl <- colfunc(nloc)
+
+dfcol01 <- as.data.frame(cbind(cl,unique(df_clo2$locality)))
+colnames(dfcol01) <- c("col","loc")
+dd = as.data.frame(tipcategories)
+#substitute to get second part of location name
+loc2 <- gsub("(.*), (.*)","\\2",dfcol01$loc)
+#substitute 
+loc2 <- gsub(",","",loc2)
+loc2 <- gsub(" ","",loc2)
+loc2 <- gsub("Roads","Rds",loc2)
+loc2 <- gsub("WismarBight","WismarBucht",loc2)
+loc2 <- gsub("MariagerFjord","Mariagerfjord",loc2)
+loc2 <- gsub("Büsum","Bussum",loc2)
+# make a new column
+dd$cat2 <- NA
+dd$loc2 <- NA
+#count the number of rows
+ncol2 <- nrow(dfcol01)
+#for element in number rows, match the location, and assign the hex color
+# to the new column
+for (e in seq(1:ncol2)){
+  dd$col2[grepl(loc2[e],dd$seqNm)] <- dfcol01$col[e]
+  dd$loc2[grepl(loc2[e],dd$seqNm)] <- dfcol01$loc[e]
+}
+#get unique NCBI sample sets to assign them colors
+unqsmplnm <- unique(gsub("(.*)_(.*)_(.*)_(.*)","\\2",dd$seqNm))
+NCBIsmpl <- unqsmplnm[grepl("NCBI",unqsmplnm)]
+# count the number of elements
+noNCBIsmpl <- length(NCBIsmpl)
+# make a color range
+cbbPalette3 <- c("brown4","brown3","brown2")
+cbbPalette3 <- c("azure4","azure3","azure2")
+cbbPalette3 <- c("cadetblue4","cadetblue3","cadetblue2")
+cbbPalette3 <- cbbPalette1
+colfunc2 <- colorRampPalette(cbbPalette3)
+#https://stackoverflow.com/questions/13353213/gradient-of-n-colors-ranging-from-color-1-and-color-2
+#
+clNBCI <- colfunc2(noNCBIsmpl)
+dfNCBIcol <- as.data.frame(cbind(NCBIsmpl,clNBCI))
+#count the number of rows
+ncol3 <- nrow(dfNCBIcol)
+#for element in number rows, match the location, and assign the hex color
+# to the new column
+for (e in seq(1:ncol3)){
+  dd$col2[grepl(dfNCBIcol$NCBIsmpl[e],dd$seqNm)] <- dfNCBIcol$clNBCI[e]
+  dd$loc2[grepl(dfNCBIcol$NCBIsmpl[e],dd$seqNm)] <- dfNCBIcol$NCBIsmpl[e]
+}
+#subset dataframe to only comprise column 4 and 5
+dd2 <- dd[,c(4,5)]
+#find unique rwos in data frame
+dd3 <- dd2 %>% group_by_all %>% count
+#retain only column 1 and 2
+dd2 <- dd3[,c(1,2)]
+#transpose the dataframe and make it a dataframe
+dd2 <- as.data.frame(t(dd2))
+# change the column names in the transposed data frame
+colnames(dd2) <- dd2[1,]
+# get the data frame excluding the first row
+dd2 <- dd2[-1,]
+
+#Begin plotting the tree
+p01 <- p %<+% dd + 
+  geom_tiplab(aes(fill = factor(loc2), 
+                  color=factor(loc2)
+  ),
+  #color = "black", # color for label font
+  geom = "label",  # labels not text
+  #hjust=0.4,
+  #align=T,
+  offset=0.002,
+  size=1.8,
+  label.padding = unit(0.09, "lines"), # amount of padding around the labels
+  label.size = 0) #+ # size of label border
+  #geom_text(aes(label=cat,size=2)) +
+  # theme(legend.position = c(0.5,0.6), 
+  #       legend.title = element_blank(), # no title
+  #       legend.key = element_blank()) # no keys
+# get number of categories
+nct <- length(unique(factor(dd$cat)))
+#
+cbbPalette2 <- c("black","purple","blue","green","yellowgreen",
+                 "yellow","white")
+colfunc <- colorRampPalette(cbbPalette2)
+#https://stackoverflow.com/questions/13353213/gradient-of-n-colors-ranging-from-color-1-and-color-2
+#
+cl <- colfunc(nct)
+# apply 
+# Use transposed data frame with unique colors
+
+
+dd4 <- dd2
+dd4[1,] <- "black"
+dd4[][grepl("Bogense",colnames(dd4))] <- "white"
+dd4[][grepl("Kerteminde",colnames(dd4))] <- "white"
+dd4[][grepl("Mariager",colnames(dd4))] <- "white"
+dd4[][grepl("Kiel Fjord",colnames(dd4))] <- "white"
+
+p01 <- p01 + scale_colour_manual(values=c("black",rep("white",2),"black","white",rep("black",9)))
+#p01 <- p01 + scale_label_manual(name = "col2", values = dd4)  
+#
+p01 <- p01 + scale_fill_manual(name = "col2", values = alpha(c(dd2),c(0.7) ))  
+
+# p01 <- p01 + labs(color= NULL)
+# p01 <- p01 + labs(fill='location')
+p01 <- p01 + theme(legend.position = "none")
+
+#
+p01
+#dev.off()
+#
+#
+#make filename to save plot to
+figname01 <- paste0("Fig03_v02_NJtree_",inpf01,".png")
+
+figname02 <- paste(wd00_wd05,"/",figname01,sep="")
+if(bSaveFigures==T){
+  ggsave(p01,file=figname02,width=210,height=297,
+         units="mm",dpi=300)
+}
+
+#
+#
+#
+#
+#
 #
