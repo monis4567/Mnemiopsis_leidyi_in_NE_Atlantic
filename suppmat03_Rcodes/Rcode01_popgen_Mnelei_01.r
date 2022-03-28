@@ -2011,7 +2011,7 @@ p <- ggtree(tre_pipr,
             options(ignore.negative.edge=TRUE)) + 
   #xlim(0, 0.12) + # to allow more space for labels
   #ylim(70,0) +
-  
+  theme(aspect.ratio=6/3) +
   geom_treescale() # adds the scale
 
 df_tiplb01 <- as.data.frame(cbind(c(tre_pipr$tip.label)))
@@ -2161,7 +2161,7 @@ p01 <- p01 + scale_fill_manual(name = "col2", values = alpha(c(dd2),c(0.7) ))
 # p01 <- p01 + labs(color= NULL)
 # p01 <- p01 + labs(fill='location')
 p01 <- p01 + theme(legend.position = "none")
-
+#p01 <- p01 + coord_fixed(ratio=0.06)
 #
 p01
 #dev.off()
@@ -2177,6 +2177,48 @@ if(bSaveFigures==T){
 }
 
 #
+
+#
+cbbPalette2 <- c("black","purple","blue","green","yellowgreen",
+                 "yellow","white")
+colfunc <- colorRampPalette(cbbPalette2)
+#identify unique localities
+nloc <- length(unique(df_clo2$locality))
+#https://stackoverflow.com/questions/13353213/gradient-of-n-colors-ranging-from-color-1-and-color-2
+#
+cl <- colfunc(nloc)
+# also see : https://github.com/tidyverse/ggplot2/issues/2037
+p04 <- 
+  ggplot(data = denm_map) +
+  #ggplot(st_transform(norw_map, 9122)) +
+  geom_sf(color = "black", fill = "azure3") +
+  theme(aspect.ratio=3/7) +
+  scatterpie::geom_scatterpie(aes(x=dec_lon, y=dec_lat, 
+                                  #group = country, 
+                                  r = rws*0.04),
+                              data = df_hap_loc03,
+                              cols = colnames(df_hap_loc04[,c(2:enc)])) +
+  geom_scatterpie_legend(df_hap_loc04$rws*0.04, x=14, y=57) +
+  scale_fill_manual(values=alpha(
+    c(cl03),
+    c(0.7)
+  ))+
+  #define limits of the plot
+  ggplot2::coord_sf(xlim = c(4, 16),
+                    ylim = c(53.4, 58.4),
+                    expand = FALSE)
+# change label for legend - Notice that you need to change for all 3 variables
+# you called 'aes' in 'geom_jitter'
+p04 <- p04 + labs(fill='Haplotype')
+p04 <- p04 + labs(color='Haplotype')
+p04 <- p04 + labs(shape='Haplotype')
+p04 <- p04 + xlab("Longitude") + ylab("Latitude")
+# #https://www.statology.org/ggplot-background-color/
+p04 <- p04 + theme(panel.background = element_rect(fill = 'white', color = 'black'),
+                   panel.grid.major = element_line(color = 'azure3')) #, linetype = 'dotted'))#,
+#panel.grid.minor = element_line(color = 'green', size = 2))
+# see the plot
+p04
 #
 #
 #
