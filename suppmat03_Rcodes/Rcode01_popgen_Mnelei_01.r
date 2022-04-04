@@ -163,7 +163,7 @@ df_pip$rwnm05 <- gsub("lei[0-9]{3}_","",df_pip$rwnm05)
 df_pip$rwnm05 <- gsub("SEDenmark_MecklenburgerBucht","NGermany_MecklenburgerBuchtWismarBucht",df_pip$rwnm05)
 df_pip$rwnm05 <- gsub("NJyllandLimfjordLogstoer","NJyllandLimfjord",df_pip$rwnm05)
 df_pip$rwnm05 <- gsub("Limfjord_Loegstoer","Limfjord",df_pip$rwnm05)
-unique(df_pip$rwnm05)
+#unique(df_pip$rwnm05)
 # #Modify location names
 # df_pip$rwnm05 <- gsub("FynBogense","Funen, Bogense", df_pip$rwnm05 )
 # df_pip$rwnm05 <- gsub("FynKerteminde","Funen, Kerteminde", df_pip$rwnm05 )
@@ -1137,6 +1137,13 @@ library(scatterpie)
 #make a viridis colour range
 cl03 <- pals::viridis(length(unique(df_hap_loc03[,c(2:enc)])))
 cl03 <- pals::inferno(length(unique(df_hap_loc03[,c(2:enc)])))
+ncolHptloc03 <- length(unique(colnames(df_hap_loc03)[2:enc]))
+cbbPalette2 <- c("black","purple","blue","green","yellowgreen",
+                 "yellow","white")
+colfunc <- colorRampPalette(cbbPalette2)
+#https://stackoverflow.com/questions/13353213/gradient-of-n-colors-ranging-from-color-1-and-color-2
+#
+cl03 <- colfunc(ncolHptloc03)
 # https://towardsdatascience.com/using-ggplot-to-plot-pie-charts-on-a-geographical-map-bb54d22d6e13
 # Using map_data()
 # # Get a map, use a high number for 'scale' for a coarse resolution
@@ -1154,6 +1161,7 @@ if (!exists("world"))
 df_hap_loc03$rws2 <- df_hap_loc03$rws
 #replace NAs with zeros
 df_hap_loc04 <- df_hap_loc03[!is.na(df_hap_loc03$rws),]
+df_hap_loc05 <- df_hap_loc04
 #https://guangchuangyu.github.io/2016/12/scatterpie-for-plotting-pies-on-ggplot/
 world <- ggplot2::map_data('world')
 jitlvl <- 0.017
@@ -1427,13 +1435,11 @@ library("rnaturalearthhires")
 # # Get a map, use a high number for 'scale' for a coarse resolution
 # use a low number for scale for a high resolution
 # if the map 'world' does not exist, then download it
-if (!exists("world"))
-{  
-  world <- ne_countries(scale = 10, returnclass = "sf")
-}
+world2 <- ne_countries(scale = 10, returnclass = "sf")
 
+cl03
 # also see : https://github.com/tidyverse/ggplot2/issues/2037
-p05 <- ggplot(data = world) +
+p05 <- ggplot(data = world2) +
   geom_sf(color = "black", fill = "azure3") +
   #geom_sf(color = "black", fill = "azure3") +
   #https://ggplot2.tidyverse.org/reference/position_jitter.html
@@ -1473,7 +1479,7 @@ p05
 #make a viridis colour range
 #cl03 <- pals::viridis(length(unique(df_hap_loc03[,c(2:enc)])))
 # also see : https://github.com/tidyverse/ggplot2/issues/2037
-p06 <-  ggplot(data = world) +
+p06 <-  ggplot(data = world2) +
   geom_sf(color = "black", fill = "azure3") +
   
   #  geom_sf(color = "black", fill = "azure3") +
@@ -1542,7 +1548,7 @@ p <-  p05t +
   plot_annotation(caption=inpf01) #& theme(legend.position = "bottom")
 #p
 #make filename to save plot to
-figname01 <- paste0("map_haplotype_pie_diagr_02",inpf01,".png")
+figname01 <- paste0("Fig04_v03_map_haplotype_pie_diagr_02",inpf01,".png")
 
 figname02 <- paste(wd00_wd05,"/",figname01,sep="")
 if(bSaveFigures==T){
@@ -1634,9 +1640,10 @@ plot(pipNet, size = attr(pipNet,"freq"),
      show.mutation = 2, threshold = 0, labels(T))
 #add a legend to the plot
 legend("bottomleft",colnames(new.hap.smplloc), 
-       col=colfh,
+       pt.bg=colfh,box.col=NA,
        #col=rainbow(ncol(new.hap.smplloc)), 
-       pch=19, ncol=1, cex=0.8)
+       pt.lwd=0.4,
+       pch=21, ncol=1, cex=0.8)
 title(main = "a",
       cex.main = 1.8,   font.main= 2, col.main= "black",
       adj = 0.01, line = 0.1)
@@ -1653,8 +1660,8 @@ plot(pipNet, size = attr(pipNet,"freq"),
 #add a legend to the plot
 legend("bottomleft",colnames(new.hap.smplye), 
        #col=rainbow(ncol(new.hap.smplye)), 
-       col=clrf6,
-       pch=19, ncol=1, cex=0.8)
+       pt.bg=clrf6,box.col=NA,pt.lwd=0.4,
+       pch=21, ncol=1, cex=0.8)
 title(main = "b",
       cex.main = 1.8,   font.main= 2, col.main= "black",
       adj = 0.01, line = 0.1)
@@ -1921,7 +1928,7 @@ p <-  p07t +
 figname01 <- paste0("map_haplotype_pie_diagr",inpf01,"_02.png")
 
 figname02 <- paste(wd00_wd05,"/",figname01,sep="")
-if(bSaveFigures==T){
+if(bSaveFigures==F){
   ggsave(p,file=figname02,width=210,height=297,
          units="mm",dpi=300)
 }
@@ -2223,4 +2230,170 @@ p04
 #
 #
 #
+#_______________________________________________________________________________
+#_______________________________________________________________________________
+# start - Make haplotype circles on map second attempt 
+#_______________________________________________________________________________
+#make a viridis colour range
+cl03 <- pals::viridis(length(unique(df_hap_loc05[,c(2:enc)])))
+cl03 <- pals::inferno(length(unique(df_hap_loc05[,c(2:enc)])))
+ncolHptloc03 <- length(unique(colnames(df_hap_loc05)[2:enc]))
+cbbPalette2 <- c("black","purple","blue","green","yellowgreen",
+                 "yellow","white")
+colfunc <- colorRampPalette(cbbPalette2)
+
+#https://stackoverflow.com/questions/13353213/gradient-of-n-colors-ranging-from-color-1-and-color-2
 #
+cl03 <- colfunc(ncolHptloc03)
+# https://towardsdatascience.com/using-ggplot-to-plot-pie-charts-on-a-geographical-map-bb54d22d6e13
+# Using map_data()
+# # Get a map, use a high number for 'scale' for a coarse resolution
+# use a low number for scale for a high resolution
+# if the map 'world' does not exist, then download it
+if (!exists("world3"))
+{  
+  #world <- ne_countries(scale = 10, returnclass = "sf")
+  world3 <- rnaturalearth::ne_countries(scale = 10, returnclass = "sf")
+}
+
+#replace NAs with zeros
+df_hap_loc06 <- df_hap_loc05[!is.na(df_hap_loc05$rws),]
+#https://guangchuangyu.github.io/2016/12/scatterpie-for-plotting-pies-on-ggplot/
+world3 <- ggplot2::map_data('world3')
+jitlvl <- 0.017
+# also see : https://github.com/tidyverse/ggplot2/issues/2037
+p08 <- 
+  ggplot(data = world3) +
+  #ggplot(st_transform(norw_map, 9122)) +
+  geom_sf(color = "black", fill = "azure3") +
+  scatterpie::geom_scatterpie(aes(x=dec_lon, y=dec_lat, 
+                                  #group = country, 
+                                  r = rws*0.10), 
+                              data = df_hap_loc06, 
+                              cols = colnames(df_hap_loc06[,c(2:enc)])) +
+  
+  scale_color_manual(values=c(rep("black",
+                                  length(unique(df_hap_loc06[,c(2:enc)]))))) +
+  scale_fill_manual(values=alpha(
+    c(cl03),
+    c(0.7)
+  ))+
+  #scale_colour_viridis_d(breaks=11) +
+  #scale_color_brewer(palette="Dark2") +
+  #https://stackoverflow.com/questions/54078772/ggplot-scale-color-manual-with-breaks-does-not-match-expected-order
+  theme(aspect.ratio=7/8) +
+  geom_scatterpie_legend(df_hap_loc06$rws*0.10, x=-10, y=47, 
+                         labeller = function(ra) {ra * (1/0.10)}) +
+  # set alpha values for color intensity of fill color in point
+  #https://ggplot2.tidyverse.org/reference/aes_colour_fill_alpha.html
+  #define limits of the plot
+  ggplot2::coord_sf(xlim = c(-12, 16),
+                    ylim = c(34.8, 58.0),
+                    expand = FALSE)
+# change label for legend - Notice that you need to change for all 3 variables
+# you called 'aes' in 'geom_jitter'
+p08 <- p08 + labs(fill='Haplotype')
+p08 <- p08 + labs(color='Haplotype')
+p08 <- p08 + labs(shape='Haplotype')
+p08 <- p08 + xlab("Longitude") + ylab("Latitude")
+# #https://www.statology.org/ggplot-background-color/
+p08 <- p08 + theme(panel.background = element_rect(fill = 'white', color = 'black'),
+                   panel.grid.major = element_line(color = 'azure3')) #, linetype = 'dotted'))#,
+#panel.grid.minor = element_line(color = 'green', size = 2))
+# see the plot
+p08
+
+
+# also see : https://github.com/tidyverse/ggplot2/issues/2037
+p09 <- ggplot(data = denm_map) +
+  #ggplot(st_transform(norw_map, 9122)) +
+  geom_sf(color = "black", fill = "azure3") +
+  scatterpie::geom_scatterpie(aes(x=dec_lon, y=dec_lat, 
+                                  #group = country, 
+                                  r = rws*0.05), 
+                              data = df_hap_loc04, 
+                              cols = colnames(df_hap_loc04[,c(2:enc)])) +
+  
+  scale_color_manual(values=c(rep("black",
+                                  length(unique(df_hap_loc04[,c(2:enc)]))))) +
+  scale_fill_manual(values=alpha(
+    c(cl03),
+    c(0.7)
+  ))+
+  #scale_colour_viridis_d(breaks=11) +
+  #scale_color_brewer(palette="Dark2") +
+  #https://stackoverflow.com/questions/54078772/ggplot-scale-color-manual-with-breaks-does-not-match-expected-order
+  theme(aspect.ratio=5/8) +
+  #https://stackoverflow.com/questions/71277499/adding-a-plot-legend-with-geom-scatterpie-legend-in-r
+  geom_scatterpie_legend(df_hap_loc04$rws*0.05, x=13.4, y=57.0,labeller = function(ra) ra * 1/0.05) +
+  #unique(df_hap_loc04$rws)[order(unique(df_hap_loc04$rws))]
+  # set alpha values for color intensity of fill color in point
+  #https://ggplot2.tidyverse.org/reference/aes_colour_fill_alpha.html
+  #define limits of the plot
+  #define limits of the plot
+  ggplot2::coord_sf(xlim = c(6, 15.4),
+                    ylim = c(52.8, 58.0),
+                    expand = FALSE)
+#https://www.statology.org/ggplot-background-color/
+#p09 <- p09 + theme_minimal() #no background annotations
+# #https://www.statology.org/ggplot-background-color/
+p09 <- p09 + theme(panel.background = element_rect(fill = 'white', color = 'black'),
+                   panel.grid.major = element_line(color = 'azure3')) #, linetype = 'dotted'))#,
+
+# see the plot
+p09
+#dev.off()
+#change labels on axis
+p09 <- p09 + xlab("Longitude") + ylab("Latitude")
+#change labels on legend
+p09 <- p09 + labs(fill='Haplotype')
+p09
+# Add titles
+# see this example: https://www.datanovia.com/en/blog/ggplot-title-subtitle-and-caption/
+#caption = "Data source: ToothGrowth")
+p08t <- p08 + labs(title = "b") +
+  theme(plot.title = element_text(face="bold"))#,
+# Add titles
+# p09t <- p09 + labs(title = "eDNA samples attempted",
+#                    subtitle = "at least approv controls and 1 or 2 pos repl")#,
+p09t <- p09 + labs(title = "a") +
+  theme(plot.title = element_text(face="bold"))#,
+
+
+# ------------- plot Combined figure -------------
+library(patchwork)
+# set a variable to TRUE to determine whether to save figures
+bSaveFigures <- T
+#see this website: https://www.rdocumentation.org/packages/patchwork/versions/1.0.0
+# on how to arrange plots in patchwork
+p <-  p09t +
+  p08t +
+  
+  plot_layout(nrow=2,byrow=T) + #xlab(xlabel) +
+  plot_layout(guides = "collect") #+
+  #plot_annotation(caption=inpf01) #& theme(legend.position = "bottom")
+#p
+
+#make filename to save plot to
+figname01 <- paste0("Fig04_v05_map_haplotype_pie_diagr",inpf01,".png")
+figname02 <- paste(wd00_wd05,"/",figname01,sep="")
+if(bSaveFigures==T){
+  ggsave(p,file=figname02,width=210,height=297,
+         units="mm",dpi=300)
+}
+
+
+#make filename to save plot to
+figname01 <- paste0("Fig04_v06_map_haplotype_pie_diagr",inpf01,".pdf")
+figname02 <- paste(wd00_wd05,"/",figname01,sep="")
+if(bSaveFigures==T){
+  ggsave(p,file=figname02,width=210,height=297,
+         units="mm",dpi=300)
+}
+#_______________________________________________________________________________
+# end - Make haplotype circles on map second attempt 
+#_______________________________________________________________________________
+# paste path and file together
+loc04fl <- paste(wd00_wd05,"/loc04.csv",sep="")
+# write csv
+write_csv(df_hap_loc04,file=loc04fl)
