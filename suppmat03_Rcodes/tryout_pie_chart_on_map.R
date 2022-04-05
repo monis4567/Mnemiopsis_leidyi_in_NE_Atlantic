@@ -8,6 +8,7 @@ rm(list=ls())
 wd01 <- "/suppmat01_inp_files"
 wd05 <- "/suppmat05_out_files"
 wd00 <- "/home/hal9000/Documents/Documents/MS_Mnemiopsis/Mnemiopsis_leidyi_in_NE_Atlantic"
+wd_out01 <- "/home/hal9000/Documents/Documents/MS_Mnemiopsis"
 wd00_wd01 <- paste0(wd00,wd01)
 wd00_wd05 <- paste0(wd00,wd05)
 #df_hap_loc04
@@ -113,12 +114,12 @@ if (!exists("zpfl"))
 {
 # Download the shapefile.
 download.file("http://thematicmapping.org/downloads/TM_WORLD_BORDERS_SIMPL-0.3.zip" 
-              , destfile=paste0(wd00_wd05,"/world_shape_file.zip"))
+              , destfile=paste0(wd_out01,"/world_shape_file.zip"))
   } #else {flnmshpfl <- paste0(wd00_wd05,"/TM_WORLD_BORDERS_SIMPL-0.3.shp")}
 # Make a full path to this file
-zpfl <- paste0(wd00_wd05,"/world_shape_file.zip")
+zpfl <- paste0(wd_out01,"/world_shape_file.zip")
 # Unzip this file. You can do it with R (as below),
-unzip(zpfl, exdir = wd00_wd05)
+unzip(zpfl, exdir = wd_out01)
 # get a list of the files inside the zip file
 lzpfl <- unzip(zpfl,list=T)
 #grep in the names of files inside the list of files
@@ -127,13 +128,13 @@ flnmshpfl <- lzpfl$Name[grepl("shp",lzpfl$Name)]
 # Read this shape file with the rgdal library. 
 library(rgdal)
 mspdf <- rgdal::readOGR( 
-  dsn= paste0(wd00_wd05,"/",flnmshpfl) , 
+  dsn= paste0(wd_out01,"/",flnmshpfl) , 
   layer="TM_WORLD_BORDERS_SIMPL-0.3",
   verbose=FALSE
 )
 #
 library(shapefiles)
-sfl<- gsub(".shp","",paste0(wd00_wd05,"/",flnmshpfl))
+sfl<- gsub(".shp","",paste0(wd_out01,"/",flnmshpfl))
 wlshpfl <- shapefiles::read.shapefile(sfl)
 # change the row names
 rownames(ma) <- df_hl05$smplloca
