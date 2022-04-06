@@ -2397,3 +2397,8 @@ if(bSaveFigures==T){
 loc04fl <- paste(wd00_wd05,"/loc04.csv",sep="")
 # write csv
 write_csv(df_hap_loc04,file=loc04fl)
+
+# paste path and file together
+loc06fl <- paste(wd00_wd05,"/loc06.csv",sep="")
+# write csv
+write_csv(df_hap_loc06,file=loc06fl)
