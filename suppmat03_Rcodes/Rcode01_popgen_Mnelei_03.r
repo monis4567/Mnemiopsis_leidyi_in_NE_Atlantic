@@ -3142,6 +3142,12 @@ df_hap_loc06$dec_loc3 <- df_clo03$locality5[match(df_hap_loc06$dec_loc2,df_clo03
 # add a new colunm to add overall geographic regions to
 df_hap_loc06$ov.aL <- df_hap_loc06$dec_loc3
 df_hap_loc09 <- df_hap_loc06 
+#df_hap_loc06 <- df_hap_loc07[complete.cases(df_hap_loc07),]
+# paste path and file together
+loc06fl <- paste(wd00_wd05,"/loc06.csv",sep="")
+# write csv
+write_csv(df_hap_loc09,file=loc06fl)
+
 # start adding overall geographical regions based on matches
 df_hap_loc06$ov.aL[grepl("Baltic",df_hap_loc06$dec_loc3)] <- "NEurope"
 df_hap_loc06$ov.aL[grepl("Germany",df_hap_loc06$dec_loc3)] <- "NEurope"
