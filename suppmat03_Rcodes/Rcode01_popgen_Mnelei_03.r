@@ -2284,8 +2284,8 @@ clrf6 <- df_cfy5$colour[match(colnames(new.hap.smplye),df_cfy5$smplnm)]
 #_______________________________________________________________________________
 #_______________________________________________________________________________
 #_______________________________________________________________________________
-flnm <- c(paste("Fig02_haplotype_network_",inp.f.fnm,"02.pdf",  sep = ""))
-flnm <- c(paste("Fig02_haplotype_network_",inp.f.fnm,"02.jpg",  sep = ""))
+flnm <- c(paste("Fig02_v01_haplotype_network_",inp.f.fnm,"02.pdf",  sep = ""))
+flnm <- c(paste("Fig02_v01_haplotype_network_",inp.f.fnm,"02.jpg",  sep = ""))
 #paste output directory and filename together in a string
 outflnm <- paste(wd00_wd05,"/",flnm,sep="")
 # Exporting PFD files via postscript()           
@@ -3384,8 +3384,8 @@ pA <-  p01t +
 #p
 bSaveFigures=T
 #make filename to save plot to
-figname01 <- paste0("Fig05_pca_M_leyidy.png")
-figname01 <- paste0("Fig05_pca_M_leyidy.jpg")
+figname01 <- paste0("Fig06_v01_pca_M_leyidy.png")
+figname01 <- paste0("Fig06_v01_pca_M_leyidy.jpg")
 figname02 <- paste(wd00_wd05,"/",figname01,sep="")
 if(bSaveFigures==T){
   ggsave(pA,file=figname02,width=210,height=297,
@@ -3395,7 +3395,7 @@ if(bSaveFigures==T){
 
 #_______________________________________________________________________________
 #_______________________________________________________________________________
-figname01 <- "Fig06_v01_network.jpg"
+figname01 <- "Fig02_v02_network.jpg"
 pthfignm01 <- paste(wd00_wd05,"/",figname01,sep="")
 # set to save plot as pdf file with dimensions 8.26 to 2.9
 # 8.26 inches and 2.9 inhes equals 210 mm and 74.25 mm
@@ -3646,3 +3646,166 @@ t.HTML02 <- mdlo %>%
   htmlTable(caption = capt_tbl02)
 t.HTML02
 
+
+#_______________________________________________________________________________
+# Make MDS plot
+#_______________________________________________________________________________
+#https://www.statmethods.net/advstats/mds.html
+
+# Classical MDS
+# N rows (objects) x p columns (variables)
+# each row identified by a unique row name
+
+#count number of columns in data frame
+nc09 <-ncol(df_hap_loc09)
+#get columns from the second the 7th last column 
+hpl10 <- df_hap_loc09[,2:(nc09-6)]
+# match to get the other set of abbreviations for smapling locations
+df_hap_loc09$dec_loc3 <- df_clo03$locality8[match(df_hap_loc09$dec_loc2,df_clo03$locality7)]
+# assign row names to the data frame
+rownames(hpl10) <- df_hap_loc09$dec_loc3
+d <- dist(hpl10) # euclidean distances between the rows
+fit <- cmdscale(d,eig=TRUE, k=2) # k is the number of dim
+fit # view results
+# plot solution
+x <- fit$points[,1]
+y <- fit$points[,2]
+plot(x, y, xlab="Coordinate 1", ylab="Coordinate 2",
+     main="Metric MDS", type="n")
+text(x, y, labels = row.names(hpl10), cex=.7) 
+
+# Nonmetric MDS
+# N rows (objects) x p columns (variables)
+# each row identified by a unique row name
+library(MASS)
+d <- dist(hpl10) # euclidean distances between the rows
+fit <- isoMDS(d, k=2) # k is the number of dim
+fit # view results
+
+# end plot
+dev.off()
+# define output file name for plot
+figname01 <- "Fig07_NMDS_plot.jpg"
+pthfignm01 <- paste(wd00_wd05,"/",figname01,sep="")
+# set to save plot as pdf file with dimensions 8.26 to 2.9
+# 8.26 inches and 2.9 inhes equals 210 mm and 74.25 mm
+# and 210 mm and 74.25 mm matches 1/4 of a A4 page
+#pdf(pthfignm01,width=(1.6*2.9),height=(0.8*8.26))
+jpeg(pthfignm01,width = 3600, height = 3600, res =300)#,width=(1.6*2.9),height=(0.8*8.26))
+
+#add extra space to the right of the plot
+#par(mar=c(5, 4, 4, 8), xpd=TRUE)
+par(mar=c(4, 4, 2, 2), xpd=FALSE)
+par(oma=c(0, 0, 0, 0))
+#reset this parameter
+par(mfrow = c(1, 1)) 
+# begin plot, with defined borders
+x <- fit$points[,1]
+y <- fit$points[,2]
+plot(x, y, xlab="Coordinate 1", ylab="Coordinate 2",
+     #main="Nonmetric MDS",
+     #pch=21,bg="red"
+     type="n"
+     )
+text(x, y, labels = row.names(hpl10), cex=1.2) 
+
+# end plot
+dev.off()
+#reset this parameter
+par(mfrow = c(1, 1)) 
+#_______________________________________________________________________________
+
+#_______________________________________________________________________________
+#https://www.r-statistics.com/2016/01/multidimensional-scaling-with-r-from-mastering-data-analysis-with-r/
+
+dly <- as.data.frame(pw_wc_pip_ye)
+dlo <- as.data.frame(pw_wc_pip_lo)
+#read FASTA as dna.bin
+pip <- ape::read.dna(pth_inpf01, format = "fasta")
+dpip <- ape::dist.gene(pip)
+ablo <- df_clo03$locality8[match(smplloca,df_clo03$locality4)]
+#rownames(pip) <- smplloca
+d <- dlo
+d <- dpip
+library(MASS)
+d <- dist(dlo) # euclidean distances between the rows
+#d <- dist(dpip) # euclidean distances between the rows
+#d <- dist(hpl10) # euclidean distances between the rows
+fit <- isoMDS(d, k=2) # k is the number of dim
+
+# make the fitted NMDS a data frame
+fmds <- as.data.frame(fit)
+# make an empty column for overall location 
+df_clo03$ov.loc <- NA
+df_clo03$ov.loc[!is.na(df_clo03$locality)] <- "NE Atlantic"
+df_clo03$ov.loc[grepl("USA",df_clo03$locality4)] <- "NW Atlantic"
+df_clo03$ov.loc[grepl("NEAtlantic",df_clo03$locality4)] <- "NE Atlantic"
+df_clo03$ov.loc[grepl("Mediterranean",df_clo03$locality4)] <- "Mediterranean"
+df_clo03$ov.loc[grepl("Holland",df_clo03$locality4)] <- "NE Atlantic"
+df_clo03$ov.loc[grepl("Baltic",df_clo03$locality4)] <- "NE Atlantic"
+df_clo03$ov.loc[grepl("Caspian",df_clo03$locality4)] <- "Caspian Sea"
+df_clo03$ov.loc[grepl("NWAtlantic",df_clo03$locality4)] <- "NW Atlantic"
+df_clo03$ov.loc[grepl("Germany",df_clo03$locality4)] <- "NE Atlantic"
+df_clo03$ov.loc[grepl("CentralWAtlantic",df_clo03$locality4)] <- "Central W Atlantic"
+# replace long row names with abbreviated location names
+rownames(fmds) <- df_clo03$locality8[match(rownames(fmds),df_clo03$locality6)]
+# match to get overall location
+fmds$ov.loc <- df_clo03$ov.loc[match(rownames(fmds),df_clo03$locality8)]
+
+# get unique over locations
+locs3 <- unique(fmds$ov.loc)
+# count unique overall locations
+nlocs3 <- length(locs3)
+# make series of numbers to use for pch shapes
+pchnmbs <- rep(c(21:24),2)
+pchnmbs <- pchnmbs[1:nlocs3]
+# make series of colors to use for coloring fill
+colnmbs <- rep(c("white","black","black"),4)
+colnmbs <- colnmbs[1:nlocs3]
+#bind together in a data frame
+df_pcl04 <- as.data.frame(cbind(locs3,pchnmbs,colnmbs))
+fmds$pchnmb <- df_pcl04$pchnmbs[match(fmds$ov.loc, df_pcl04$locs3)]
+fmds$flcnmb <- df_pcl04$colnmbs[match(fmds$ov.loc, df_pcl04$locs3)]
+# load the library
+library(ggplot2)
+nrwsfmds <- length(rownames(fmds))
+# plot it with ggplot
+p14 <- ggplot(fmds, aes(points.1, -points.2, label = rownames(fmds))) +
+  #geom_jitter() +
+  geom_point(aes(shape= ov.loc, 
+                 fill=ov.loc),size=3.0) +  
+  geom_text(check_overlap = TRUE,
+            #position = position_dodge(width = 1),
+            vjust = -0.75) #+ theme_minimal() + xlab('') + ylab('') +
+#scale_y_continuous(breaks = NULL) + scale_x_continuous(breaks = NULL)
+
+
+p14 <- p14 +  scale_shape_manual(values = c(as.integer(pchnmbs))) +
+  #scale_color_manual(values = c(rep("#00AFBB", nrwsfmds))) +
+  scale_fill_manual(values = c(colnmbs))
+
+p14 <- p14 + theme(panel.background = element_rect(fill = 'white', color = 'black'))#,
+#rect = element_line(color = 'black')) #, linetype = 'dotted'))#,
+# change label for legend - Notice that you need to change for all 3 variables
+# you called 'aes' in 'geom_jitter'
+p14 <- p14 + labs(fill='Location')
+p14 <- p14 + labs(color='Location')
+p14 <- p14 + labs(shape='Location')
+p14 <- p14 + xlab("dimension 1") + ylab("dimension 2")
+
+# add border around plot
+p14 <- p14 + theme(panel.border = element_rect(color = "black",
+                                               fill = NA,
+                                               size = 1.0))
+# change background of legend
+p14 <- p14 + theme(legend.key = element_rect(fill = "white"))
+#make filename to save plot to
+figname14 <- paste0("Fig07_v02_NMDS_",inpf01,".png")
+
+figname02 <- paste(wd00_wd05,"/",figname14,sep="")
+if(bSaveFigures==T){
+  ggsave(p14,file=figname02,
+         #width=210,height=297,
+         width=210,height=(297*0.5),
+         units="mm",dpi=300)
+}

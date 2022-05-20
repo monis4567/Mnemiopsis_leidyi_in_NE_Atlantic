@@ -738,6 +738,88 @@ dev.off()
 
 
 
+#______________________________________________________________
+#___________start plot map halpotype v 13____________________
+#______________________________________________________________
+# define name for outpu plot file
+figname01 <- "Fig05_v01_map_haplotype_pie.jpg"
+pthfignm01 <- paste(wd00_wd05,"/",figname01,sep="")
+# set to save plot as pdf file with dimensions 8.26 to 2.9
+# 8.26 inches and 2.9 inhes equals 210 mm and 74.25 mm
+# and 210 mm and 74.25 mm matches 1/4 of a A4 page
+#pdf(pthfignm01,width=(1.6*2.9),height=(0.8*8.26))
+jpeg(pthfignm01,width = 3600, height = 2400, res =300)#,width=(1.6*2.9),height=(0.8*8.26))
+
+#add extra space to the right of the plot
+#par(mar=c(5, 4, 4, 8), xpd=TRUE)
+par(mar=c(4, 4, 2, 2), xpd=FALSE)
+par(oma=c(0, 0, 0, 0))
+#reset this parameter
+par(mfrow = c(1, 1)) 
+# Next - start plot for Europe and the Atlantic Ocean
+# begin plot, with defined borders
+plot(NA,NA, xlim = c(-80, 60),
+     ylim = c(6, 60.0),
+     # use las to turn the tick labels to be horizontal
+     las=1,
+     #      # use 'asp' to change the aspect ratio: https://statisticsglobe.com/asp-r-plot
+     asp=1.6,
+     #surpress tickmarks
+     #xaxt="n", yaxt="n",
+     xlab="Longitude", ylab="Latitude",
+     cex.lab = 1.2)
+#xlab = NA, ylab = NA)
+# add internal map inside coastline
+maps::map('worldHires', add=TRUE, fill=TRUE, 
+          # xlim = c(-12, 16),
+          # ylim = c(34.8, 58.0),
+          xlim = c(-120, 80),
+          ylim = c(-10, 90.0),
+          #xlab = "Longitude", ylab = "Latitude",
+          col="azure3", bg=transp_col)
+#mtext("a", side=3, adj=0, line=0.4, cex=1.2, font=2)
+mapplots::draw.pie(df_hl08$dec_lat,
+                   df_hl08$dec_lon,
+                   ma,
+                   radius = df_hl08$rws, add = TRUE,
+                   col=c(colra)
+)
+# https://stackoverflow.com/questions/51799118/writing-the-symbol-degrees-celsius-in-axis-titles-with-r-plotly
+#longwE <- paste(seq(-12, 16,4),"\u00B0E",sep="")
+longwW <- paste(c(16,12,8,4),"\u00B0W",sep="")
+longwW <- paste(c(20,15,10,5),"\u00B0W",sep="")
+longw0 <- paste("0","\u00B0",sep="")
+longwE <- paste(c(4,8,12,16),"\u00B0E",sep="")
+longwE <- paste(c(seq(5,20,5)),"\u00B0E",sep="")
+longwW0E<- c(longwW,longw0,longwE)
+#axis(1, at=c(-16,-12,-8,4,0,4,8,12,16), labels=longwW0E,cex.axis = 0.6)
+
+# axis(1, at=c(seq(-80,60, by=10)), labels=longwW0E,cex.axis = 0.6)
+# lattwN <- paste(round(seq(6, 6,10),0),"\u00B0N",sep="")
+# axis(2, at=c(round(seq(6, 60,10),0)), labels=lattwN, las=1,cex.axis = 0.6)
+
+#add pies to map
+draw.pie(xyz.Hpt$x, xyz.Hpt$y, xyz.Hpt$z, radius = 1.6, col=scales::alpha(colra,0.7))
+#class(mspdf)
+#_______add histogram bars to positions on the map
+# add a legend
+legend.z <- round(max(rowSums(xyz.Hpt$z,na.rm=TRUE))/10^0,0)
+legend.bubble(-40,40,z=legend.z*1.875,round=0,maxradius=(1.6*1.875),bty="n",txt.cex=0.6)
+text(-40,44,"samples",cex=0.6) 
+#add legend to plot
+legend("bottomright", inset=c(0.03, 0), legend=c(Hpts), pch=c(rep(22,nHpt)), 
+       bg="white",title="Haplotype", pt.bg=colra, cex=0.8, pt.cex = 1.2, ncol=4,
+       x.intersp = 0.6,y.intersp = 0.9)
+
+# end plot
+dev.off()
+#reset this parameter
+par(mfrow = c(1, 1)) 
+
+
+#______________________________________________________________
+#___________end plot map halpotype v 13____________________
+#______________________________________________________________
 
 
 
