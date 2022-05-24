@@ -3675,7 +3675,7 @@ colourtxthtml <- t(matrix(data=colourtxthtml,nrow=nr+1,ncol=nc+1))
 colourhtml[2:(nr+1),2:(nc+1)]<-colourhtmlvalues
 colourtxthtml[2:(nr+1),2:(nc+1)]<-colourhtmltxtvals
 # make a table caption
-capt_tbl01 <- paste0("Table 1. Comparison of population genetic fixation index (PhiST) obtained from sequences of nDNA 18S for various sampling locations. Low PhiST values suggest that individuals sampled are genetically very similar, and high PhiST values indicates genetic variation is high. Abbreviations for locations are: ",
+capt_tbl01 <- paste0("Table 1. Comparison of population genetic fixation index (PhiST) obtained from sequences of nDNA ITS1-2 for various sampling locations. Low PhiST values suggest that individuals sampled are genetically very similar, and high PhiST values indicates genetic variation is high. Abbreviations for locations are: ",
                      locat_abb,
                      "The color gradient reflects the PhiST index with a yellow for low PhiST values, and dark blue for high PhiST values.")
 
@@ -3757,7 +3757,7 @@ colourtxthtml <- t(matrix(data=colourtxthtml,nrow=nr+1,ncol=nc+1))
 colourhtml[2:(nr+1),2:(nc+1)]<-colourhtmlvalues
 colourtxthtml[2:(nr+1),2:(nc+1)]<-colourhtmltxtvals
 # make a table caption
-capt_tbl02 <-        "Table 2. Comparison of PhiST for Mnemiopsis leidyi obtained from sequences of nDNA 18S for the sampling years. Sequences of nDNA 18S obtained from the National Center for Biotechnology Information (NCBI) GenBank were assigned a sampling year as inferred from the year the sequence was deposited on NCBI GenBank. A high PhiST index indicates no variation among the individuals sampled, a high PhiST index indicates there ishigh variation among sequences compared. The color gradient reflects this as a yellow for low PhiST values, and dark blue for high PhiST values."
+capt_tbl02 <-        "Table 2. Comparison of PhiST for Mnemiopsis leidyi obtained from sequences of nDNA ITS1-2 for the sampling years. Sequences of nDNA ITS1-2 obtained from the National Center for Biotechnology Information (NCBI) GenBank were assigned a sampling year as inferred from the year the sequence was deposited on NCBI GenBank. A high PhiST index indicates no variation among the individuals sampled, a high PhiST index indicates there ishigh variation among sequences compared. The color gradient reflects this as a yellow for low PhiST values, and dark blue for high PhiST values."
 #make a function that keeps 2 decimal places : see: https://stackoverflow.com/questions/48341878/increasing-decimal-positions-swirl-r-programming-environment-12-data-manip
 fSpr <- function(c) sprintf("%.2f", c)
 # apply the function to the matrix : see: https://www.tutorialkart.com/r-tutorial/r-apply-function-to-each-element-of-matrix/
