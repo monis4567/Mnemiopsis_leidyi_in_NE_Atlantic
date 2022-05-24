@@ -356,8 +356,8 @@ df_lN02$location[grepl("^JQ742005",df_lN02$accession_nmb)] <- "Caspian Sea" #"43
 # get unique location for Caspian sea
 Caspsealoc <- unique(df_lN02$latlonpos[grepl("Iran: Caspian Sea",df_lN02$location)])
 df_lN02$latlonpos[grepl("^JQ742005",df_lN02$accession_nmb)] <- Caspsealoc #"43 25 N 9 17 E"
-# Assign location for the Holland sample
-df_lN02$location[grepl("^EF175463",df_lN02$accession_nmb)] <- "Holland"
+# Assign location for the Netherlands sample
+df_lN02$location[grepl("^EF175463",df_lN02$accession_nmb)] <- "Netherlands"
 
 #replace in location names
 df_lN02$location[grepl("Bornholm",df_lN02$location)] <- "Baltic Sea"
@@ -458,6 +458,11 @@ df_clo03$dec_lat[is.na(df_clo03$locality2)] <- df_locN02$lN02lat
 df_clo03$dec_lon[is.na(df_clo03$locality2)] <- df_locN02$lN02lon
 #replace non ascii characteres
 df_clo03$locality5 <- textclean::replace_non_ascii(df_clo03$locality4)
+# Replace "Germany:Maasholm" with "Germany, Kiel Fjord"
+df_clo03$locality5[df_clo03$locality5=="Germany:Maasholm" ] <- "Germany, Kiel Fjord" 
+df_clo03$locality4[df_clo03$locality4=="Germany:Maasholm" ] <- "Germany, Kiel Fjord" 
+df_clo03$locality6[df_clo03$locality6=="Germany:Maasholm" ] <- "Germany, Kiel Fjord" 
+
 #add a column with sampling locations to be able to 
 # match the localities
 df_clo03$locality2 <- abbreviate(df_clo03$locality5, 1, named = FALSE)
@@ -474,6 +479,24 @@ df_clo03$locality6 <- gsub("Germany:KielFjord", "NGermanyKielFjord" ,df_clo03$lo
 df_clo03$locality6 <- gsub("JyllandLimfjord","NJyllandLimfjord"  ,df_clo03$locality6)
 df_clo03$locality6 <- gsub("GermanyWismarBight" ,"NGermanyMecklenburgerBuchtWismarBucht" ,df_clo03$locality6)
 df_clo03$locality6 <- gsub("NorthSeaHelgolandRoads","NWGermanyNSeaHelgolandRds"  ,df_clo03$locality6)
+#substitue abbreviations
+df_clo03$locality2[df_clo03$locality2=="GWB"] <- "GWi"
+df_clo03$locality2[df_clo03$locality2=="G:K"] <- "GKi"
+df_clo03$locality2[df_clo03$locality2=="G:H"] <- "GHe"
+df_clo03$locality2[df_clo03$locality2=="G:M"] <- "GKi"
+df_clo03$locality2[df_clo03$locality2=="G:M"] <- "GKi"
+df_clo03$locality2[df_clo03$locality2=="SS"] <- "SSk"
+df_clo03$locality2[df_clo03$locality2=="SB"] <- "SBa"
+df_clo03$locality2[df_clo03$locality2=="GB"] <- "GBu"
+df_clo03$locality2[df_clo03$locality2=="GKF"] <- "GKi"
+df_clo03$locality2[df_clo03$locality2=="JMF"] <- "JMa"
+df_clo03$locality2[df_clo03$locality2=="FK"] <- "FKe"
+df_clo03$locality2[df_clo03$locality2=="FB"] <- "FBo"
+df_clo03$locality2[df_clo03$locality2=="JL"] <- "JLi"
+df_clo03$locality2[df_clo03$locality2=="NSHR"] <- "GHe"
+df_clo03$locality2[df_clo03$locality2=="CW"] <- "CWA"
+df_clo03$locality2[df_clo03$locality2=="AO"] <- "NWA"
+df_clo03$locality2[df_clo03$locality2=="NE"] <- "NEA"
 
 #order the data fram with location abbreviations to get 
 df_clo03 <- df_clo03[order(df_clo03$locality2),]
@@ -497,13 +520,13 @@ abbloccnms <-
     "FKe",
     "JMa",
     "GKi",
-    "GMe",
+    "GWi",
     "JLi",
     "JLo",
     "GHe",
-    "GWa",
+    "GBu",
     "SBa",
-    "DMe",
+    "GWi",
     "Ssk")
 #combine to a data frame
 df_abblocnms <- as.data.frame(cbind(llocnms,abbloccnms))
@@ -743,6 +766,7 @@ smplloca <- gsub("SamsoeBallen","Samsøe, Ballen", smplloca )
 #smplloca <- gsub("SEDenmarkMecklenburgerBucht","", smplloca )
 smplloca <- gsub("SjaellandSkovshoved","Sealand, Skovshoved", smplloca )
 
+unique(smplloca)
 accnms <- gsub("Mnelei","",sapply(locations, "[[", 1))
 #df_lN02$smplyear[match(accnms,df_lN02$accession_nmb)]
 
@@ -753,9 +777,18 @@ smplym <- sapply(locations, "[[", 4)
 #class(smplym)
 # see the first header of this list of characters
 #head(smplym)
+#replace "Germany:Maasholm" with,"Germany, Kiel Fjord"
+smplloca <- gsub("Germany:Maasholm","Germany, Kiel Fjord" ,smplloca)
+smplloca <- gsub("AtlanticOcean:NWAtlantic","NW Atlantic" ,smplloca)
+smplloca <- gsub("BalticSea","Baltic Sea" ,smplloca)
+smplloca <- gsub("NEAtlantic" ,"NE Atlantic",smplloca)
+smplloca <- gsub("CentralWAtlantic" ,"CW Atlantic",smplloca)
+smplloca <- gsub("CaspianSea" ,"Caspian Sea",smplloca)
+
 #make it a table
 new.hap.smplloc <- table(df_ihpt02$hap, smplloca)
 new.hap.smplye <- table(df_ihpt02$hap, smplye)
+
 # check what kind of object it is
 #class(locations)
 #see the object
@@ -763,10 +796,18 @@ new.hap.smplye <- table(df_ihpt02$hap, smplye)
 # make it a data frame
 df_nhpt01.loc <- as.data.frame(new.hap.smplloc)
 df_nhpt01.ye  <- as.data.frame(new.hap.smplye)
+
+
 #class(df_nhpt01.ye)
 #use reshape2 package to recast df from long to wide: see this example : https://www.datacamp.com/community/tutorials/long-wide-data-R
 df_nhpt02.loc <- reshape2::dcast(df_nhpt01.loc, Var1 ~ smplloca, value.var="Freq")
 df_nhpt02.ye <- reshape2::dcast(df_nhpt01.ye, Var1 ~ smplye, value.var="Freq")
+
+
+# add together the 2 sampling locations that are close to each other
+#df_nhpt02.loc$`Germany, Kiel Fjord` <- df_nhpt02.loc$`Germany, Kiel Fjord`+df_nhpt02.loc$`Germany:Maasholm`
+# and then remove the redundant column
+#df_nhpt02.loc$`Germany:Maasholm` <- NULL
 
 #dev.off()
 #make a haplotype network
@@ -1217,6 +1258,9 @@ df_pip03 <- data.frame(do.call
 #rename columns names
 colnames(df_pip03) <- c("unqnm","locality","year",
                         "yearmonth")
+# replace the 'Germany:Maasholm' location name with "NGermanyKielFjord"
+# since these two locations are very close to each other
+df_pip03$locality[df_pip03$locality=="Germany:Maasholm"] <- "NGermanyKielFjord"
 #make the multidna object a genind object
 gi_pip03 <- apex::multidna2genind(mltdn_pip03)
 #Make the genind object a data frame
@@ -1228,32 +1272,34 @@ df_geipip04 <- df_geipip03 %>% replace(is.na(.), "-")
 df_geipip03 <- df_geipip04
 #make the df object a matrix and make this a dnabin object
 dnb_pip03 <- as.DNAbin(as.matrix(df_geipip04))
+
+
 #see column names of the data frame
 #colnames(df_pip03)
 #colnames(df_geipip03)
 #make genind and hierfstat objects by region
-gi_pip_unqnm <- adegenet::DNAbin2genind(dnb_pip03,pop=df_pip03$unqnm) 
+#gi_pip_unqnm <- adegenet::DNAbin2genind(dnb_pip03,pop=df_pip03$unqnm) 
 gi_pip_local <- adegenet::DNAbin2genind(dnb_pip03,pop=df_pip03$locality) 
 gi_pip_years <- adegenet::DNAbin2genind(dnb_pip03,pop=df_pip03$year) 
 gi_pip_yearm <- adegenet::DNAbin2genind(dnb_pip03,pop=df_pip03$yearmonth) 
 #make hierfstat objects - Note that it is required to set 'pop' to the 
 # vector that matches the population to which the indivudal belongs
-hfst_pip_un <- hierfstat::genind2hierfstat(gi_pip_unqnm,pop=df_pip03$unqnm)
+#hfst_pip_un <- hierfstat::genind2hierfstat(gi_pip_unqnm,pop=df_pip03$unqnm)
 hfst_pip_lo <- hierfstat::genind2hierfstat(gi_pip_local,pop=df_pip03$locality)
 hfst_pip_ye <- hierfstat::genind2hierfstat(gi_pip_years,pop=df_pip03$year)
 hfst_pip_ym <- hierfstat::genind2hierfstat(gi_pip_yearm,pop=df_pip03$yearmonth)
 #replace all NAs with 0
-hfst_pip_un2 <- hfst_pip_un %>% replace(is.na(.), 0)
+#hfst_pip_un2 <- hfst_pip_un %>% replace(is.na(.), 0)
 hfst_pip_lo2 <- hfst_pip_lo %>% replace(is.na(.), 0)
 hfst_pip_ye2 <- hfst_pip_ye %>% replace(is.na(.), 0)
 hfst_pip_ym2 <- hfst_pip_ym %>% replace(is.na(.), 0)
 #overwrite the previous dataframes
-hfst_pip_un <- hfst_pip_un2
+#hfst_pip_un <- hfst_pip_un2
 hfst_pip_lo <- hfst_pip_lo2
 hfst_pip_ye <- hfst_pip_ye2
 hfst_pip_ym <- hfst_pip_ym2
 #pairwise fst test Nei - this takes an 'hierfstat' object as input
-pw_Nei_pip_un <- hierfstat::pairwise.neifst(hfst_pip_un, diploid = FALSE)
+#pw_Nei_pip_un <- hierfstat::pairwise.neifst(hfst_pip_un, diploid = FALSE)
 pw_Nei_pip_lo <- hierfstat::pairwise.neifst(hfst_pip_lo, diploid = FALSE)
 pw_Nei_pip_ye <- hierfstat::pairwise.neifst(hfst_pip_ye, diploid = FALSE)
 pw_Nei_pip_ym <- hierfstat::pairwise.neifst(hfst_pip_ym, diploid = FALSE)
@@ -1272,19 +1318,19 @@ pw_Nei_pip_ym <- hierfstat::pairwise.neifst(hfst_pip_ym, diploid = FALSE)
 # as the 'hierfstat::pairwise.WCfst'
 # function cannot handle the unique pop rows only 
 # represented by only a single individual
-hfst_pip_un2 <- hfst_pip_lo[hfst_pip_un$pop %in% hfst_pip_un$pop[duplicated(hfst_pip_un$pop)],]
+#hfst_pip_un2 <- hfst_pip_lo[hfst_pip_un$pop %in% hfst_pip_un$pop[duplicated(hfst_pip_un$pop)],]
 hfst_pip_lo2 <- hfst_pip_lo[hfst_pip_lo$pop %in% hfst_pip_lo$pop[duplicated(hfst_pip_lo$pop)],]
 hfst_pip_ye2 <- hfst_pip_ye[hfst_pip_ye$pop %in% hfst_pip_ye$pop[duplicated(hfst_pip_ye$pop)],]
-hfst_pip_ym2 <- hfst_pip_ye[hfst_pip_ym$pop %in% hfst_pip_ym$pop[duplicated(hfst_pip_ym$pop)],]
+hfst_pip_ym2 <- hfst_pip_ym[hfst_pip_ym$pop %in% hfst_pip_ym$pop[duplicated(hfst_pip_ym$pop)],]
 #overwrite previous data frames
-hfst_pip_un <- hfst_pip_un2
+#hfst_pip_un <- hfst_pip_un2
 hfst_pip_lo <- hfst_pip_lo2
 hfst_pip_ye <- hfst_pip_ye2
 hfst_pip_ym <- hfst_pip_ym2
 # The Pairwise fst test used in the heatmap colored table
 # below makes use of the 'hierfstat' prepared object
 #Pairwise fst test WC - this takes an 'hierfstat' object as input
-pw_wc_pip_un <- hierfstat::pairwise.WCfst(hfst_pip_un, diploid = FALSE)
+#pw_wc_pip_un <- hierfstat::pairwise.WCfst(hfst_pip_un, diploid = FALSE)
 pw_wc_pip_lo <- hierfstat::pairwise.WCfst(hfst_pip_lo, diploid = FALSE)
 pw_wc_pip_ye <- hierfstat::pairwise.WCfst(hfst_pip_ye, diploid = FALSE)
 pw_wc_pip_ym <- hierfstat::pairwise.WCfst(hfst_pip_ym, diploid = FALSE)
@@ -1380,24 +1426,28 @@ ggplot(df_Nei_pip3, aes(x = rowname,
 # tables
 pw_Gst_pip_ym <- mmod::pairwise_Gst_Nei(gi_pip_yearm, linearized = FALSE)
 pw_Gst_pip_lo <- mmod::pairwise_Gst_Nei(gi_pip_local, linearized = FALSE)
-
+pw_Gst_pip_ye <- mmod::pairwise_Gst_Nei(gi_pip_years, linearized = FALSE)
 # The Pairwise fst test used in the heatmap colored table
 # below makes use of the 'hierfstat' prepared object
 #Pairwise fst test WC - this takes an 'hierfstat' object as input
 pw_wc_pip_lo <- hierfstat::pairwise.WCfst(hfst_pip_lo, diploid = FALSE)
 pw_wc_pip_ym <- hierfstat::pairwise.WCfst(hfst_pip_ym, diploid = FALSE)
+pw_wc_pip_ye <- hierfstat::pairwise.WCfst(hfst_pip_ye, diploid = FALSE)
 
 # make the data frame as a heat map
 df_pw_wc_pip_lo <- as.data.frame(pw_wc_pip_lo)
 df_pw_wc_pip_ym <- as.data.frame(pw_wc_pip_ym)
+df_pw_wc_pip_ye <- as.data.frame(pw_wc_pip_ye)
 #replace NAs with zeroes
 df_pw_wc_pip_lo[is.na(df_pw_wc_pip_lo)] = 0
 df_pw_wc_pip_ym[is.na(df_pw_wc_pip_ym)] = 0
+df_pw_wc_pip_ye[is.na(df_pw_wc_pip_ye)] = 0
+
 #_____________________________________________________________
 # Prepare min and max values for plot
 #_____________________________________________________________
 
-df_pw_wc_pip <- df_pw_wc_pip_ym
+df_pw_wc_pip <- df_pw_wc_pip_ye
 #get the dplyr library to summarize
 library(dplyr)
 #get the max value per col
@@ -1422,7 +1472,7 @@ locnm <- c("FynBogense","FynKerteminde","JyllandMariagerfjord",
            "NJyllandLimfjord","NJyllandLimfjordLogstoer",
            "NWGermanyNSeaHelgolandRds","NWGermanyWaddenSeaBussumHaupstr",
            "SamsoeBallen","SEDenmarkMecklenburgerBucht","SjaellandSkovshoved")
-locabb <- c("FBo","FKe","JMa","GKi","GMe","JLi","JLo","GHe","GWa","SBa","DMe","SSk")
+locabb <- c("FBo","FKe","JMa","GKi","GWi","JLi","JLo","GHe","GBu","SBa","GWi","SSk")
 # bind it together to a data frame
 df_abloc <- as.data.frame(cbind(locnm,locabb))
 
@@ -1743,8 +1793,15 @@ df_hap_loc02 <- reshape(data=df_hap_loc01,idvar="smplloca",
 # # match the localities
 # df_clo03$locality2 <- abbreviate(df_clo03$locality5, 1, named = FALSE)
 # 
-# df_clo03 <- df_clo03[!grepl("NCBI",df_clo03$locality4),]
+# substitute to get matching location names
+df_clo03$locality4 <- gsub("BalticSea","Baltic Sea",df_clo03$locality4)
+df_clo03$locality4 <- gsub("CaspianSea","Caspian Sea",df_clo03$locality4)
+df_clo03$locality4 <- gsub("CentralWAtlantic","CW Atlantic",df_clo03$locality4)
+df_clo03$locality4 <- gsub("Germany:KielFjord","Germany, Kiel Fjord" ,df_clo03$locality4)
+df_clo03$locality4 <- gsub("NEAtlantic" ,"NE Atlantic"  ,df_clo03$locality4)
+df_clo03$locality4 <- gsub("AtlanticOcean:NWAtlantic"   ,"NW Atlantic"    ,df_clo03$locality4)
 # #match between data frames
+
  df_hap_loc02$dec_loc2 <- df_clo03$locality2[match(df_hap_loc02$smplloca,df_clo03$locality4)]
 
 # sum for duplicated values in row
@@ -1862,7 +1919,7 @@ p01 <- p01 + labs(fill='Haplotype')
 p01 <- p01 + theme(panel.background = element_rect(fill = 'white', color = 'black'),
                    panel.grid.major = element_line(color = 'azure3')) #, linetype = 'dotted'))#,
 # see the plot
-p01
+#p01
 
 df_hap_loc03$dec_lat<- as.numeric(df_hap_loc03$dec_lat)
 df_hap_loc03$dec_lon<- as.numeric(df_hap_loc03$dec_lon)
@@ -2355,6 +2412,8 @@ par(mfrow = c(1, 1))
 rwnm01 <- rownames(df_pip)
 # split by delimeter and make a new data frame
 df_r02 <- data.frame(do.call('rbind', strsplit(as.character(rwnm01),'_',fixed=TRUE)))
+#
+df_r02$collloc2[df_r02$collloc2=="Germany:Maasholm" ] <- "NGermanyKielFjord" 
 #change column names on data frame
 colnames(df_r02) <- c("smplnm","collloc","collyear","collmnth")
 #replace in location names
@@ -2411,14 +2470,28 @@ df_r02$collloc2[grepl("crystal",df_r02$collloc2)] <- "NA"
 df_r02$NCBIaccsNosmplnm[grepl("crystal",df_r02$NCBIaccsNosmplnm)] <- "NA"
 df_r02$collloc2[grepl("Bolinop",df_r02$collloc2)] <- "NA"
 
+df_r02$collloc2[grepl("Germany:Maasholm",df_r02$collloc2)] <- "NGermanyKielFjord"
+
+
 #match to get abbreviated location name
 df_r02$collloc3 <- df_abloc$locabb[match(df_r02$collloc2,df_abloc$locnm)]
+# Germany Mecklenburger bight is close to Germany Wismar bight
+df_r02$collloc3[df_r02$collloc3=="GMe"] <- "GWi"
+df_r02$collloc3[df_r02$collloc3=="GWa"] <- "GWi"
 
-df_r02$collloc3[df_r02$collloc3=="GMe"] <- "GWB"
-df_r02$collloc3[df_r02$collloc3=="GWa"] <- "GWB"
+
+unique(df_r02$collloc3)
+df_r02$collloc3 <- gsub("Hl","Ne",df_r02$collloc3)
+#df_r02$collloc3 <- gsub("Nt","Ne",df_r02$collloc3)
+# Germany Maashol, is close to Germany Kiel Fjord
+df_r02$collloc3 <- gsub("G:M","GKi",df_r02$collloc3)
+
 # round decimal degrees and paste together in a string
 df_clo03$dec_lat2 <- round(as.numeric(df_clo03$dec_lat),3)
 df_clo03$dec_lon2 <-  round(as.numeric(df_clo03$dec_lon),3)
+# Keep 3 decimal places : see: https://stackoverflow.com/questions/48341878/increasing-decimal-positions-swirl-r-programming-environment-12-data-manip
+df_clo03$dec_lon2 <- sprintf("%.3f", df_clo03$dec_lon2)
+df_clo03$dec_lat2 <- sprintf("%.3f", df_clo03$dec_lat2)
 df_clo03$dec_latlon2 <- paste0(df_clo03$dec_lat2,"; ",df_clo03$dec_lon2)
 #match to get sampling location 
 df_r02$posloc <- df_clo03$dec_latlon2[match(df_r02$collloc3,df_clo03$locality8)]
@@ -2487,8 +2560,13 @@ lcnm8 <- gsub("CentralWAtlantic","Central W Atlantic",lcnm8)
 lcnm8 <- gsub("NEAtlantic","NE Atlantic",lcnm8)
 lcnm8 <- gsub("NWAtlantic","NW Atlantic",lcnm8)
 lcnm8 <- gsub("AtlanticOcean","Atlantic Ocean",lcnm8)
+lcnm8 <- gsub("Atlantic Ocean, ","",lcnm8)
+abbr8 <- gsub("Ssk","SSk",abbr8)
 #paste long nmae and abbreviatoin together to use for table header
 ablo8 <- paste0(lcnm8," (",abbr8,")")
+# exclude matches
+ablo8<- ablo8[!grepl("GalvestonBay",ablo8)]
+ablo8<- ablo8[!grepl("Panacea",ablo8)]
 # paste the vector together to be one single string
 ablo8 <- paste(ablo8,collapse="; ")
 #paste together a text to use as header in the table
@@ -2809,7 +2887,7 @@ NCBIsmpl <- c("Mediterranean",
   "NWGermanyNSeaHelgolandRds", 
   "BalticSea", 
   "AtlanticOcean:NWAtlantic", 
-  "Holland")
+  "Netherlands")
 # count the number of elements
 noNCBIsmpl <- length(NCBIsmpl)
 # make a color range
@@ -2982,8 +3060,8 @@ df_clo03[grepl("Mediterr",df_clo03$locality5),]
 df_hap_loc06 <- df_hap_loc05[!is.na(df_hap_loc05$rws),]
 df_hap_loc06$dec_lat <- as.numeric(df_hap_loc06$dec_lat)
 df_hap_loc06$dec_lon <- as.numeric(df_hap_loc06$dec_lon)
-df_hap_loc06[grepl("Hl",df_hap_loc06$dec_loc2),]
-
+#df_hap_loc06[grepl("Hl",df_hap_loc06$dec_loc2),]
+#df_hap_loc06[grepl("Nt",df_hap_loc06$dec_loc2),]
 #https://guangchuangyu.github.io/2016/12/scatterpie-for-plotting-pies-on-ggplot/
 world3 <- ggplot2::map_data('world3')
 jitlvl <- 0.017
@@ -3138,7 +3216,18 @@ write_csv(df_hap_loc09,file=loc06fl)
 
 #_______________________________________________________________________________
 # match between abbreviated location names to get long location names
-df_hap_loc06$dec_loc3 <- df_clo03$locality5[match(df_hap_loc06$dec_loc2,df_clo03$locality2 )]
+View(df_clo03)
+df_clo03$locality9 <- df_clo03$locality5
+df_clo03$locality9 <- gsub("BalticSea" ,"Baltic Sea" ,df_clo03$locality9)
+df_clo03$locality9 <- gsub("CaspianSea" ,"Caspian Sea" ,df_clo03$locality9)
+df_clo03$locality9 <- gsub("Germany:Helgoland","North Sea, Helgoland Roads" ,df_clo03$locality9)
+df_clo03$locality9 <- gsub("CentralWAtlantic","CW Atlantic"  ,df_clo03$locality9)
+df_clo03$locality9 <- gsub("Germany:KielFjord" ,"Germany, Kiel Fjord"   ,df_clo03$locality9)
+df_clo03$locality9 <- gsub("NEAtlantic" ,"NE Atlantic" ,df_clo03$locality9)
+df_clo03$locality9 <- gsub("AtlanticOcean:NWAtlantic" ,"NW Atlantic" ,df_clo03$locality9)
+
+df_hap_loc06$dec_loc3 <- df_clo03$locality9[match(df_hap_loc06$dec_loc2,df_clo03$locality2 )]
+
 # add a new colunm to add overall geographic regions to
 df_hap_loc06$ov.aL <- df_hap_loc06$dec_loc3
 df_hap_loc09 <- df_hap_loc06 
@@ -3155,11 +3244,12 @@ df_hap_loc06$ov.aL[grepl("Jutland",df_hap_loc06$dec_loc3)] <- "NEurope"
 df_hap_loc06$ov.aL[grepl("Funen",df_hap_loc06$dec_loc3)] <- "NEurope"
 df_hap_loc06$ov.aL[grepl("North Sea",df_hap_loc06$dec_loc3)] <- "NEurope"
 df_hap_loc06$ov.aL[grepl("NEAtlantic",df_hap_loc06$dec_loc3)] <- "NEurope"
+df_hap_loc06$ov.aL[grepl("NE Atlantic",df_hap_loc06$dec_loc3)] <- "NEurope"
 df_hap_loc06$ov.aL[grepl("Samsoe",df_hap_loc06$dec_loc3)] <- "NEurope"
 df_hap_loc06$ov.aL[grepl("Sealand",df_hap_loc06$dec_loc3)] <- "NEurope"
-df_hap_loc06$ov.aL[grepl("Holland",df_hap_loc06$dec_loc3)] <- "NEurope"
+df_hap_loc06$ov.aL[grepl("Netherlands",df_hap_loc06$dec_loc3)] <- "NEurope"
 
-df_hap_loc06$ov.aL[grepl("NWAtlantic",df_hap_loc06$dec_loc3)] <- "NWAtlantic"
+df_hap_loc06$ov.aL[grepl("NW",df_hap_loc06$dec_loc3)] <- "NWAtlantic"
 df_hap_loc06$ov.aL[grepl("USA",df_hap_loc06$dec_loc3)] <- "NWAtlantic"
 
 # sum up Hpt counts from different sampling locations within same geographic region
@@ -3286,37 +3376,28 @@ title(ylab="Percent of variance\nexplained", line = 2)
 title(xlab="Eigenvalues", line = 1)
 # second make PCA plot
 h.pca.scores <- as.data.frame(h.pca$scores)
+
+#h.pca.scores$pop
 #get pop groups from row names
 popyear <- gsub("(^.*)_(.*)_(.*)_(.*)$","\\3",row.names(h.pca.scores))
 poploc <- gsub("(^.*)_(.*)_(.*)_(.*)$","\\2",row.names(h.pca.scores))
-#h.pca.scores$pop <- popyear
+#  substitute the location names that are slightly wrong
+poploc <- gsub("NWGermanyWaddenSeaBussumHaupstr" ,"GermanyBusum",poploc  )
+poploc <- gsub("Germany:Maasholm","NGermanyKielFjord" ,poploc  )
+# match to get location names
+poploc <- df_clo03$locality9[match(poploc,df_clo03$locality6)]
+# substitute the location names that are slightly wrong in 'df_clo03$locality9'
+poploc <- gsub("Funen, Bogense,","Funen, Bogense",poploc)
+poploc <- gsub("Samsoe, Ballen","Samsøe, Ballen",poploc)
+poploc <- gsub("Germany, Busum","Germany, Büsum",poploc)
+# add a column with location names
 h.pca.scores$pop <- poploc
-# match to get longer location names on data frame with colors
-df_cll$coll_loc2 <- df_clo2$locality3[match(df_cll$coll_loc,df_clo2$locality)]
-# add one long location name that is missing
-df_cll$coll_loc2[df_cll$coll_loc=="Funen, Bogense"] <- "FynBogense"
-# use the first 4 values in one column and add to the first 4 rows of a another
-# colunm
-df_cll$coll_loc2[1:4] <- df_cll$coll_loc[1:4]
-# sort the unique pop locations
-poplocs2 <- unique(poploc)[order(unique(poploc))]
-df_cll$coll_loc3 <- df_cll$coll_loc
-#poplocs2[!poplocs2 %in% df_cll$coll_loc3]
-poplocs3 <- df_clo03$locality4[match(poplocs2,df_clo03$locality6)]
-
+# order the data frame by the column with location names
+h.pca.scores <- h.pca.scores[order(h.pca.scores$pop),]
+# get unique location names
+ppll3 <- unique(h.pca.scores$pop)
 # now match between data frames to get colors for locations
-#cl7 <- df_cll$colfcol_loc[match(poplocs2,df_cll$coll_loc2)]
-cl7 <- df_cll$colfcol_loc[match(poplocs3,df_cll$coll_loc)]
-col8 <- as.data.frame(cbind(poplocs3,poplocs2,cl7))
-
-col8$cl7[grepl("Kiel",col8$poplocs2)] <- df_cll$colfcol_loc[grepl("Kiel",df_cll$coll_loc)]
-col8$cl7[grepl("Bussum",col8$poplocs2)] <- df_cll$colfcol_loc[grepl("Büsum",df_cll$coll_loc)]
-cl7 <- col8$cl7
-# match back detailed location name
-poploc3 <- df_cll$coll_loc[match(poplocs3,df_cll$coll_loc3)]
-
-#replace location names in pca data frame
-h.pca.scores$pop <- poploc3
+cl7 <- df_cll$colfcol_loc[match(ppll3,df_cll$coll_loc)]
 library(ggplot2)
 set.seed(9)
 #make a plot with pca 
@@ -3332,15 +3413,14 @@ p01 <- p
 #p01
 # color range from haplotype network pie diagrams for
 # location sampled - used in Fig.2.
-#colfh
-p01 <- p01 + scale_color_manual(values = cl7) 
+#p01 <- p01 + scale_color_manual(values = cl7) 
 p01 <- p01 + scale_fill_manual(values = cl7) 
 # change the heading for the legend, this must be done for all 
 #settings for the points
 p01 <- p01 + labs(color='Location')
 p01 <- p01 + labs(fill='Location')
 p01 <- p01 + labs(shape='Location')
-
+#p01
 # replace the pop name column in the pca data frame with the sampling year
 h.pca.scores$pop <- popyear
 #h.pca.scores$pop <- poploc
@@ -3442,10 +3522,10 @@ par(mfrow = c(1, 1))
 #_______________________________________________________________________________
 #
 df.p.lo <- df_pw_wc_pip
-df.p.ym <- df_pw_wc_pip_ym
+df.p.ye <- df_pw_wc_pip_ye
 
 df.p.lo <- round(df.p.lo,2)
-df.p.ym <- round(df.p.ym,2)
+df.p.ye <- round(df.p.ye,2)
 df_clo03$locality6 <- gsub(" ","",df_clo03$locality5)
 df_clo03$locality6 <- gsub(",","",df_clo03$locality6)
 df_clo03$locality6 <- gsub("Funen","Fyn",df_clo03$locality6)
@@ -3482,13 +3562,13 @@ abbloccnms <-
 "FKe",
 "JMa",
 "GKi",
-"GMe",
+"GWi",
 "JLi",
 "JLo",
 "GHe",
-"GWa",
+"GBu",
 "SBa",
-"DMe",
+"GWi",
 "Ssk")
 #combine to a data frame
 df_abblocnms <- as.data.frame(cbind(llocnms,abbloccnms))
@@ -3505,13 +3585,37 @@ df_clo03$locality7 <- df_clo03$locality2
 df_clo03$locality8 <-  df_ll08$ll7[match(df_clo03$locality,df_ll08$lloc6)]
 df_clo03$locality8[is.na(df_clo03$locality8)] <- df_clo03$locality7[is.na(df_clo03$locality8)]
 df_clo03$locality8[df_clo03$locality8=="FB"] <- "FBo"
+df_clo03$locality8[df_clo03$locality8=="GMe"] <- "GWi"
 #replace abbreviated colunm names and row names
 colnames(df.p.lo) <- df_clo03$locality8[match(colnames(df.p.lo),df_clo03$locality2)]
 rownames(df.p.lo) <- df_clo03$locality8[match(rownames(df.p.lo),df_clo03$locality2)]
+
 # paste together location and abbreviation to use for the tables
 v_locabb <- paste0(df_clo03$locality4," (",df_clo03$locality8,");")
+# exclude by grepping
+v_locabb <- v_locabb[!grepl("G:M",v_locabb)]
+v_locabb <- v_locabb[!grepl("Panacea",v_locabb)]
+v_locabb <- v_locabb[!grepl("GalvestonBay",v_locabb)]
+v_locabb <- v_locabb[!grepl("Germany:Helgoland",v_locabb)]
+v_locabb <- v_locabb[!grepl("Germany:Maasholm",v_locabb)]
+v_locabb <- v_locabb[!grepl("Germany:KielFjord ",v_locabb)]
+
+
+# use substitute to replace in names
+v_locabb <- gsub("BalticSea","Baltic Sea",v_locabb)
+v_locabb <- gsub("CaspianSea","Caspian Sea",v_locabb)
+v_locabb <- gsub("CentralWAtlantic","Central W Atlantic",v_locabb)
+v_locabb <- gsub("NEAtlantic","NE Atlantic",v_locabb)
+v_locabb <- gsub("AtlanticOcean:NWAtlantic","NW Atlantic",v_locabb)
+v_locabb <- gsub("Ssk","SSk",v_locabb)
+
+#ensure only unique names are included
+v_locabb <- unique(v_locabb)
+
 # paste all elements in vector together in one string
 locat_abb <- paste(v_locabb,collapse=" ")
+# replace the last semi colon with a punctuation mark and a space
+locat_abb <- gsub(";$",". ",locat_abb)
 #_______________________________________________________________________________
 #
 #_______________________________________________________________________________
@@ -3526,6 +3630,9 @@ d1 <- df.p.lo
 mdlo <- as.matrix(d1)
 nr <- nrow(mdlo)
 nc <- ncol(mdlo)
+# substitue in column names and in row names
+rownames(mdlo) <- gsub("Ssk","SSk",rownames(mdlo))
+colnames(mdlo) <- gsub("Ssk","SSk",colnames(mdlo))
 # normalize values to a scale from 0 to 1
 minval <- min(mdlo)
 maxval <- max(mdlo)
@@ -3537,10 +3644,13 @@ colscale<-scale_fill_continuous()
 library(paletteer)
 colscale <- scale_fill_paletteer_c(palette="scico::tokyo", direction = 1)
 colscale <- scale_fill_paletteer_c(palette="pals::kovesi.linear_kryw_5_100_c64", direction = 1)
+colscale <- scale_fill_paletteer_c(palette="pals::ocean.haline", direction = 1)
+# reverse the color scale: see: https://stackoverflow.com/questions/45868625/how-to-reverse-the-default-color-palette-for-ggplot2
+colscale <- scale_fill_paletteer_c(palette="pals::ocean.haline", direction = -1)
 # get colour values corresponding to normalized values in matrix
 colourhtmlvalues <- colscale$palette(valuesnorm)
 # evaluate for low values and assign these a different color to use for the font
-coltxtval <- ifelse(valuesnorm>0.3,"black","white")
+coltxtval <- ifelse(valuesnorm<0.4,"black","white")
 # add necessary html around each colour value
 colourhtmlvalues  <- paste0("background-color:",colourhtmlvalues ,";")
 # also make  values for colors for text
@@ -3565,11 +3675,18 @@ colourtxthtml <- t(matrix(data=colourtxthtml,nrow=nr+1,ncol=nc+1))
 colourhtml[2:(nr+1),2:(nc+1)]<-colourhtmlvalues
 colourtxthtml[2:(nr+1),2:(nc+1)]<-colourhtmltxtvals
 # make a table caption
-capt_tbl01 <- paste0("Table 2. Comparison of population genetic fixation index (PhiST) obtained from sequences of nDNA 18S for various sampling locations. The PhiST values can range from 0 to 1, where a PhiST of 1 indicates very different genetic variations among sampled individuals. Low PhiST values close to 0 suggest that individuals sampled are genetically very similar. Abbreviations for locations are: ",
-                     locat_abb)
-                     
+capt_tbl01 <- paste0("Table 1. Comparison of population genetic fixation index (PhiST) obtained from sequences of nDNA 18S for various sampling locations. Low PhiST values suggest that individuals sampled are genetically very similar, and high PhiST values indicates genetic variation is high. Abbreviations for locations are: ",
+                     locat_abb,
+                     "The color gradient reflects the PhiST index with a yellow for low PhiST values, and dark blue for high PhiST values.")
+
+#make a function that keeps 2 decimal places : see: https://stackoverflow.com/questions/48341878/increasing-decimal-positions-swirl-r-programming-environment-12-data-manip
+fSpr <- function(c) sprintf("%.2f", c)
+# apply the function to the matrix : see: https://www.tutorialkart.com/r-tutorial/r-apply-function-to-each-element-of-matrix/
+mdlo2 <-  apply(mdlo, 2, fSpr)
+# add back row names
+rownames(mdlo2) <- rownames(mdlo)
 # show the table
-t.HTML01 <- mdlo %>%
+t.HTML01 <- mdlo2 %>%
   addHtmlTableStyle(align = "r") %>%
   #addHtmlTableStyle(css.cell = colourhtml) %>%
   addHtmlTableStyle(css.cell = colourhtml_cell) %>%
@@ -3587,7 +3704,8 @@ t.HTML01
 #_______________________________________________________________________________
 #_______________________________________________________________________________
 library(htmlTable)
-d1 <- df.p.ym
+d1 <- df.p.ye
+
 # change column and row names to ensure they are not evaluated when
 # min and max values are used for coloring cells
 colnames(d1) <-  paste0("y_",colnames(d1))
@@ -3608,10 +3726,13 @@ colscale<-scale_fill_continuous()
 library(paletteer)
 colscale <- scale_fill_paletteer_c(palette="scico::tokyo", direction = 1)
 colscale <- scale_fill_paletteer_c(palette="pals::kovesi.linear_kryw_5_100_c64", direction = 1)
+colscale <- scale_fill_paletteer_c(palette="pals::ocean.haline", direction = 1)
+# reverse the color scale: see: https://stackoverflow.com/questions/45868625/how-to-reverse-the-default-color-palette-for-ggplot2
+colscale <- scale_fill_paletteer_c(palette="pals::ocean.haline", direction = -1)
 # get colour values corresponding to normalized values in matrix
 colourhtmlvalues <- colscale$palette(valuesnorm)
 # evaluate for low values and assign these a different color to use for the font
-coltxtval <- ifelse(valuesnorm>0.3,"black","white")
+coltxtval <- ifelse(valuesnorm<0.4,"black","white")
 # add necessary html around each colour value
 colourhtmlvalues  <- paste0("background-color:",colourhtmlvalues ,";")
 # also make  values for colors for text
@@ -3636,9 +3757,16 @@ colourtxthtml <- t(matrix(data=colourtxthtml,nrow=nr+1,ncol=nc+1))
 colourhtml[2:(nr+1),2:(nc+1)]<-colourhtmlvalues
 colourtxthtml[2:(nr+1),2:(nc+1)]<-colourhtmltxtvals
 # make a table caption
-capt_tbl02 <-        "Table 3. Comparison of PhiST for Mnemiopsis leidyi obtained from sequences of nDNA 18S for the sampling years. Sequences of nDNA 18S obtained from the National Center for Biotechnology Information (NCBI) GenBank were assigned a sampling year as inferred from the year the sequence was deposited on NCBI GenBank."
+capt_tbl02 <-        "Table 2. Comparison of PhiST for Mnemiopsis leidyi obtained from sequences of nDNA 18S for the sampling years. Sequences of nDNA 18S obtained from the National Center for Biotechnology Information (NCBI) GenBank were assigned a sampling year as inferred from the year the sequence was deposited on NCBI GenBank. A high PhiST index indicates no variation among the individuals sampled, a high PhiST index indicates there ishigh variation among sequences compared. The color gradient reflects this as a yellow for low PhiST values, and dark blue for high PhiST values."
+#make a function that keeps 2 decimal places : see: https://stackoverflow.com/questions/48341878/increasing-decimal-positions-swirl-r-programming-environment-12-data-manip
+fSpr <- function(c) sprintf("%.2f", c)
+# apply the function to the matrix : see: https://www.tutorialkart.com/r-tutorial/r-apply-function-to-each-element-of-matrix/
+mdlo2 <-  apply(mdlo, 2, fSpr)
+# add back row names
+rownames(mdlo2) <- rownames(mdlo)
+#mdlo2
 # show the table
-t.HTML02 <- mdlo %>%
+t.HTML02 <- mdlo2 %>%
   addHtmlTableStyle(align = "r") %>%
   #addHtmlTableStyle(css.cell = colourhtml) %>%
   addHtmlTableStyle(css.cell = colourhtml_cell) %>%
@@ -3741,7 +3869,7 @@ df_clo03$ov.loc[!is.na(df_clo03$locality)] <- "NE Atlantic"
 df_clo03$ov.loc[grepl("USA",df_clo03$locality4)] <- "NW Atlantic"
 df_clo03$ov.loc[grepl("NEAtlantic",df_clo03$locality4)] <- "NE Atlantic"
 df_clo03$ov.loc[grepl("Mediterranean",df_clo03$locality4)] <- "Mediterranean"
-df_clo03$ov.loc[grepl("Holland",df_clo03$locality4)] <- "NE Atlantic"
+df_clo03$ov.loc[grepl("Netherlands",df_clo03$locality4)] <- "NE Atlantic"
 df_clo03$ov.loc[grepl("Baltic",df_clo03$locality4)] <- "NE Atlantic"
 df_clo03$ov.loc[grepl("Caspian",df_clo03$locality4)] <- "Caspian Sea"
 df_clo03$ov.loc[grepl("NWAtlantic",df_clo03$locality4)] <- "NW Atlantic"
@@ -3749,6 +3877,11 @@ df_clo03$ov.loc[grepl("Germany",df_clo03$locality4)] <- "NE Atlantic"
 df_clo03$ov.loc[grepl("CentralWAtlantic",df_clo03$locality4)] <- "Central W Atlantic"
 # replace long row names with abbreviated location names
 rownames(fmds) <- df_clo03$locality8[match(rownames(fmds),df_clo03$locality6)]
+# see if there is a match in one column, and use this to add a string to another
+# column, that specifies the overall sampling location
+df_clo03$ov.loc[df_clo03$locality9=="CW Atlantic"] <- "CW Atlantic" 
+df_clo03$ov.loc[df_clo03$locality9=="NE Atlantic"] <- "NE Atlantic" 
+df_clo03$ov.loc[df_clo03$locality9=="NW Atlantic"] <- "NW Atlantic" 
 # match to get overall location
 fmds$ov.loc <- df_clo03$ov.loc[match(rownames(fmds),df_clo03$locality8)]
 
