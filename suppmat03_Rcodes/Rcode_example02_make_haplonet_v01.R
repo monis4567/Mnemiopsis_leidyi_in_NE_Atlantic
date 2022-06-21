@@ -34,3 +34,4 @@ ind.hap3<-with(
 plot(net3, size=attr(net3, "freq"), scale.ratio = 2, cex = 0.8, pie=ind.hap3)
 plot(net3, size=attr(net3, "freq"), scale.ratio = 20, cex = 0.8, pie=ind.hap3)
 plot(net3, size=attr(net3, "freq"), scale.ratio = 0.20, cex = 0.8, pie=ind.hap3)
+plot(net3, size=attr(net3, "freq"), scale.ratio = 500, cex = 0.8, pie=ind.hap3)

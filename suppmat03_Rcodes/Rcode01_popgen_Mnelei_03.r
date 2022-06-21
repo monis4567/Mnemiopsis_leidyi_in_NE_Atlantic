@@ -399,9 +399,10 @@ df_lN02$location <- gsub(" ","",df_lN02$location)
 # add a column for sample year
 df_lN02$smplyear <- gsub(".*(20[0-9]{2}).*","\\1",df_lN02$pubjournal)
 df_lN02$smplyear[grepl("Unpublished",df_lN02$smplyear)] <- "unknown"
-
-
-
+# define a filename to write the data frame to as a csv file
+wd00_wd05_flnm3 <- paste(wd00_wd05,"/df_lN02.csv",sep="")
+# write the data frame as a csv file
+write.csv(df_lN02,file=wd00_wd05_flnm3)
 
 #:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 #define input file
@@ -711,7 +712,11 @@ df_pip02$rwnm08 <- NULL
 df_pip02 <- df_pip02 %>% replace(is.na(.), "-")
 #make the date frame a matrix and a DNAbin object again
 dnb_pip02 <- as.DNAbin(as.matrix(df_pip02))
-
+# define a filename to write the data frame to as a csv file
+wd00_wd05_flnm2 <- paste(wd00_wd05,"/dnb_pip02_df.csv",sep="")
+# write the data frame as a csv file
+write.csv(df_pip02,file=wd00_wd05_flnm2)
+# copy the data frame to a new object
 pip <- dnb_pip02
 #________________________________________________________________
 #start - Plot haplotype network:
@@ -821,6 +826,11 @@ legend("topright",colnames(new.hap.smplloc),
        col=rainbow(ncol(new.hap.smplloc)), 
        pch=19, ncol=1)
 
+
+plot(pipNet, size = (sqrt((attr(pipNet,"freq"))/pi)), 
+     scale.ratio = 1.2, cex = 1.1, pie = new.hap.smplloc, 
+     show.mutation = 0, threshold = 0, labels(T))
+
 #define variable
 inp.f.fnm <- "Mnelei_per_location"
 flnm <- c(paste("haplotype_network_",inp.f.fnm,".pdf",  sep = ""))
@@ -884,6 +894,9 @@ par(op)
 # end svg file to save as
 dev.off()  
 
+plot(pipNet, size = (sqrt((attr(pipNet,"freq"))/pi)), 
+     scale.ratio = 2.6, cex = 1.1, pie = new.hap.smplye, 
+     show.mutation = 2, threshold = 0, labels(TRUE))
 
 
 #________________________________________________________________
@@ -948,6 +961,7 @@ par(mfrow = c(1, 1))
 #________________________________________________________________
 # Try and plot a neighbour join tree
 #
+class(pip)
 mtr_dd_pip <- ape::dist.dna(pip)
 tre_pip <- ape::njs(mtr_dd_pip)
 #sort the branches in the tree
@@ -3909,6 +3923,10 @@ df_clo03$ov.loc[df_clo03$locality9=="NE Atlantic"] <- "NE Atlantic"
 df_clo03$ov.loc[df_clo03$locality9=="NW Atlantic"] <- "NW Atlantic" 
 # match to get overall location
 fmds$ov.loc <- df_clo03$ov.loc[match(rownames(fmds),df_clo03$locality8)]
+# define path and output file name
+outfNm3 <- paste0(wd00_wd05,"/df_clo03.csv")
+# write output filename
+write.table(df_clo03,outfNm3,sep=";")
 
 # get unique over locations
 locs3 <- unique(fmds$ov.loc)
@@ -3968,321 +3986,113 @@ if(bSaveFigures==T){
          units="mm",dpi=300)
 }
 
+#_______________________________________________________________________________
+#_______________________________________________________________________________
+# Save a faste file without Bolinopsis and with modified sequence names
+#
+#_______________________________________________________________________________
+#_______________________________________________________________________________
+library(pegas) #for analyses and haplotype network
+library(magrittr)
+library(dplyr)
+#Important: all these functions rely on the order of the sequences 
+#in the fasta file being exactly the same as the order of the labels!!! 
+#No error message is given if this is not the case.
 
+#read in the data
+#x <- read.dna(file="aligment_alle_Aurelias_definitief.fas",format="fasta")
+inf01 <- "algn_Mnelei_18s_10.aligned.fasta.fas"
+wd00_wd01_inf01 <- paste0(wd00_wd01,"/",inf01)
+x <- read.dna(file=wd00_wd01_inf01,format="fasta")
+x2 <- x
+#make the DNAbin object a genind object
+geni_x2 <- adegenet::DNAbin2genind(x2)
+#make the genind object a dataframe
+df_x2 <- adegenet::genind2df(geni_x2)
+#get the row names
+orig_rwnm <- row.names(df_x2)
+# replace all NAs
+df_x2 <- df_x2 %>% replace(is.na(.), "-")
 
-
-#https://search.r-project.org/CRAN/refmans/StAMPP/html/stamppFst.html
-# convert genind object to genlight object with the dartR package
-gl_pip <- dartR::gi2gl(gei_pip)
-# load the "StAMPP" to be able to use functions from the "StAMPP" package
-library("StAMPP")
-# convert genlight object in to a stamp object
-sta_mnelei <- StAMPP::stamppConvert(gl_pip,type = "genlight")
+#Grep among the list of files, to get the file that holds the different names
+fnm_clo3 <- list.files(wd00_wd05)[grepl("clo03",list.files(wd00_wd05))]
+fnm_df_lN02 <- list.files(wd00_wd05)[grepl("df_lN02",list.files(wd00_wd05))]
+#read locations file
+df_clo3<-read.csv(file=paste0(wd00_wd05,"/",fnm_clo3),header=TRUE,sep=";")
+df_lN02<-read.csv(file=paste0(wd00_wd05,"/",fnm_df_lN02),header=TRUE,sep=",")
 # split string and get lists nested in a list
-loca2 <- strsplit(as.character(sta_mnelei$sample), "_")
+lbls01 <- strsplit(as.character(labels(x)), "_")
+# get only NCBI labels
+lbls02 <- sapply(lbls01, "[[", 3)
+# grep only elements that includes numbers
+ncbilbls <- lbls02[grepl("[0-9]",lbls02)]
+# get location names for NCBI accesion numbers
+lnbls<- df_lN02$location[match(ncbilbls,df_lN02$accession_nmb)]
+# replace the labels that has numbers in them with the location name
+lbls02[grepl("[0-9]",lbls02)] <- lnbls
+# copy the vector with labels
+lbls03 <- lbls02
+df_lblnms <- as.data.frame(cbind(lbls02,lbls03)) 
+colnames(df_lblnms) <- c("longNm","AbrNm")
+df_lblnms$AbrNm <- df_clo3$locality8[match(df_lblnms$longNm,df_clo3$locality5)]
+llnNm1 <- df_lblnms$longNm[is.na(df_lblnms$AbrNm)]
+# make vector with long names appearing in the haplotype labels
+Nm_inLonNm <- c("USA:WoodsHole","NEAtlantic","Mediterranean","CaspianSea","CentralWAtlantic","USA:GalvestonBay","USA:Panacea","Germany:KielFjord","Germany:Maasholm","Germany:Helgoland","BalticSea","AtlanticOcean:NWAtlantic","Netherlands","Loegstoer","Mariagerfjord","Kerteminde","NSeaHelgolandRds","WaddenSeaBussumHaupstr","Skovshoved","KielFjord","Bogense","MecklenburgerBuchtWismarBucht","MecklenburgerBucht","Ballen")
+# make vector with long names appearing in the df_clo3 df
+Nm_inclo03 <- c("USA:WoodsHole","NEAtlantic","Mediterranean","CaspianSea","CentralWAtlantic","USA:GalvestonBay","USA:Panacea","NGermanyKielFjord","NGermanyKielFjord","NWGermanyNSeaHelgolandRds","BalticSea","AtlanticOcean:NWAtlantic","Netherlands","NJyllandLimfjord","JyllandMariagerfjord","FynKerteminde","NWGermanyNSeaHelgolandRds","GermanyBusum","SjaellandSkovshoved","NGermanyKielFjord","FynBogense","NGermanyMecklenburgerBuchtWismarBucht","NGermanyMecklenburgerBuchtWismarBucht","SamsoeBallen")
+# combine to a df
+df_rplNm <- as.data.frame(cbind(Nm_inLonNm,Nm_inclo03))
+# match first the longNm from the Haplotype labels to the df with both the haplotype labels and the df_clo03 labels
+df_lblnms$longNm <- df_rplNm$Nm_inclo03[match(df_lblnms$longNm,df_rplNm$Nm_inLonNm)]
+# then match the new long name with th df_clo03 table to get the abbreviation
+df_lblnms$AbrNm <- df_clo3$locality8[match(df_lblnms$longNm,df_clo3$locality6)]
+#add rownames for haploFreq function
+df_rNm_lblNm <- as.data.frame(cbind(rownames(df_x2),df_lblnms$AbrNm))
+
+# split to get 
+lrNm <- strsplit(as.character(rownames(df_x2)), "_")
 #get second object in nested list
-smplno2 <- sapply(loca2, "[[", 2)
-# replace other location names
-smplno2[grep("WaddenSeaBussumHaupstr",smplno2)] <-  "GermanyBusum" 
-smplno2[grep("Germany:Maasholm",smplno2)] <- "GermanyKielFjord" 
-# replace pop names in stamp object - you will need the identifiers for the 
-# populations to be able 
-sta_mnelei$pop.names <- df_clo03$locality8[match(smplno2,df_clo03$locality6)]
-# use 'StAMPP' package to calculate Fst and p-values on populations
-Mnl.fst <- StAMPP::stamppFst(sta_mnelei, 100, 95, 1)
-# make the nested tables data frames
-df_Mnelei.fst <- as.data.frame(Mnl.fst$Fsts)
-df_Mnelei.pval <- as.data.frame(Mnl.fst$Pvalues)
-df_Mnelei.pval <- t(df_Mnelei.pval)
+#unique sample number
+smplno1 <- sapply(lrNm, "[[", 1)
+smplno2 <- sapply(lrNm, "[[", 2)
+smplno3 <- sapply(lrNm, "[[", 3)
+# get sample numbers from haplotype table
+liht2Nm <- strsplit(as.character(df_ihpt02$pop), "_")
+# get the first element of the split string
+liht2Nm.1 <- sapply(liht2Nm, "[[", 1)
+# copy the vector
+liht2Nm.1a <- liht2Nm.1
+# grep for long (5) numeric characters in the string, and substitute, to only get accession number 
+liht2Nm.1a[grepl("[0-9]{5}",liht2Nm.1a)] <- gsub("Mnelei","",liht2Nm.1[grepl("[0-9]{5}",liht2Nm.1)])
+# get the sampling year
+yearsmpl4 <- sapply(liht2Nm, "[[", 3)
+# bind them by column in a new data frame
+df_smpl.yer4 <- as.data.frame(cbind(liht2Nm.1a,yearsmpl4))
+# change the column names
+colnames(df_smpl.yer4) <- c("smplNo5","smplyer5")
+#copy the vector
+smplno1a <- smplno1
+# replace in the copied vector
+smplno1a[grepl("Mnemiopsis",smplno1)] <- smplno3[grepl("Mnemiopsis",smplno1)]
+# match back to get sampling year
+smplno5 <- df_smpl.yer4$smplyer5[match(smplno1a,df_smpl.yer4$smplNo5)]
+# combine to a data frame
+df_rNm_lblNm2 <- cbind(smplno1a,df_rNm_lblNm, smplno5)
+# change column name
+colnames(df_rNm_lblNm2) <- c("longNm1","longNm2","locat","smplyear")
+df_rNm_lblNm2$longNm1
+# change row names in data frame with sequences
+rownames(df_x2) <- paste0(df_rNm_lblNm2$longNm1,"_",df_rNm_lblNm2$locat,"_",df_rNm_lblNm2$smplyear)
+# grep for "Bolinopsis" to exclude from the data frame
+df_x2 <- df_x2[!grepl("Bolinopsis",rownames(df_x2)),]
+#make the date frame a matrix and a DNAbin object again
+dnb_x2 <- as.DNAbin(as.matrix(df_x2))
+#
+pth_outpnxf <- paste0(wd00,"/",wd05,"/Mnelei_tmp01.fas")
+#write the DNAbin object as a nexus file
+ape::write.nexus.data(dnb_x2,pth_outpnxf,
+                      interleaved = F)
+#write the output file
+ips::write.fas(dnb_x2,pth_outpnxf)
 
 
-m3 <- as.matrix(df_Mnelei.pval)
-m2 <- as.matrix(df_Mnelei.fst)
-rwnmMfst <- rownames(df_Mnelei.fst)
-clnmMfst <- colnames(df_Mnelei.fst)
-# m2 <- matrix(1:20, 4, 5)
-# m3 <- matrix(rep(letters[1:5],4),4,5)
-m2a <- ifelse(lower.tri(m2),m2,NA)
-m3a <- ifelse(upper.tri(m3),m3,NA)
-m4 <- ifelse(is.na(m2a),m3a,m2a)
-rownames(m4) <- rwnmMfst
-colnames(m4) <- clnmMfst
-df_Mnelei.fst <- as.data.frame(m4)
-
-# use the other 'StAMPP' function 
-Mnl.Gst <- StAMPP::stamppGmatrix(sta_mnelei)
-Mnl.NesD <- StAMPP::stamppNeisD(sta_mnelei)
-# turn these tables in to data frames too
-df_Mnelei.Gst <- as.data.frame(Mnl.Gst)
-df_Mnelei.NesD <- as.data.frame(Mnl.NesD)
-#_______________________________________________________________________________
-library(htmlTable)
-d1 <- df_Mnelei.fst
-#d1 <- df_Mnelei.NesD
-#https://cran.r-project.org/web/packages/htmlTable/vignettes/general.html
-#https://cran.r-project.org/web/packages/htmlTable/vignettes/general.html
-mdlo <- as.matrix(d1)
-
-nr <- nrow(mdlo)
-nc <- ncol(mdlo)
-# normalize values to a scale from 0 to 1
-minval <- min(mdlo)
-maxval <- max(mdlo)
-# but do not consider the values that are NA
-minval <- min(mdlo[!is.na(mdlo)])
-maxval <- max(mdlo[!is.na(mdlo)])
-#minval <- 0
-#maxval <- 1
-valuesnorm <- mapply(function(x) (x-minval)/(maxval-minval), t(mdlo))
-# set up colour scale using default ggplot palette
-colscale<-scale_fill_continuous()
-# alternative palettes
-# note that we only need to define colscale once - comment out the ones you don't want
-library(paletteer)
-colscale <- scale_fill_paletteer_c(palette="scico::tokyo", direction = 1)
-colscale <- scale_fill_paletteer_c(palette="pals::kovesi.linear_kryw_5_100_c64", direction = 1)
-colscale <- scale_fill_paletteer_c(palette="pals::ocean.haline", direction = 1)
-# reverse the color scale: see: https://stackoverflow.com/questions/45868625/how-to-reverse-the-default-color-palette-for-ggplot2
-colscale <- scale_fill_paletteer_c(palette="pals::ocean.haline", direction = -1)
-# get colour values corresponding to normalized values in matrix
-colourhtmlvalues <- colscale$palette(valuesnorm)
-# evaluate for low values and assign these a different color to use for the font
-coltxtval <- ifelse(valuesnorm<0.4,"black","white")
-# add necessary html around each colour value
-colourhtmlvalues  <- paste0("background-color:",colourhtmlvalues ,";")
-# also make  values for colors for text
-coltxtval         <- paste0("color:",coltxtval ,";")
-# paste together background color og font color
-colourhtml_cell <- paste0(colourhtml,colourtxthtml)
-colourhtml_cell <- matrix(data=colourhtml_cell,nrow=nr+1,ncol=nc+1)
-# convert back to matrix
-colourhtmlvalues <- t(matrix(data=colourhtmlvalues,nrow=nr,ncol=nc))
-colourhtmltxtvals <- t(matrix(data=coltxtval,nrow=nr,ncol=nc))
-# we now have colour codes for the cells containing values
-# make a matrix the size of the table including headers and row names
-ncells <- (nc+1)*(nr+1)
-colourhtml <- rep("background-color:transparent;",ncells)
-#colourtxthtml <- rep("color:transparent;",ncells)
-colourtxthtml <- rep("color:#000000;",ncells)
-# or use for example: "background-color:#FFFFFF;"
-colourhtml <- t(matrix(data=colourhtml,nrow=nr+1,ncol=nc+1))
-colourtxthtml <- t(matrix(data=colourtxthtml,nrow=nr+1,ncol=nc+1))
-# replace the values part of the table with the html for the colours
-colourhtml[2:(nr+1),2:(nc+1)]<-colourhtmlvalues
-colourtxthtml[2:(nr+1),2:(nc+1)]<-colourhtmltxtvals
-# make a table caption
-capt_tbl02 <-        "Table 3. Comparison of FST for Mnemiopsis leidyi obtained from sequences of nDNA ITS1-2 for the sampling years. Sequences of nDNA ITS1-2 obtained from the National Center for Biotechnology Information (NCBI) GenBank were assigned a sampling year as inferred from the year the sequence was deposited on NCBI GenBank. A high FST index indicates no variation among the individuals sampled, a high FST index indicates there is high variation among sequences compared. The color gradient reflects this as a yellow for low FST values, and dark blue for high FST values."
-#make a function that keeps 2 decimal places : see: https://stackoverflow.com/questions/48341878/increasing-decimal-positions-swirl-r-programming-environment-12-data-manip
-fSpr <- function(c) sprintf("%.3f", c)
-# apply the function to the matrix : see: https://www.tutorialkart.com/r-tutorial/r-apply-function-to-each-element-of-matrix/
-mdlo2 <-  apply(mdlo, 2, fSpr)
-# add back row names
-rownames(mdlo2) <- rownames(mdlo)
-mdlo2.Fst <- mdlo2
-#mdlo2
-# show the table
-t.HTML03 <- mdlo2 %>%
-  addHtmlTableStyle(align = "r") %>%
-  #addHtmlTableStyle(css.cell = colourhtml) %>%
-  addHtmlTableStyle(css.cell = colourhtml_cell) %>%
-  #  addHtmlTableStyle(css.cell = colourtxthtml) %>%
-  htmlTable(caption = capt_tbl02)
-t.HTML03
-#_______________________________________________________________________________
-library(htmlTable)
-d1 <- df_Mnelei.fst
-d1 <- df_Mnelei.NesD
-#https://cran.r-project.org/web/packages/htmlTable/vignettes/general.html
-#https://cran.r-project.org/web/packages/htmlTable/vignettes/general.html
-mdlo <- as.matrix(d1)
-nr <- nrow(mdlo)
-nc <- ncol(mdlo)
-# change column names - in the NeisD table the column names are replaced
-colnames(mdlo) <- rownames(mdlo)
-#_______________________________________________________________________________
-# Get lower triangles from tables
-#_______________________________________________________________________________
-
-#http://www.sthda.com/french/wiki/ggplot2-heatmap-d-une-matrice-de-corr-lation-logiciel-r-et-visualisation-de-donn-es
-#https://stat.ethz.ch/R-manual/R-devel/library/base/html/lower.tri.html
-# Obtenir le triangle inférieur
-get_lower_tri<-function(cormat){
-  cormat[upper.tri(cormat)] <- NA
-  return(cormat)
-}
-# Obtenir le triangle supérieur
-get_upper_tri <- function(cormat){
-  cormat[lower.tri(cormat)]<- NA
-  return(cormat)
-}
-# use the funciton to get the low triangle of the table
-lwtr_mdlo <- get_lower_tri(mdlo)
-# lower.tri(mdlo)
-# upper.tri(mdlo)
-
-#replace the table to use later on
-mdlo <- lwtr_mdlo
-# normalize values to a scale from 0 to 1
-minval <- min(mdlo)
-maxval <- max(mdlo)
-# but do not consider the values that are NA
-minval <- min(mdlo[!is.na(mdlo)])
-maxval <- max(mdlo[!is.na(mdlo)])
-#minval <- 0
-#maxval <- 1
-valuesnorm <- mapply(function(x) (x-minval)/(maxval-minval), t(mdlo))
-# set up colour scale using default ggplot palette
-colscale<-scale_fill_continuous()
-# alternative palettes
-# note that we only need to define colscale once - comment out the ones you don't want
-library(paletteer)
-colscale <- scale_fill_paletteer_c(palette="scico::tokyo", direction = 1)
-colscale <- scale_fill_paletteer_c(palette="pals::kovesi.linear_kryw_5_100_c64", direction = 1)
-colscale <- scale_fill_paletteer_c(palette="pals::ocean.haline", direction = 1)
-# reverse the color scale: see: https://stackoverflow.com/questions/45868625/how-to-reverse-the-default-color-palette-for-ggplot2
-colscale <- scale_fill_paletteer_c(palette="pals::ocean.haline", direction = -1)
-# get colour values corresponding to normalized values in matrix
-colourhtmlvalues <- colscale$palette(valuesnorm)
-# evaluate for low values and assign these a different color to use for the font
-coltxtval <- ifelse(valuesnorm<0.4,"black","white")
-# add necessary html around each colour value
-colourhtmlvalues  <- paste0("background-color:",colourhtmlvalues ,";")
-# also make  values for colors for text
-coltxtval         <- paste0("color:",coltxtval ,";")
-# paste together background color og font color
-colourhtml_cell <- paste0(colourhtml,colourtxthtml)
-colourhtml_cell <- matrix(data=colourhtml_cell,nrow=nr+1,ncol=nc+1)
-# convert back to matrix
-colourhtmlvalues <- t(matrix(data=colourhtmlvalues,nrow=nr,ncol=nc))
-colourhtmltxtvals <- t(matrix(data=coltxtval,nrow=nr,ncol=nc))
-# we now have colour codes for the cells containing values
-# make a matrix the size of the table including headers and row names
-ncells <- (nc+1)*(nr+1)
-colourhtml <- rep("background-color:transparent;",ncells)
-#colourtxthtml <- rep("color:transparent;",ncells)
-colourtxthtml <- rep("color:#000000;",ncells)
-# or use for example: "background-color:#FFFFFF;"
-colourhtml <- t(matrix(data=colourhtml,nrow=nr+1,ncol=nc+1))
-colourtxthtml <- t(matrix(data=colourtxthtml,nrow=nr+1,ncol=nc+1))
-# replace the values part of the table with the html for the colours
-colourhtml[2:(nr+1),2:(nc+1)]<-colourhtmlvalues
-colourtxthtml[2:(nr+1),2:(nc+1)]<-colourhtmltxtvals
-# make a table caption
-capt_tbl02 <-        "Table 4. Comparison of NeisD for Mnemiopsis leidyi obtained from sequences of nDNA ITS1-2 for the sampling years. Sequences of nDNA ITS1-2 obtained from the National Center for Biotechnology Information (NCBI) GenBank were assigned a sampling year as inferred from the year the sequence was deposited on NCBI GenBank. A high NeisD index indicates no variation among the individuals sampled, a high NeisD index indicates there is high variation among sequences compared. The color gradient reflects this as a yellow for low NeisD values, and dark blue for high NeisD values."
-#make a function that keeps 2 decimal places : see: https://stackoverflow.com/questions/48341878/increasing-decimal-positions-swirl-r-programming-environment-12-data-manip
-fSpr <- function(c) sprintf("%.2f", c)
-# apply the function to the matrix : see: https://www.tutorialkart.com/r-tutorial/r-apply-function-to-each-element-of-matrix/
-mdlo2 <-  apply(mdlo, 2, fSpr)
-# add back row names
-rownames(mdlo2) <- rownames(mdlo)
-mdlo2.NeD <- mdlo2
-#mdlo2
-# show the table
-t.HTML04 <- mdlo2 %>%
-  addHtmlTableStyle(align = "r") %>%
-  #addHtmlTableStyle(css.cell = colourhtml) %>%
-  addHtmlTableStyle(css.cell = colourhtml_cell) %>%
-  #  addHtmlTableStyle(css.cell = colourtxthtml) %>%
-  htmlTable(caption = capt_tbl02)
-t.HTML04
-
-#_______________________________________________________________________________
-#_______________________________________________________________________________
-#copy the data frame
-df_piplo2 <- pw_Nei_pip_lo
-df_piplo2 <- as.matrix(pw_wc_pip_lo)
-df_piplo2 <- as.matrix(pw_Gst_pip_lo)
-# replace other location names
-colnames(df_piplo2)[grep("WaddenSeaBussumHaupstr",colnames(df_piplo2))] <-  "GermanyBusum" 
-rownames(df_piplo2)[grep("WaddenSeaBussumHaupstr",rownames(df_piplo2))] <-  "GermanyBusum" 
-colnames(df_piplo2)[grep("Germany:Maasholm",colnames(df_piplo2))] <-  "GermanyKielFjord" 
-rownames(df_piplo2)[grep("Germany:Maasholm",rownames(df_piplo2))] <-  "GermanyKielFjord" 
-# replace long names with abbreviated names
-rownames(df_piplo2) <- df_clo03$locality8[match(rownames(df_piplo2),df_clo03$locality6)]
-colnames(df_piplo2) <- df_clo03$loscality8[match(colnames(df_piplo2),df_clo03$locality6)]
-#http://www.sthda.com/french/wiki/ggplot2-heatmap-d-une-matrice-de-corr-lation-logiciel-r-et-visualisation-de-donn-es
-#https://stat.ethz.ch/R-manual/R-devel/library/base/html/lower.tri.html
-# Obtenir le triangle inférieur
-get_lower_tri<-function(cormat){
-  cormat[upper.tri(cormat)] <- NA
-  return(cormat)
-}
-# Obtenir le triangle supérieur
-get_upper_tri <- function(cormat){
-  cormat[lower.tri(cormat)]<- NA
-  return(cormat)
-}
-# get lower triangle
-df_df_piplo2 <- get_lower_tri(df_piplo2)
-# get library for making 
-library(htmlTable)
-d1 <- df_df_piplo2 
-#d1 <- df_Mnelei.NesD
-#https://cran.r-project.org/web/packages/htmlTable/vignettes/general.html
-#https://cran.r-project.org/web/packages/htmlTable/vignettes/general.html
-mdlo <- as.matrix(d1)
-nr <- nrow(mdlo)
-nc <- ncol(mdlo)
-# normalize values to a scale from 0 to 1
-minval <- min(mdlo)
-maxval <- max(mdlo)
-# but do not consider the values that are NA
-minval <- min(mdlo[!is.na(mdlo)])
-maxval <- max(mdlo[!is.na(mdlo)])
-#minval <- 0
-#maxval <- 1
-valuesnorm <- mapply(function(x) (x-minval)/(maxval-minval), t(mdlo))
-# set up colour scale using default ggplot palette
-colscale<-scale_fill_continuous()
-# alternative palettes
-# note that we only need to define colscale once - comment out the ones you don't want
-library(paletteer)
-colscale <- scale_fill_paletteer_c(palette="scico::tokyo", direction = 1)
-colscale <- scale_fill_paletteer_c(palette="pals::kovesi.linear_kryw_5_100_c64", direction = 1)
-colscale <- scale_fill_paletteer_c(palette="pals::ocean.haline", direction = 1)
-# reverse the color scale: see: https://stackoverflow.com/questions/45868625/how-to-reverse-the-default-color-palette-for-ggplot2
-colscale <- scale_fill_paletteer_c(palette="pals::ocean.haline", direction = -1)
-# get colour values corresponding to normalized values in matrix
-colourhtmlvalues <- colscale$palette(valuesnorm)
-# evaluate for low values and assign these a different color to use for the font
-coltxtval <- ifelse(valuesnorm<0.4,"black","white")
-# add necessary html around each colour value
-colourhtmlvalues  <- paste0("background-color:",colourhtmlvalues ,";")
-# also make  values for colors for text
-coltxtval         <- paste0("color:",coltxtval ,";")
-# paste together background color og font color
-colourhtml_cell <- paste0(colourhtml,colourtxthtml)
-colourhtml_cell <- matrix(data=colourhtml_cell,nrow=nr+1,ncol=nc+1)
-# convert back to matrix
-colourhtmlvalues <- t(matrix(data=colourhtmlvalues,nrow=nr,ncol=nc))
-colourhtmltxtvals <- t(matrix(data=coltxtval,nrow=nr,ncol=nc))
-# we now have colour codes for the cells containing values
-# make a matrix the size of the table including headers and row names
-ncells <- (nc+1)*(nr+1)
-colourhtml <- rep("background-color:transparent;",ncells)
-#colourtxthtml <- rep("color:transparent;",ncells)
-colourtxthtml <- rep("color:#000000;",ncells)
-# or use for example: "background-color:#FFFFFF;"
-colourhtml <- t(matrix(data=colourhtml,nrow=nr+1,ncol=nc+1))
-colourtxthtml <- t(matrix(data=colourtxthtml,nrow=nr+1,ncol=nc+1))
-# replace the values part of the table with the html for the colours
-colourhtml[2:(nr+1),2:(nc+1)]<-colourhtmlvalues
-colourtxthtml[2:(nr+1),2:(nc+1)]<-colourhtmltxtvals
-# make a table caption
-capt_tbl02 <-        "Table 5. Comparison of FST for Mnemiopsis leidyi obtained from sequences of nDNA ITS1-2 for the sampling years. Sequences of nDNA ITS1-2 obtained from the National Center for Biotechnology Information (NCBI) GenBank were assigned a sampling year as inferred from the year the sequence was deposited on NCBI GenBank. A high FST index indicates no variation among the individuals sampled, a high FST index indicates there is high variation among sequences compared. The color gradient reflects this as a yellow for low FST values, and dark blue for high FST values."
-#make a function that keeps 2 decimal places : see: https://stackoverflow.com/questions/48341878/increasing-decimal-positions-swirl-r-programming-environment-12-data-manip
-fSpr <- function(c) sprintf("%.2f", c)
-# apply the function to the matrix : see: https://www.tutorialkart.com/r-tutorial/r-apply-function-to-each-element-of-matrix/
-mdlo2 <-  apply(mdlo, 2, fSpr)
-# add back row names
-rownames(mdlo2) <- rownames(mdlo)
-mdlo2.NeiFst <- mdlo2
-#mdlo2
-# show the table
-t.HTML05 <- mdlo2 %>%
-  addHtmlTableStyle(align = "r") %>%
-  #addHtmlTableStyle(css.cell = colourhtml) %>%
-  addHtmlTableStyle(css.cell = colourhtml_cell) %>%
-  #  addHtmlTableStyle(css.cell = colourtxthtml) %>%
-  htmlTable(caption = capt_tbl02)
-t.HTML05
