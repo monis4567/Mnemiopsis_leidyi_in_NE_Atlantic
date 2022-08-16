@@ -317,12 +317,16 @@ plot(hN4,
      scale.ratio = 0.6, 
      cex = 1.1, # set size of roman numerals on circles for haplotype ID
      #bg= colfh,
-     bg=alpha(c(colfh),c(0.7)),
+     # use the 'alpha' function on the color to make the color fill more transparent
+     #bg=alpha(c(colfh),c(0.7)),
+     bg=alpha(c(colfh),c(1.0)),
      pie = hsl4, 
      show.mutation = 2, threshold = 0, labels(T), xy=xy)
 #add a legend to the plot
 legend("bottomleft",colnames(hsl4), 
-       pt.bg=alpha(c(colfh),c(0.7))
+       # use the 'alpha' function on the color to make the color fill more transparent
+       #pt.bg=alpha(c(colfh),c(0.7))
+       pt.bg=alpha(c(colfh),c(1.0))
        ,box.col=NA,
        #col=rainbow(ncol(new.hap.smplloc)), 
        pt.lwd=0.4,
@@ -338,13 +342,17 @@ plot(hN4,
      #size = log10(attr(hN4,"freq")), 
      scale.ratio = 0.6, 
      cex = 1.1, # set size of roman numerals on circles for haplotype ID
-     bg= alpha(c(colfh_y),c(0.7)), 
+     #bg= alpha(c(colfh_y),c(0.7)),
+     # use the 'alpha' function on the color to make the color fill more transparent
+     bg= alpha(c(colfh_y),c(1.0)), 
      pie = hsl5, 
      show.mutation = 2, threshold = 0, labels(T), xy=xy)
 #add a legend to the plot
 legend("bottomleft",colnames(hsl5), 
        #col=rainbow(ncol(new.hap.smplye)), 
-       pt.bg=alpha(c(colfh_y),c(0.7))
+       # use the 'alpha' function on the color to make the color fill more transparent
+       #pt.bg=alpha(c(colfh_y),c(0.7))
+       pt.bg=alpha(c(colfh_y),c(1.0))
        ,box.col=NA,pt.lwd=0.4,
        pch=21, ncol=2, cex=1.2)
 # add subfigure letter
