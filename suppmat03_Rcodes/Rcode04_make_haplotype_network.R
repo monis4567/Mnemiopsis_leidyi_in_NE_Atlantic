@@ -2,11 +2,71 @@
 # -*- coding: utf-8 -*-
 
 #remove everything in the working environment, without a warning!!
-#rm(list=ls())
+rm(list=ls())
+# Read in package libraries
+library(pegas)
+library(ape)
+packageVersion("pegas")
+#[1] ‘1.1’
+packageVersion("ape")
+# [1] ‘5.6.2’
+#install.packages("pegas")
+R.Version()
+# $platform
+# [1] "x86_64-pc-linux-gnu"
+# 
+# $arch
+# [1] "x86_64"
+# 
+# $os
+# [1] "linux-gnu"
+# 
+# $system
+# [1] "x86_64, linux-gnu"
+# 
+# $status
+# [1] ""
+# 
+# $major
+# [1] "4"
+# 
+# $minor
+# [1] "1.2"
+# 
+# $year
+# [1] "2021"
+# 
+# $month
+# [1] "11"
+# 
+# $day
+# [1] "01"
+# 
+# $`svn rev`
+# [1] "81115"
+# 
+# $language
+# [1] "R"
+# 
+# $version.string
+# [1] "R version 4.1.2 (2021-11-01)"
+# 
+# $nickname
+# [1] "Bird Hippie"
 
-
-#remove everything in the working environment, without a warning!!
-#rm(list=ls())
+# Or the development version from GitHub:
+# install.packages("devtools")
+#devtools::install_github("r-lib/devtools")
+if(!require(pegas)){
+  # make sure you have Rtools installed
+  if (!require('devtools')) install.packages('devtools')
+  # install from GitHub
+  devtools::install_github("emmanuelparadis/pegas/pegas")
+}
+# read in package libraries
+library(dplyr)
+library(pegas)
+library(ape)
 #define overall working directory
 wd00 <- "/home/hal9000/Documents/Documents/MS_Mnemiopsis/Mnemiopsis_leidyi_in_NE_Atlantic"
 #define input working directories
@@ -16,64 +76,228 @@ setwd(wd00)
 #define paths for in and output directories
 wd00_wd01 <- paste0(wd00,"/",wd01)
 wd00_wd05 <- paste0(wd00,"/",wd05)
-#load packages
-library(pegas) #for analyses and haplotype network
-library(magrittr)
-library(dplyr)
-#read in the data
-inf01 <- "Mnelei_tmp01.fas"
-inp.f.fnm <- "Mnelei_tmp01.fas"
+#read in the data  - first define the input file name
+inf01 <- "algn_Mnelei_18s_10.aligned.fasta.fas"
+inf01 <- "algn_Mnelei_v13.fa"
+inf01 <- "algn_Mnelei_v15.fa"
+inf01 <- "algn_Mnelei_18s_17.fas.aligned.fasta"
+inf02 <- "df_clo2.csv" 
+inf03 <- "df_cll_colf_smpl_loc.csv" 
+inf04 <- "df_lN02.csv"
+inf05 <- "df_dd02.csv"
+inf06 <- "df_cfy3.csv"
+#  then paste directory path and file name together
 wd00_wd05_inf01 <- paste0(wd00_wd05,"/",inf01)
-dnb_fasf1 <- read.dna(file=wd00_wd05_inf01,format="fasta")
-# split to get individual names
-lbf <- strsplit(as.character(labels(dnb_fasf1)), "_")
-#ge the different  sample numbers
-smplno1 <- sapply(lbf, "[[", 1)
-smplno2 <- sapply(lbf, "[[", 2)
-smplno3 <- sapply(lbf, "[[", 3)
-# combine to a table
-tb_splNm1 <- table(smplno1, smplno2)
-# extract haplotypes
-hpt3 <- pegas::haplotype(dnb_fasf1)
+# paste together path for file with table with colors for locations.
+wd00_wd05_inf02 <- paste0(wd00_wd05,"/",inf02)
+wd00_wd05_inf03 <- paste0(wd00_wd05,"/",inf03)
+wd00_wd05_inf04 <- paste0(wd00_wd05,"/",inf04)
+wd00_wd05_inf05 <- paste0(wd00_wd05,"/",inf05)
+wd00_wd05_inf06 <- paste0(wd00_wd05,"/",inf06)
+# read in file with locations and matching colors for sample locations
+df_clo2 <- read.csv(wd00_wd05_inf02)
+df_cll <- read.csv(wd00_wd05_inf03) 
+df_lN02 <- read.csv(wd00_wd05_inf04) 
+df_dd02 <- read.csv(wd00_wd05_inf05) 
+df_cfy3 <- read.csv(wd00_wd05_inf06) 
+# remove first column
+df_dd02 <- df_dd02[,-1]
+# then read in the fasta file which makes it a DNAbinxn object
+dnb_pip4 <- read.dna(file=wd00_wd05_inf01,format="fasta")
+#make the DNAbin object a genind object
+geni_pip4 <- adegenet::DNAbin2genind(dnb_pip4)
+#make the genind object a dataframe
+df_pip4 <- adegenet::genind2df(geni_pip4)
+#get the row names
+orig_rwnm <- row.names(df_pip4)
+# replace all NAs
+df_pip4 <- df_pip4 %>% replace(is.na(.), "-")
+#Grep among the list of files, to get the file that holds the different names
+fnm_clo3 <- list.files(wd00_wd05)[grepl("clo03",list.files(wd00_wd05))]
+fnm_df_lN02 <- list.files(wd00_wd05)[grepl("df_lN02",list.files(wd00_wd05))]
+#read locations file
+df_clo3<-read.csv(file=paste0(wd00_wd05,"/",fnm_clo3),header=TRUE,sep=";")
+df_lN02<-read.csv(file=paste0(wd00_wd05,"/",fnm_df_lN02),header=TRUE,sep=",")
+# split string and get lists nested in a list
+lbls01 <- strsplit(as.character(row.names(df_pip4)), "_")
+# # split to get a list of vectors
+lrNm <- strsplit(as.character(rownames(dnb_pip4)), "_")
+#get second object in nested list
+#unique sample number
+smplno1 <- sapply(lrNm, "[[", 1)
+smplno2 <- sapply(lrNm, "[[", 2)
+smplno3 <- sapply(lrNm, "[[", 3)
+# #create haplotypes from dna.bin
+# pip4Haps <- pegas::haplotype(pip4)
+# #prepare hpt table
+# ind.hap<-with(
+#   stack(setNames(attr(pip4Haps, "index"), rownames(pip4Haps))),
+#   table(hap=ind, pop=rownames(pip4)[values]))
+# #make it a dataframe
+# df_ihpt01 <- as.data.frame(ind.hap)
+# #limit to include only 'Freq' that equals 1
+# df_ihpt02 <- df_ihpt01[df_ihpt01$Freq == 1,]
+# # get sample numbers from haplotype table
+# liht2Nm <- strsplit(as.character(df_ihpt02$pop), "_")
+# # get the first element of the split string
+# liht2Nm.1 <- sapply(liht2Nm, "[[", 2)
+# # copy the vector
+# liht2Nm.1a <- liht2Nm.1
+# # grep for long (5) numeric characters in the string, and substitute, to only get accession number 
+# liht2Nm.1a[grepl("[0-9]{5}",liht2Nm.1a)] <- gsub("Mnelei","",liht2Nm.1[grepl("[0-9]{5}",liht2Nm.1)])
+# # get the sampling year
+# yearsmpl4 <- sapply(liht2Nm, "[[", 3)
+# # bind them by column in a new data frame
+# df_smpl.yer4 <- as.data.frame(cbind(liht2Nm.1a,yearsmpl4))
+# # change the column names
+# colnames(df_smpl.yer4) <- c("smplNo5","smplyer5")
+# #copy the vector
+# smplno1a <- smplno1
+# # replace in the copied vector
+# smplno1a[grepl("Mnemiopsis",smplno1)] <- smplno3[grepl("Mnemiopsis",smplno1)]
+# # match back to get sampling year
+# smplno5 <- df_smpl.yer4$smplyer5[match(smplno1a,df_smpl.yer4$smplNo5)]
+# # combine to a data frame
+# df_rNm_lblNm2 <- cbind(smplno1a,df_rNm_lblNm, smplno5)
+# # change column name
+# colnames(df_rNm_lblNm2) <- c("longNm1","longNm2","locat","smplyear")
+# # change row names in data frame with sequences
+# rownames(df_pip4) <- paste0(df_rNm_lblNm2$longNm1,"_",df_rNm_lblNm2$locat,"_",df_rNm_lblNm2$smplyear)
+# # grep for "Bolinopsis" to exclude this sequence from the data frame
+# df_pip4 <- df_pip4[!grepl("Bolinopsis",rownames(df_pip4)),]
+# #make the date frame a matrix and a DNAbin object again
+# dnb_pip4 <- as.DNAbin(as.matrix(df_pip4))
+# make a distance matrix 
+dst_pip4 <- ape::dist.dna(dnb_pip4, model= "raw")
+# make it a matrix
+mtx_pip4 <- as.matrix(dst_pip4)
+# make it a data frame
+df_pip5 <- as.data.frame(mtx_pip4)
+# split the row name string by a character 
+lpip5 <- strsplit(as.character(row.names(mtx_pip4)), "_")
+# get the 2 nd element per vector in the list - this holds the abbreviated 
+# location name
+grp.loc5 <- sapply(lpip5, "[[", 2)
+#make haplotype object
+ht4 <- pegas::haplotype(dnb_pip4)
 #which polyps belong to which haplotype?
-hpt3_indices<-attr(hpt3, "index")
+ht4_indices<-attr(ht4, "index")
 # get number of labels 
-hlab3 <- length(labels(hpt3))
+hlab4 <- length(labels(ht4))
 #assign labels
-names(hpt3_indices)<-c(1:hlab3)
+names(ht4_indices)<-c(1:hlab4)
 # make roman numerals arabic numerals instead
-labs.hpt3 <- as.numeric(as.roman(labels(hpt3)))
+labs.ht4 <- as.numeric(as.roman(labels(ht4)))
 # use arabian numerals instead of roman numerals for haplotypes
-hpt3 <- haplotype(dnb_fasf1,labels=c(labs.hpt3))
-#make a haplonetwork
-hpt3net <- pegas::haploNet(hpt3)
-#mjn3net <- pegas::mjn(as.matrix(tb_splNm1))
+ht4 <- haplotype(dnb_pip4,labels=c(labs.ht4))
+# make haplonet object
+hN4 <- pegas::haploNet(ht4)
 #prepare hpt table
-ind.hap3<-with(
-  stack(setNames(attr(hpt3, "index"), rownames(hpt3))),
-  table(hap=ind, pop=rownames(dnb_fasf1)[values]))
+ind.hap4<-with(
+  stack(setNames(attr(ht4, "index"), rownames(ht4))),
+  table(hap=ind, pop=rownames(dnb_pip4)[values]))
 #make it a dataframe
-df_ihpt03 <- as.data.frame(ind.hap3)
+df_ihpt04 <- as.data.frame(ind.hap4)
 # make haplotype labels arabic numerals instead of roman numerals 
-df_ihpt03$hap.arab <- as.numeric(as.roman(as.character(df_ihpt03$hap)))
+df_ihpt04$hap.ab <- as.numeric(as.roman(as.character(df_ihpt04$hap)))
 # split the string with sequence name which holds the location name
-lbf3  <- strsplit(as.character(df_ihpt03$pop), "_")
+lbf4  <- strsplit(as.character(df_ihpt04$pop), "_")
 # get the second element from this string split
-df_ihpt03$pop.loc <- sapply(lbf3, "[[", 2)
+df_ihpt04$pop.loc <- sapply(lbf4, "[[", 2)
 #remove any zero occurences
-df_ihpt03 <- df_ihpt03[df_ihpt03$Freq >= 1,]	
+df_ihpt04 <- df_ihpt04[df_ihpt04$Freq >= 1,]	
 # make a table of locations and haplotype numbers
-hsl3 <- table(df_ihpt03$hap.arab, df_ihpt03$pop.loc)
+hsl4 <- table(df_ihpt04$hap.ab, df_ihpt04$pop.loc)
+#make the plot
+plot(hN4, 
+     size = sqrt(attr(hN4,"freq")/pi), 
+     #size = log10(attr(hN4,"freq")), 
+     scale.ratio = 0.6, 
+     cex = 1.1, # set size of roman numerals on circles for haplotype ID
+     #bg= colfh, 
+     pie = hsl4, 
+     show.mutation = 2, threshold = 0, labels(T))
 
-#plot the network
-plot(hpt3net, size = (sqrt(attr(hpt3net,"freq")/pi)), 
-     scale.ratio = 0.2, cex = 0.5, pie = hsl3, 
-     show.mutation = 0, threshold = 0) #, labels(TRUE))
+# Use the replot function to be able to move pies around in the plot
+# run the out-commented line below
+#xy <- replot()
+# and rearrange your pies as you want them to be placed.
+# NOTICE !!! This replot function does not work in Rstudio. You must start up R in a terminal, and then 
+# run all the code above, including the replot part
+# Once you are happy with the rearranged circles, you can right click the plot, and exit the replot
+# function.
+# Because you write the new positions of the pies to the object 'xy' you might want to 
+# use the 'dput' function when using R in a terminal , like this: dput(xy)
+# This will give you a list of the coordinates, that you can use here in Rstudio
+xy <- list(x = c(-3.78009492656885, 0.151374570335722, 0, -7.70394570412442, 
+                 -0.413177807763105, -9.72915900866923, -8.31150969548786, -9.37474668037389, 
+                 -2.81912360628134, 0.270331682520766, -2.07856204801223, 2.19338982144833, 
+                 3.22502895264294, 0.847543264652827, 3.03507968042298, -6.33718905319336, 
+                 -1.68543764284715, 0.104992462245932, -3.0626070633811, -1.35783397187625, 
+                 0.502954879238477, 4.00856970055032, -0.714548112740307, 1.01401660595308, 
+                 -0.951605419872329, -5.05917141159912, -1.84268740491318, 4.85353162973206, 
+                 1.95751517834928, -4.28002434887989, -3.62846625836468, -7.2048744662272, 
+                 -1.82084143217233, 1.94441103151045, 2.34215255505902, -3.02090226700123, 
+                 2.78307642919596, -1.79027081755784, -1.4004692937287, 4.20652972471708, 
+                 7.07114931100761, 1.31541198324631, -5.05917141159912, 3.09757595332802, 
+                 5.77756760859653, 5.8596172932963, 2.10166079357648, -1.06604271516307, 
+                 -5.81397012860837, -6.69133905185202, -8.49890774248904, -2.48928377455822, 
+                 0.804350256531708, -1.37093811871508, -1.34472982503741, -4.93742968304924, 
+                 -4.10958592891006), y = c(0.185371219435836, -1.97038269146326, 
+                                           0, -0.269105781977764, -0.799328950293629, -0.243857059677008, 
+                                           1.37206116757134, 0.9428328884585, 0.798043387686757, -3.8796730709858, 
+                                           0.46938451101758, 2.220731379872, 2.46000064746, -2.25524327550549, 
+                                           4.07033174790751, 1.37206116757134, 2.71738198447251, 4.44850022968935, 
+                                           1.81798983789992, 1.39733695645537, 2.56054495144077, 3.80983701107041, 
+                                           2.65266532385822, -1.46493889637387, -1.37345062710535, 1.50229212711966, 
+                                           -1.7655432096847, -0.184103126614666, -1.68712469316883, -1.50897834493825, 
+                                           -1.35480084091025, -1.62359484098738, -3.038898020258, -0.510846945430789, 
+                                           0.409492359034124, -0.900323839496651, 1.00524437387602, -0.419358676162275, 
+                                           -2.33950101063971, 2.23665152919641, 3.57760074848688, -0.706893236720463, 
+                                           -1.46040946635667, -2.45824010557488, 5.01345158824423, 3.13420484655794, 
+                                           2.92649802851483, -3.16032021671195, -1.33898726990273, 0.463107164744145, 
+                                           -1.38458801442011, -0.344851948880031, 1.88091780830323, -0.837590764246912, 
+                                           0.691570307812544, 2.25510974513413, 1.91512759506308))
 
-# 
+
+# #where "............." are your options (colours, etc...) Once you found a nice layout you can save it:
+# saveRDS(xy, "mynicelayout.rds")
+# #and reuse it in a script:
+# xy <- readRDS("mynicelayout.rds")
+# plot(h, ............, xy = xy)
+# #'xy' is a simple list with two vectors, so you can also edit it manually.
+#plot(h, ............, xy = xy)
+plot(hN4, 
+     size = sqrt(attr(hN4,"freq")/pi), 
+     #size = log10(attr(hN4,"freq")), 
+     scale.ratio = 0.6, 
+     cex = 1.1, # set size of roman numerals on circles for haplotype ID
+     #bg= colfh, 
+     pie = hsl4, 
+     show.mutation = 2, threshold = 0, labels(T), xy=xy)
+
+# split the string with sequence name which holds the location name
+lbf4  <- strsplit(as.character(df_ihpt04$pop), "_")
+# get the second element from this string split
+df_ihpt04$pop.loc <- sapply(lbf4, "[[", 2)
+
+smplyear3 <- sapply(lbf4, "[[", 3)
+usmplyear3 <- unique(smplyear3)
+df_ihpt05 <- df_ihpt04
+df_ihpt05$pop.loc <- sapply(lbf4, "[[", 3)
+#remove any zero occurences
+df_ihpt04 <- df_ihpt04[df_ihpt04$Freq >= 1,]	
+df_ihpt05 <- df_ihpt05[df_ihpt05$Freq >= 1,]	
+# make a table of locations and haplotype numbers
+hsl4 <- table(df_ihpt04$hap.ab, df_ihpt04$pop.loc)
+hsl5 <- table(df_ihpt05$hap.ab, df_ihpt05$pop.loc)
 
 
-flnm <- c(paste("Fig02_v03_haplotype_network_",inp.f.fnm,"02.jpg",  sep = ""))
+# get colours to use for pies
+colfh<- df_cll$colfcol_loc[match(colnames(hsl4),df_cll$coll_loc)]
+colfh_y <- df_cfy3$colour[match(colnames(hsl5),df_cfy3$smplyr)]
+
+flnm <- c(paste("Fig02_v03_haplotype_network_",inf01,"02.jpg",  sep = ""))
 #paste output directory and filename together in a string
 outflnm <- paste(wd00_wd05,"/",flnm,sep="")
 # Exporting PFD files via postscript()           
@@ -82,475 +306,74 @@ outflnm <- paste(wd00_wd05,"/",flnm,sep="")
 jpeg(outflnm,
      width=(3200),height=(4800),res=300)
 #define lpot arrangement
-tbt.par <- par(mfrow=c(1, 1),
+tbt.par <- par(mfrow=c(2, 1),
                oma=c(0,0,0,0), #define outer margins
                mai=c(0,0,0,0), #define inner margins
                mar=c(0,0,2,0))
-
-#plot the network
-plot(hpt3net, size = (sqrt(attr(hpt3net,"freq")/pi)), 
-     scale.ratio = 0.2, cex = 0.5, pie = hsl3, 
-     show.mutation = 0, threshold = 0) #, labels(TRUE))
+# plot the network with colours
+plot(hN4, 
+     size = sqrt(attr(hN4,"freq")/pi), 
+     #size = log10(attr(hN4,"freq")), 
+     scale.ratio = 0.6, 
+     cex = 1.1, # set size of roman numerals on circles for haplotype ID
+     #bg= colfh,
+     bg=alpha(c(colfh),c(0.7)),
+     pie = hsl4, 
+     show.mutation = 2, threshold = 0, labels(T), xy=xy)
 #add a legend to the plot
-legend("bottomleft",unique(df_ihpt03$pop.loc), 
-       #pt.bg=colfh,
-       box.col=NA,
+legend("bottomleft",colnames(hsl4), 
+       pt.bg=alpha(c(colfh),c(0.7))
+       ,box.col=NA,
        #col=rainbow(ncol(new.hap.smplloc)), 
        pt.lwd=0.4,
-       pch=21, ncol=1, cex=0.8)
+       pch=21, ncol=2, cex=1.2)
+# add subfigure letter
 title(main = "a",
-      cex.main = 1.8,   font.main= 2, col.main= "black",
+      cex.main = 2.2,   font.main= 2, col.main= "black",
       adj = 0.01, line = 0.1)
 
-#_______________________________________________________________________________
+# plot the network with colours
+plot(hN4, 
+     size = sqrt(attr(hN4,"freq")/pi), 
+     #size = log10(attr(hN4,"freq")), 
+     scale.ratio = 0.6, 
+     cex = 1.1, # set size of roman numerals on circles for haplotype ID
+     bg= alpha(c(colfh_y),c(0.7)), 
+     pie = hsl5, 
+     show.mutation = 2, threshold = 0, labels(T), xy=xy)
+#add a legend to the plot
+legend("bottomleft",colnames(hsl5), 
+       #col=rainbow(ncol(new.hap.smplye)), 
+       pt.bg=alpha(c(colfh_y),c(0.7))
+       ,box.col=NA,pt.lwd=0.4,
+       pch=21, ncol=2, cex=1.2)
+# add subfigure letter
+title(main = "b",
+      cex.main = 2.2,   font.main= 2, col.main= "black",
+      adj = 0.01, line = 0.1)
+# use the par settings defined above
 par(tbt.par)
-# end svg file to save as
+# end file to save as
 dev.off()  
-#reset this parameter
+#reset this par parameter
 par(mfrow = c(1, 1)) 
 
 
 
-
-
-
-#:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: 
-# 
-# 
-# 
-# 
-# 
-# 
-# # make a haplotype object
-# h2 <- haplotype(dnb_x2)
-# hlab2 <- length(labels(h2))
-# h2 <- haplotype(dnb_x2,labels=c(1:hlab2))#default labels are roman numerals. Vector of names has to be of equal length as the number of haplotypes.
-# #h_selection<-haplotype(x_selection)
-# #which polyps belong to which haplotype?
-# h2_indices<-attr(h2, "index")
-# #assign labels
-# names(h2_indices)<-c(1:hlab2)
-# #str(h_indices)
-# #generate plain network 
-# net2 <- haploNet(h2)
-# #get list of all sequence labels with haplotype numbers
-# haplotypes2<-stack(setNames(attr(h2, "index"), rownames(h2)))
-# 
-# #haploNet
-# 
-# 
-# plot(net2,
-#      size=(sqrt((attr(net2, "freq"))/pi)),
-#      scale.ratio = 0.3,
-#      cex = 1.2,
-#      bg= colfh, 
-#      pie = new.hap.smplloc2 , 
-#      show.mutation=2,
-#      threshold=0)
-# 
-# 
-# rownames(dnb_x2)
-# #prepare hpt table
-# ind.hap2<-with(
-#   stack(setNames(attr(h2, "index"), rownames(h2))),
-#   table(hap=ind, pop=rownames(dnb_x2)[values]))
-# #make it a dataframe
-# df_ihpt02 <- as.data.frame(ind.hap2)
-# #limit to include only 'Freq' that equals 1
-# df_ihpt02 <- df_ihpt01[df_ihpt01$Freq == 1,]	
-# 
-# 
-# 
-# 
-# 
-# #names(getHaploNetOptions())
-# #extract all unique haplotypes and attach custom labels
-# h <- haplotype(x)
-# hlab <- length(labels(h))
-# h <- haplotype(x,labels=c(1:hlab))#default labels are roman numerals. Vector of names has to be of equal length as the number of haplotypes.
-# #h_selection<-haplotype(x_selection)
-# #which polyps belong to which haplotype?
-# h_indices<-attr(h, "index")
-# #assign labels
-# names(h_indices)<-c(1:hlab)
-# #str(h_indices)
-# #generate plain network 
-# net <- haploNet(h)
-# #haploNet
-# #net <- haploNet(h_selection)
-# #plot
-# plot(net,
-#      size=attr(net, "freq"),
-#      scale.ratio = 3,
-#      cex = 0.8,
-#      show.mutation=2,
-#      threshold=0)
-# 
-# plot(net,
-#      size=(sqrt((attr(net, "freq"))/pi)),
-#      scale.ratio = 0.85,
-#      cex = 1.1,
-#      show.mutation=2,
-#      threshold=0)
-# 
-# #extract all names
-# names<-data.frame(labels(x))
-# 
-# #write.table(names,file="names_def.csv",sep=",")
-# haploFreq(x,haplo=h)
-# #get list of all sequence labels with haplotype numbers
-# haplotypes<-stack(setNames(attr(h, "index"), rownames(h)))
-# #Grep among the list of files, to get the file that holds the different names
-# fnm_clo3 <- list.files(wd00_wd05)[grepl("clo03",list.files(wd00_wd05))]
-# fnm_df_lN02 <- list.files(wd00_wd05)[grepl("df_lN02",list.files(wd00_wd05))]
-# #read locations file
-# df_clo3<-read.csv(file=paste0(wd00_wd05,"/",fnm_clo3),header=TRUE,sep=";")
-# df_lN02<-read.csv(file=paste0(wd00_wd05,"/",fnm_df_lN02),header=TRUE,sep=",")
-# # split string and get lists nested in a list
-# lbls01 <- strsplit(as.character(labels(x)), "_")
-# # get only NCBI labels
-# lbls02 <- sapply(lbls01, "[[", 3)
-# # grep only elements that includes numbers
-# ncbilbls <- lbls02[grepl("[0-9]",lbls02)]
-# # get location names for NCBI accesion numbers
-# lnbls<- df_lN02$location[match(ncbilbls,df_lN02$accession_nmb)]
-# # replace the labels that has numbers in them with the location name
-# lbls02[grepl("[0-9]",lbls02)] <- lnbls
-# # copy the vector with labels
-# lbls03 <- lbls02
-# df_lblnms <- as.data.frame(cbind(lbls02,lbls03)) 
-# colnames(df_lblnms) <- c("longNm","AbrNm")
-# df_lblnms$AbrNm <- df_clo3$locality8[match(df_lblnms$longNm,df_clo3$locality5)]
-# llnNm1 <- df_lblnms$longNm[is.na(df_lblnms$AbrNm)]
-# # make vector with long names appearing in the haplotype labels
-# Nm_inLonNm <- c("USA:WoodsHole","NEAtlantic","Mediterranean","CaspianSea","CentralWAtlantic","USA:GalvestonBay","USA:Panacea","Germany:KielFjord","Germany:Maasholm","Germany:Helgoland","BalticSea","AtlanticOcean:NWAtlantic","Netherlands","Loegstoer","Mariagerfjord","Kerteminde","NSeaHelgolandRds","WaddenSeaBussumHaupstr","Skovshoved","KielFjord","Bogense","MecklenburgerBuchtWismarBucht","MecklenburgerBucht","Ballen")
-# # make vector with long names appearing in the df_clo3 df
-# Nm_inclo03 <- c("USA:WoodsHole","NEAtlantic","Mediterranean","CaspianSea","CentralWAtlantic","USA:GalvestonBay","USA:Panacea","NGermanyKielFjord","NGermanyKielFjord","NWGermanyNSeaHelgolandRds","BalticSea","AtlanticOcean:NWAtlantic","Netherlands","NJyllandLimfjord","JyllandMariagerfjord","FynKerteminde","NWGermanyNSeaHelgolandRds","GermanyBusum","SjaellandSkovshoved","NGermanyKielFjord","FynBogense","NGermanyMecklenburgerBuchtWismarBucht","NGermanyMecklenburgerBuchtWismarBucht","SamsoeBallen")
-# # combine to a df
-# df_rplNm <- as.data.frame(cbind(Nm_inLonNm,Nm_inclo03))
-# # match first the longNm from the Haplotype labels to the df with both the haplotype labels and the df_clo03 labels
-# df_lblnms$longNm <- df_rplNm$Nm_inclo03[match(df_lblnms$longNm,df_rplNm$Nm_inLonNm)]
-# # then match the new long name with th df_clo03 table to get the abbreviation
-# df_lblnms$AbrNm <- df_clo3$locality8[match(df_lblnms$longNm,df_clo3$locality6)]
-# #add rownames for haploFreq function
-# rownames(x2) <- df_lblnms$AbrNm
-# #The following code is used to plot the haplotype and add the haplotype frequencies. 
-# #create haplotypes from dna.bin
-# #x
-# px <- pegas::haplotype(x2)
-# #prepare hpt table
-# ih<-with(
-#   stack(setNames(attr(h, "index"), rownames(h))),
-#   table(hap=ind, pop=rownames(x2)[values]))
-# #make it a dataframe
-# ih01 <- as.data.frame(ih)
-# #limit to include only 'Freq' that equals 1
-# ih02 <- ih01[ih01$Freq >= 1,]	
-# hpfrq <- haploFreq(x2,rownames(x2),haplo=h)
-# #make it a table
-# hsl <- table(ih02$hap, ih02$pop)
-# #per area THIS IS THE ONE USED IN THE PAPER
-# #freq_area<-haploFreq(x,split="_",what=2,haplo=h)
-# #plot the new haplotype
-# 
-# plot(net,
-#      #size=(sqrt(attr(net, "freq")/pi)),
-#      size=attr(net, "freq"),
-#      scale.ratio = 2.7,
-#      cex = 2.8,
-#      pie=ih, #hsl
-#      #pie=ih02,
-#      show.mutation=2,# mutations are shown with small dots on the links
-#      threshold=0#turn off display of alternative links
-#      )
-# 
-# legend(30,20, colnames(hsl), col=rainbow(ncol(hsl)), pch=20,bty="n")
-# 
-# 
-# 
-# plot(net,
-#      size=(sqrt((attr(net, "freq"))/pi)),
-#      scale.ratio = 0.85,
-#      cex = 1.1,
-#      #pie=ih,
-#      show.mutation=2,
-#      threshold=0)
-# #https://cran.r-project.org/web/packages/pegas/vignettes/PlotHaploNet.pdf
 # #_______________________________________________________________________________
-# # Advice from Cody Aylward:  - https://doi.org/10.1007/s10592-018-1130-3
-# 
-# # Hello Steen,
-# # 
-# # Thanks for your comments on my paper. 
-# #I looked back at my old hard drive and unfortunately cannot 
-# #  find the exact R script used for that figure. However, I have a few suggestions. 
-# #I read through this vignette to refresh my memory on constructing haplotype 
-# #networks in Pegas (https://cran.r-project.org/web/packages/pegas/vignettes/PlotHaploNet.pdf), 
-# #I found it quite helpful.
-# # 
-# # My first suggestion is to re-size of your circles. 
-# #It looks like you have one haplotype that is substantially more common than the rest, 
-# #such that it is covering other circles completely. 
-# #I am assuming you made this figure using the default setting, 
-# #where the diameter of each circle is equal to the frequency of each haplotype. 
-# #An alternative is to set the diameter of each circle equal to the square root
-# #of the frequency of each haplotype divided by pi 
-# #(such that the area of each circle is equal to the frequency of 
-# #each haplotype). This is explained on pages 11-12 of the vignette.
-# #Another alternative is to manually size the circles. 
-# #This was easier for my paper since I only had 12 haplotypes, 
-# #and might be a bit more of a task for your larger number of haplotypes. 
-# #However, if the square root approach doesn't shrink your largest circle 
-# #sufficiently, you might consider manually creating a vector 
-# #for your circle sizes. If you use this approach, 
-# #I would group haplotype frequencies into different size categories. 
-# #For example, haplotype frequencies of 1-5 would be size 1, haplotype 
-# #frequencies 6-20 are size 2, etc. 
-# #That may be a bit more work, but it gives you more direct manipulation 
-# #of the network. Page 6 of the vignette shows how to order the size
-# #vector to match the order of your haplotypes in the network.
-# # 
-# # I think once the circles are resized your network will be much cleaner. 
-# #If that isn't sufficient, there may be a way to manually adjust 
-# #the coordinates of each circle. I did a very quick search and didn't 
-# #find an answer right away. If you still need to modify the network after 
-# #re-sizing the circles I would be happy to take a longer look at 
-# #manually adjusting coordinates.
-# # 
-# # Best of luck with your study,
-# # 
-# # Cody Aylward, M.S.
-# #______________________________________________________________________________
-# 
-# # vignette try out
-# 
-# library(pegas) # loads also ape
-# library(ape) 
-# #detach("package:genetics", unload=TRUE)
-# #detach("package:ape", unload=TRUE)
-# #install.packages("ape")
-# #install.packages("pegas")
-# data(woodmouse)
-# 
-# set.seed(10)
-# x <- woodmouse[sample.int(nrow(woodmouse), 80, TRUE), ]
-# region <- rep(c("regA", "regB"), each = 40)
-# pop <- rep(paste0("pop", 1:4), each = 20)
-# table(region, pop)
-# # extract the haplotypes which are used to reconstruct the RMST after computing the
-# # pairwise Hamming distances:
-# h <- pegas::haplotype(x)
-# #hDb <- as.DNAbin(h)
-# d <- ape::dist.dna(h, "N")
-# 
-# d <- ape::dist.dna(x)
-# nt <- rmst(d, quiet = TRUE)
-# nt
-# plot(nt)
-# plot(nt, fast = TRUE)
-# # By default, not all links are drawn. This is controlled with the option threshold which
-# # takes two values in order to set the lower and upper bounds of the number of mutations for
-# # a link to be drawn:
-# plot(nt, threshold = c(1, 14))
-# # The visual aspect of the links is arbitrary: the links of the backbone MST are shown with
-# # continuous segments, while “alternative” links are shown with dashed segments.
-# args(pegas:::plot.haploNet)
-# # Like for most plot methods, the first argument (x) is the object to be plotted. Until
-# # pegas 0.14, all other arguments were defined with default values. In recent versions, as
-# # shown above, only size and shape are defined with default values; the other options, if not
-# # modified in the call to plot, are taken from a set of parameters which can be modified as
-# # explained in Section 3.4.
-# # The motivation for this new function definition is that in most cases users need to modify
-# # size and shape with their own data, such as haplotype frequencies or else, and these might
-# # be changed repeatedly (e.g., with different data sets or subsets). On the other hand, the
-# # other options are more likely to be used to modify the visual aspect of the graph, so it could
-# # be more useful to change them once during a session as explained later in this document.
-# # The size of the haplotype symbols can be used to display haplotype frequencies. The
-# # function summary can extract these frequencies from the "haplotype" object:
-# 
-# (sz <- summary(h))
-# # It is likely that these values are not ordered in the same way than haplotypes are ordered
-# # in the network
-# (nt.labs <- attr(nt, "labels"))
-# #It is simple to reorder the frequencies before using them into plot
-# sz <- sz[nt.labs]
-# plot(nt, size = sz)
-# (R <- haploFreq(x, fac = region, haplo = h))
-# # A  similar mechanism can be used to show variables such as region or pop. The function
-# # haploFreq is useful here because it computes the frequencies of haplotypes for each region
-# # or population:
-# (P <- haploFreq(x, fac = pop, haplo = h))
-# # Like with size, we have to reorder these matrices so that their rows are in the same order
-# # than in the network:
-# R <- R[nt.labs, ]
-# P <- P[nt.labs, ]
-# # We may now plot the network with either information on haplotype frequencies by just
-# # changing the argument pie:
-# plot(nt, size = sz, pie = R, legend = c(-25, 30))
-# plot(nt, size = sz, pie = P, legend = c(-25, 30))
-# 
-# # The option legend can be:
-# # FALSE (the default): no legend is shown;
-# # TRUE: the user is asked to click where the legend should be printed;
-# # a vector of two values with the coordinates where the print the legend (for non-
-# # interactive use like in this vignette
-# # New Features in pegas 1.0
-# # This section details some of the improvements made to haplotype network drawing after
-# # pegas 0.14.
-# # 3.1 Improved ‘Replotting’
-# # The graphical display of networks is a notoriously difficult problem, especially when there is
-# # an undefined number of links (or edges). The occurrence of reticulations makes line crossings
-# # almost inevitable. The packages igraph and network have algorithms to optimise the layouts
-# # of nodes and edges when plotting such networks.
-# #
-# # The function replot (introduced in pegas 0.7, March 2015) lets the user modify the
-# # layout of nodes interactively by clicking on the graphical window where a network has been
-# # plotted beforehand. replot—which cannot be used in this non-interactive vignette—has
-# # been improved substantially:
-# # The explanations printed when the function is called are more detailed and the node
-# # to be moved is visually identified after clicking.
-# # The final coordinates, for instance saved with xy <- replot(), can be used directly
-# # into plot(nt, xy = xy). This also makes possible to input coordinates calculated
-# # with another software.
-# # In previous versions, the limits of the plot tended to drift when increasing the number
-# # of node moves. This has been fixed, and the network is correctly displayed whatever
-# # the number of moves done
-# 
-# # Haplotype Symbol Shapes
-# # Haplotypes can be represented with three different shapes: circles, squares, or diamonds.
-# # The argument shape of plot.haploNet is used in the same way than size as explained
-# # above (including the evental need to reorder the values). Some details are given below
-# # about how these symbols are scaled.
-# # There are two ways to display a quantitative variable using the size of a circle: either
-# # with its radius (r) or with the area of the disc defined by the circle. This area is πr2, so if we
-# # want the area of the symbols to be proportional to size, we should square-root these last
-# # values. However, in practice this masks variation if most values in size are not very different
-# # (see below). In pegas, the diameters of the circles (2r) are equal to the values given by size.
-# # If these are very heterogeneous, they could be transformed with size = sqrt(.... keeping
-# # in mind that the legend will be relative to this new scale.
-# # The next figure shows both ways of scaling the size of the circles: the top one is the
-# # scaling used in pegas.
-# 
-# par(xpd = TRUE)
-# size <- c(1, 3, 5, 10)
-# x <- c(0, 5, 10, 20)
-# plot(0, 0, type="n", xlim=c(-2, 30), asp=1, bty="n", ann=FALSE)
-# other.args <- list(y = -5, inches = FALSE, add = TRUE,bg = rgb(1, 1, 0, .3))
-# o <- mapply(symbols, x = x, circles = sqrt(size / pi),MoreArgs = other.args)
-# other.args$y <- 5
-# o <- mapply(symbols, x = x, circles = size / 2,MoreArgs = other.args)
-# text(x, -1, paste("size =", size), font = 2, col = "blue")
-# text(30, -5, expression("circles = "*sqrt(size / pi)))
-# text(30, 5, "circles = size / 2")
-# #
-# # For squares and diamonds (shape = "s" and shape = "d", respectively), they are scaled
-# # so that their areas are equal to the disc areas for the same values given to size. The figure
-# # below shows these three symbol shapes superposed for several values of this parameter. Note
-# # that a diamond is a square rotated 45° around its center
-# 
-# x  <- c(0, 6, 13, 25)
-# plot(0, 0, type="n", xlim=c(-2, 30), asp=1, bty="n", ann=FALSE)
-# other.args$y <- 0
-# o <- mapply(symbols, x = x, circles = size/2, MoreArgs = other.args)
-# other.args$col <- "black"
-# other.args$add <- other.args$inches <- NULL
-# o <- mapply(pegas:::square, x = x, size = size, MoreArgs = other.args)
-# o <- mapply(pegas:::diamond, x = x, size = size, MoreArgs = other.args)
-# text(x, -7, paste("size =", size), font = 2, col = "blue")
-# # The Function mutations
-# # mutations() is a low-level plotting function which displays information about the mutations
-# # related to a particular link of the network. This function can be used interactively. For
-# # instance, the following is copied from an interactive R session:
-# #mutations(nt)
-# 
-# plot(nt)
-# mutations(nt, 18, x = -8.9, y = 16.3, data = h)
-# #Like any low-level plotting function, mutations() can be called as many times
-# #as needed to display similar information on other links.
-# #The option style takes the value "table"
-# # (the default) or "sequence". In the second, the positions of the mutations are drawn on a
-# # horizontal segment representing the sequence:
-# plot(nt)
-# mutations(nt, 18, x = -8.9, y = 16.3, data = h)
-# mutations(nt, 18, x = 10, y = 17, data = h, style = "s")
-# #
-# # Getting and Setting Options
-# # The new version of pegas has two ways to change some of the parameters of the plot:
-# # either by changing the appropriate option(s) in one of the above functions, or by
-# # setting these values with the function setHaploNetOptions, in which case all subsequent
-# # plots will be affected.2 The list of the option values currently in use can be printed
-# # with getHaploNetOptions. There is a relatively large number of options that affect
-# # either plot.haploNet() or mutations(). Their names are quite explicit so that the user
-# # should find which one(s) to modify easily:
-# # names(getHaploNetOptions())
-# # # We see here several examples with the command plot(nt, size = 2) which is repeated
-# # # after calling setHaploNetOptions
-# # plot(nt, size = 2)
-# # 
-# # setHaploNetOptions(haplotype.inner.color = "#CCCC4D",
-# #                    haplotype.outer.color = "#CCCC4D",
-# #                    show.mutation = 3, labels = FALSE)
-# # plot(nt, size = 2 )
-# # setHaploNetOptions(haplotype.inner.color = "blue",
-# #                    haplotype.outer.color = "blue", show.mutation = 1)
-# # par(bg = "yellow3")
-# # plot(nt, size = 2)
-# # 
-# # setHaploNetOptions(haplotype.inner.color = "navy",
-# #                    haplotype.outer.color = "navy")
-# # par(bg = "lightblue")
-# # plot(nt, size = 2)
-# # par(bg = "white")
-# #______________________________________________________________________________
-# # end vignette
-# #______________________________________________________________________________
-# 
-# # get summary  for haplotype object
-# (szp <- summary(h))
-# 
-# # It is likely that these values are not ordered in the same way than haplotypes are ordered
-# # in the network
-# (nt.labsp <- attr(net, "labels"))
-# #It is simple to reorder the frequencies before using them into plot
-# szp <- szp[as.numeric(nt.labsp)]
-# plot(net, size = sqrt(szp / pi))
-# regions2 <- rownames(x2)
-# (Rp <- haploFreq(x2, fac = regions2, haplo = h))
-# # A  similar mechanism can be used to show variables such as region or pop. The function
-# # haploFreq is useful here because it computes the frequencies of haplotypes for each region
-# # or population:
-# #(P <- haploFreq(x, fac = pop, haplo = h))
-# # Like with size, we have to reorder these matrices so that their rows are in the same order
-# # than in the network:
-# Rp <- Rp[as.numeric(nt.labsp), ]
-# 
-# # We may now plot the network with either information on haplotype frequencies by just
-# # changing the argument pie:
-# plot(net, size = sqrt(szp / pi), 
-#      scale.ratio = 1.8,
-#      cex = 1.8,
-#      threshold=0,#turn off display of alternative links
-#      show.mutation=2,# mutations are shown with small dots on the links
-#      pie = Rp, 
-#      legend = c(-25, 30))
-# 
-# 
-# hsl2 <- sqrt(attr(net, "freq") / pi)
-# 
-# plot(net,
-#      size=sqrt(attr(net, "freq") / pi),
-#      scale.ratio = 2,
-#      cex = 0.8,
-#      pie=hsl,
-#      show.mutation=2,# mutations are shown with small dots on the links
-#      threshold=0#turn off display of alternative links
-# )
-# 
-# 
-# plot(net, size = sqrt(szp / pi), 
-#      scale.ratio = 1.8,
-#      cex = 1.8,
-#      threshold=0,#turn off display of alternative links
-#      show.mutation=2,# mutations are shown with small dots on the links
-#      pie = Rp, 
-#      legend = c(-25, 30))
+# Another solution which works only with pegas: set the lengths of the links between haplotypes equal to the sum of the sizes of their respective symbols:
+#   ## extract the size of the haplotype symbols:
+#   size <- attr(net3, "freq")
+# ## make a copy of the network:
+# mynet <- net3
+# ## change the lengths of the links by changing the 3th column:
+# mynet[, 3] <- size[net3[, 1]] + size[net3[, 2]]
+# We now plot the modified network:
+#   o <- plot(mynet, size = size, cex = 0.8, pie = ind.hap3, threshold = 0, show.mutation = 0, scale.ratio = 2)
+# 'o' is a list that includes (among other things) the coordinates; we extract them and adjust the names:
+#   xy <- setNames(o[c("xx", "yy")], c("x", "y"))
+# We can plot the original network using these coordinates so that the mutations will be correctly displayed
+# plot(net3, xy = xy, size = size, cex = 0.8, pie = ind.hap3, threshold = 0, scale.ratio = 2, legend = TRUE)
+# The haplotype labels overlap quite a bit, so adding 'labels = FALSE' gives a nice result too (unless you want print these labels).
+# Best,
+# Emmanuel

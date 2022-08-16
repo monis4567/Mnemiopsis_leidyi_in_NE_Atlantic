@@ -2,12 +2,15 @@
 # -*- coding: utf-8 -*-
 
 #remove everything in the working environment, without a warning!!
-#rm(list=ls())
+rm(list=ls())
 #define path for input dir
 # wd01 <- "/suppmat01_inp_files"
 # wd05 <- "/suppmat05_out_files"
-wd00 <- "/home/hal9000/Documents/Documents/MS_Mnemiopsis/Mnemiopsis_leidyi_in_NE_Atlantic"
+wd00 <- "/home/hal9000/Documents/Documents/MS_Mnemiopsis/Mnemiopsis_leidyi_in_NE_Atlantic/"
 wd_out01 <- "/home/hal9000/Documents/Documents/MS_Mnemiopsis"
+#define path for input dir
+wd01 <- "/suppmat01_inp_files"
+wd05 <- "/suppmat05_out_files"
 wd00_wd01 <- paste0(wd00,wd01)
 wd00_wd05 <- paste0(wd00,wd05)
 #https://stackoverflow.com/questions/21676721/r-plot-circular-histograms-rose-diagrams-on-map
@@ -98,14 +101,14 @@ library(shapefiles)
 # bathymap <- marmap::getNOAA.bathy(lon1 = 4, lon2 = 17,
 #                         lat1 = 52.88, lat2 = 60, resolution = 2)
 # paste path and filename for input file together
-#loc04fl <- paste(wd00_wd05,"/loc04.csv",sep="")
+loc04fl <- paste(wd00_wd05,"/loc04.csv",sep="")
 #read in csv
-#df_hap_loc04 <- read.table(loc04fl, sep=",")
-#df_hap_loc06
+df_hap_loc04 <- read.table(loc04fl, sep=",")
 #change column names
-# colnames(df_hap_loc04) <- df_hap_loc04[1,]
+ colnames(df_hap_loc04) <- df_hap_loc04[1,]
 # # drop first row with column names
-# df_hap_loc04 <- df_hap_loc04[-1,]
+ df_hap_loc04 <- df_hap_loc04[-1,]
+ df_hap_loc08 <- df_hap_loc04
 #copy data frame
 df_hl05 <- df_hap_loc08
 # Creating a custom palette of blues for the bathymetric background
@@ -153,6 +156,8 @@ xlim = c(4, 16)
 ylim = c(53, 59)
 ## remove column
 df_hl05$rws2 <- NULL
+# change column name on first element of column names
+colnames(df_hl05)[1] <- "smplloca"
 # re arrange from wide to long
 df_hl06 <- reshape2::melt(df_hl05,                                 # Apply melt function
                    id.vars = c("smplloca", "dec_lat","dec_lon","rws"))
@@ -163,6 +168,8 @@ df_hl06$Cnt <- df_hl06$value
 df_hl06$variable <-  NULL
 df_hl06$value <-  NULL
 df_hl06$Cnt <- as.numeric(df_hl06$Cnt)
+# change roman numerals to arabian numerals
+df_hl06$Hpt <- as.numeric(df_hl06$Hpt)
 # make xyz list 
 xyz.Hpt <- make.xyz(df_hl06$dec_lon,df_hl06$dec_lat,df_hl06$Cnt,df_hl06$Hpt)
 # count number of haplotypes
@@ -245,6 +252,7 @@ dev.off()
 #______________________________________________________________
 #___________start plot map halpotype v 08____________________
 #______________________________________________________________
+
 # define name for outpu plot file
 figname01 <- "Fig04_v09_map_haplotype_pie.pdf"
 pthfignm01 <- paste(wd00_wd05,"/",figname01,sep="")
@@ -267,18 +275,19 @@ plot(NA,NA, xlim = c(4, 16), ylim = c(53, 59),
      xlab="Longitude", ylab="Latitude")
 # add internal map inside coastline
 maps::map('worldHires', add=TRUE, fill=TRUE, 
-    xlim = c(4, 16), ylim = c(53, 59),
-    xlab = "Longitude", ylab = "Latitude",
-    col="azure3", bg=transp_col)
+          xlim = c(4, 16), ylim = c(53, 59),
+          xlab = "Longitude", ylab = "Latitude",
+          col="azure3", bg=transp_col)
 #add new title
 mtext("a", side=3, adj=0, line=0.4, cex=1.2, font=2)
 #dev.off()
-mapplots::draw.pie(df_hl05$dec_lon,
-                   df_hl05$dec_lon,
-                   ma,
-                   radius = df_hl05$rws, add = TRUE,
-                   col=c(colra)
-                   )
+# mapplots::draw.pie(df_hl05$dec_lon,
+#                    df_hl05$dec_lon,
+#                    ma,
+#                    #radius = (sqrt(df_hl05$rws/pi)), 
+#                    add = TRUE,
+#                    col=c(colra)
+#)
 #https://stackoverflow.com/questions/51799118/writing-the-symbol-degrees-celsius-in-axis-titles-with-r-plotly
 longwE <- paste(5*(0:4),"\u00B0E",sep="")
 axis(1, at=c(5*(0:4)), labels=longwE,cex.axis = 0.6)
@@ -288,12 +297,13 @@ axis(2, at=c(53:59), labels=lattwN, las=1,cex.axis = 0.6)
 draw.pie(xyz.Hpt$x, xyz.Hpt$y, xyz.Hpt$z, radius = 0.6, col=scales::alpha(colra,0.7))
 #_______add histogram bars to positions on the map
 # add a legend
+# min(rowSums(xyz.Hpt$z,na.rm=TRUE))
 legend.z <- round(max(rowSums(xyz.Hpt$z,na.rm=TRUE))/10^0,0)
-legend.bubble(5,54,z=legend.z,round=0,maxradius=(1*0.6),bty="n",txt.cex=0.6)
-text(5,55.5,"samples",cex=0.8) 
+legend.bubble(14.8, 58,z=legend.z,round=0,maxradius=0.6*1.22,bty="n",txt.cex=0.6)
+text(14.8,56.7,"samples",cex=0.8) 
 #add legend to plot
-legend("topright", inset=c(0.03, 0), legend=c(Hpts), pch=c(rep(22,nHpt)), 
-       bg="white",title="Haplotype", pt.bg=colra, cex=0.3, pt.cex = 0.8, ncol=3,
+legend("topleft", inset=c(0.03, 0), legend=c(Hpts), pch=c(rep(22,nHpt)), 
+       bg="white",title="Haplotype", pt.bg=colra, cex=0.5, pt.cex = 0.88, ncol=4,
        x.intersp = 0.6,y.intersp = 0.7)
 # end plot
 dev.off()
@@ -317,19 +327,16 @@ df_hap_loc06 <- df_hap_loc06[-1,]
 df_hl07 <- df_hap_loc06
 # get number of columns
 nclhl07 <- ncol(df_hl07)
-colnames(df_hl07)[grepl("ov.aL",colnames(df_hl07))] <- "smplloca"
 
+colnames(df_hl07)[grepl("ov.aL",colnames(df_hl07))] <- "smplloca"
 # get column 2 to the 7th last column
 df_hl08 <- df_hl07[,c(2:(nclhl07-6))]
-rownames(df_hap_loc06)
-#df_hap_loc06$dec_loc2
-
+df_hl07$lnNm <- NULL
 # make all columns numeric
 df_hl08 <- as.data.frame(lapply(df_hl08,as.numeric))
 #make it a 'matrix array'
 ma <- as.matrix(df_hl08)
-
-
+# check if map exists , if not then get it
 if (!exists("zpfl"))
 {
   # Download the shapefile.
@@ -355,8 +362,6 @@ mspdf <- rgdal::readOGR(
 #
 sfl<- gsub(".shp","",paste0(wd_out01,"/",flnmshpfl))
 wlshpfl <- shapefiles::read.shapefile(sfl)
-#
-#df_hl07$smplloca <- df_hl07$dec_loc2
 # change the row names
 rownames(ma) <- df_hl07$smplloca
 # define plot limits
@@ -379,9 +384,15 @@ df_hl08$Cnt <- df_hl08$value
 #remove columns
 df_hl08$variable <-  NULL
 df_hl08$value <-  NULL
+#df_hl08$Cnt[is.na(df_hl08$Cnt)]
 df_hl08$Cnt <- as.numeric(df_hl08$Cnt)
+# replace any NAs with zero
+#df_hl08$Cnt[is.na(df_hl08$Cnt)] <- 0
+
 # make xyz list 
 xyz.Hpt <- mapplots::make.xyz(df_hl08$dec_lon,df_hl08$dec_lat,df_hl08$Cnt,df_hl08$Hpt)
+
+length(xyz.Hpt$x)==length(xyz.Hpt$y) & length(xyz.Hpt$y)==nrow(xyz.Hpt$z)
 # count number of haplotypes
 nHpt <- length(unique(df_hl08$Hpt))
 # make a colour range to reflect the number of haplotypes
@@ -402,7 +413,7 @@ world3 <- rnaturalearth::ne_countries(scale = 10, returnclass = "sf")
 w3sp<- as(world3, 'Spatial')
 #shapefiles::convert.to.shapefile(w3sp, field = )
 # end plot
-dev.off()
+#dev.off()
 # get library for package
 library(shapefiles)
 
@@ -441,13 +452,13 @@ maps::map('worldHires', add=TRUE, fill=TRUE,
 #par(new=T)
 mtext("b", side=3, adj=0, line=0.4, cex=1.2, font=2)
 #dev.off()
-
-mapplots::draw.pie(df_hl08$dec_lat,
-                   df_hl08$dec_lon,
-                   ma,
-                   radius = df_hl08$rws, add = TRUE,
-                   col=c(colra)
-)
+# 
+# mapplots::draw.pie(df_hl08$dec_lat,
+#                    df_hl08$dec_lon,
+#                    ma,
+#                    radius = df_hl08$rws, add = TRUE,
+#                    col=c(colra)
+# )
 # https://stackoverflow.com/questions/51799118/writing-the-symbol-degrees-celsius-in-axis-titles-with-r-plotly
 longwE <- paste(seq(-12, 16,4),"\u00B0E",sep="")
 longwW <- paste(c(12,8,4),"\u00B0W",sep="")
@@ -464,11 +475,11 @@ draw.pie(xyz.Hpt$x, xyz.Hpt$y, xyz.Hpt$z, radius = 1.6, col=scales::alpha(colra,
 #_______add histogram bars to positions on the map
 # add a legend
 legend.z <- round(max(rowSums(xyz.Hpt$z,na.rm=TRUE))/10^0,0)
-legend.bubble(-10,48,z=legend.z,round=0,maxradius=(1.6),bty="n",txt.cex=0.6)
-text(-10,46.5,"samples",cex=0.8) 
+legend.bubble(-12,48,z=(legend.z*1.5),round=0,maxradius=(1.6*1.5),bty="n",txt.cex=0.6)
+text(-12,45.0,"samples",cex=0.7) 
 #add legend to plot
 legend("bottomright", inset=c(0.03, 0), legend=c(Hpts), pch=c(rep(22,nHpt)), 
-       bg="white",title="Haplotype", pt.bg=colra, cex=0.3, pt.cex = 1.2, ncol=3,
+       bg="white",title="Haplotype", pt.bg=colra, cex=0.5, pt.cex = 0.88, ncol=4,
        x.intersp = 0.6,y.intersp = 0.7)
 # end plot
 dev.off()
@@ -509,37 +520,37 @@ plot(NA,NA, xlim = c(4, 16), ylim = c(53, 59),
      #surpress tickmarks
      xaxt="n", yaxt="n",
      xlab="Longitude", ylab="Latitude",
-     cex.lab = 0.7)
+     cex.lab = 0.96)
 # add internal map inside coastline
 maps::map('worldHires', add=TRUE, fill=TRUE, 
           xlim = c(4, 16), ylim = c(53, 59),
           xlab = "Longitude", ylab = "Latitude",
           col="azure3", bg=transp_col)
 #add new title
-mtext("a", side=3, adj=0, line=0.4, cex=1.2, font=2)
+mtext("a", side=3, adj=0, line=0.4, cex=1.8, font=2)
 #dev.off()
-mapplots::draw.pie(df_hl05$dec_lon,
-                   df_hl05$dec_lon,
-                   ma,
-                   radius = df_hl05$rws, add = TRUE,
-                   col=c(colra)
-)
+# mapplots::draw.pie(df_hl05$dec_lon,
+#                    df_hl05$dec_lon,
+#                    ma,
+#                    radius = df_hl05$rws, add = TRUE,
+#                    col=c(colra)
+# )
 #https://stackoverflow.com/questions/51799118/writing-the-symbol-degrees-celsius-in-axis-titles-with-r-plotly
 longwE <- paste(5*(0:4),"\u00B0E",sep="")
-axis(1, at=c(5*(0:4)), labels=longwE,cex.axis = 0.6)
+axis(1, at=c(5*(0:4)), labels=longwE,cex.axis = 0.96)
 lattwN <- paste((53:59),"\u00B0N",sep="")
-axis(2, at=c(53:59), labels=lattwN, las=1,cex.axis = 0.6)
+axis(2, at=c(53:59), labels=lattwN, las=1,cex.axis = 0.96)
 #add pies to map
 draw.pie(xyz.Hpt$x, xyz.Hpt$y, xyz.Hpt$z, radius = 0.6, col=scales::alpha(colra,0.7))
 #_______add histogram bars to positions on the map
 # add a legend
 legend.z <- round(max(rowSums(xyz.Hpt$z,na.rm=TRUE))/10^0,0)
-legend.bubble(5,54,z=legend.z,round=0,maxradius=(1*0.6),bty="n",txt.cex=0.6)
-text(5,55,"samples",cex=0.6) 
+legend.bubble(5,54,z=legend.z,round=0,maxradius=(1*0.6),bty="n",txt.cex=0.96)
+text(5,54.88,"samples",cex=0.96) 
 #add legend to plot
 legend("topright", inset=c(0.03, 0), legend=c(Hpts), pch=c(rep(22,nHpt)), 
-       bg="white",title="Haplotype", pt.bg=colra, cex=0.8, pt.cex = 1.2, ncol=3,
-       x.intersp = 0.6,y.intersp = 0.9)
+       bg="white",title="Haplotype", pt.bg=colra, cex=0.96, pt.cex = 0.88, ncol=4,
+       x.intersp = 0.6,y.intersp = 0.7)
 
 # Next - start plot for Europe
 # begin plot, with defined borders
@@ -552,7 +563,7 @@ plot(NA,NA, xlim = c(-12, 16),
      #surpress tickmarks
      xaxt="n", yaxt="n",
      xlab="Longitude", ylab="Latitude",
-     cex.lab = 0.7)
+     cex.lab = 0.96)
 #xlab = NA, ylab = NA)
 # add internal map inside coastline
 maps::map('worldHires', add=TRUE, fill=TRUE, 
@@ -563,15 +574,15 @@ maps::map('worldHires', add=TRUE, fill=TRUE,
           #xlab = "Longitude", ylab = "Latitude",
           col="azure3", bg=transp_col)
 #par(new=T)
-mtext("b", side=3, adj=0, line=0.4, cex=1.2, font=2)
+mtext("b", side=3, adj=0, line=0.4, cex=1.8, font=2)
 #dev.off()
 
-mapplots::draw.pie(df_hl08$dec_lat,
-                   df_hl08$dec_lon,
-                   ma,
-                   radius = df_hl08$rws, add = TRUE,
-                   col=c(colra)
-)
+# mapplots::draw.pie(df_hl08$dec_lat,
+#                    df_hl08$dec_lon,
+#                    ma,
+#                    radius = df_hl08$rws, add = TRUE,
+#                    col=c(colra)
+# )
 # https://stackoverflow.com/questions/51799118/writing-the-symbol-degrees-celsius-in-axis-titles-with-r-plotly
 #longwE <- paste(seq(-12, 16,4),"\u00B0E",sep="")
 longwW <- paste(c(16,12,8,4),"\u00B0W",sep="")
@@ -582,9 +593,9 @@ longwE <- paste(c(seq(5,20,5)),"\u00B0E",sep="")
 longwW0E<- c(longwW,longw0,longwE)
 #axis(1, at=c(-16,-12,-8,4,0,4,8,12,16), labels=longwW0E,cex.axis = 0.6)
 
-axis(1, at=c(seq(-20,20, by=5)), labels=longwW0E,cex.axis = 0.6)
+axis(1, at=c(seq(-20,20, by=5)), labels=longwW0E,cex.axis = 0.96)
 lattwN <- paste(round(seq(34.8, 58.0,4),0),"\u00B0N",sep="")
-axis(2, at=c(round(seq(34.8, 58.0,4),0)), labels=lattwN, las=1,cex.axis = 0.6)
+axis(2, at=c(round(seq(34.8, 58.0,4),0)), labels=lattwN, las=1,cex.axis = 0.96)
 
 #add pies to map
 draw.pie(xyz.Hpt$x, xyz.Hpt$y, xyz.Hpt$z, radius = 1.6, col=scales::alpha(colra,0.7))
@@ -592,12 +603,12 @@ draw.pie(xyz.Hpt$x, xyz.Hpt$y, xyz.Hpt$z, radius = 1.6, col=scales::alpha(colra,
 #_______add histogram bars to positions on the map
 # add a legend
 legend.z <- round(max(rowSums(xyz.Hpt$z,na.rm=TRUE))/10^0,0)
-legend.bubble(-16,55,z=legend.z*1.875,round=0,maxradius=(1.6*1.875),bty="n",txt.cex=0.6)
-text(-16,51,"samples",cex=0.6) 
+legend.bubble(-16,55,z=legend.z*1.875,round=0,maxradius=(1.6*1.875),bty="n",txt.cex=0.96)
+text(-16,51,"samples",cex=0.96) 
 #add legend to plot
 legend("bottomleft", inset=c(0.03, 0), legend=c(Hpts), pch=c(rep(22,nHpt)), 
-       bg="white",title="Haplotype", pt.bg=colra, cex=0.8, pt.cex = 1.2, ncol=3,
-       x.intersp = 0.6,y.intersp = 0.9)
+       bg="white",title="Haplotype", pt.bg=colra, cex=0.96, pt.cex = 0.88, ncol=4,
+       x.intersp = 0.6,y.intersp = 0.7)
 
 # end plot
 dev.off()
@@ -613,7 +624,6 @@ dev.off()
 #___________start plot map halpotype v 10____________________
 #______________________________________________________________
 # define name for outpu plot file
-figname01 <- "Fig04_v11_map_haplotype_pie.pdf"
 figname01 <- "Fig04_v12_map_haplotype_pie.jpg"
 pthfignm01 <- paste(wd00_wd05,"/",figname01,sep="")
 # set to save plot as pdf file with dimensions 8.26 to 2.9
@@ -647,12 +657,12 @@ maps::map('worldHires', add=TRUE, fill=TRUE,
 #add new title
 mtext("a", side=3, adj=0, line=0.4, cex=1.2, font=2)
 #dev.off()
-mapplots::draw.pie(df_hl05$dec_lon,
-                   df_hl05$dec_lon,
-                   ma,
-                   radius = df_hl05$rws, add = TRUE,
-                   col=c(colra)
-)
+# mapplots::draw.pie(df_hl05$dec_lon,
+#                    df_hl05$dec_lon,
+#                    ma,
+#                    radius = df_hl05$rws, add = TRUE,
+#                    col=c(colra)
+# )
 #https://stackoverflow.com/questions/51799118/writing-the-symbol-degrees-celsius-in-axis-titles-with-r-plotly
 longwE <- paste(5*(0:4),"\u00B0E",sep="")
 axis(1, at=c(5*(0:4)), labels=longwE,cex.axis = 0.6)
@@ -695,12 +705,12 @@ maps::map('worldHires', add=TRUE, fill=TRUE,
 mtext("b", side=3, adj=0, line=0.4, cex=1.2, font=2)
 #dev.off()
 
-mapplots::draw.pie(df_hl08$dec_lat,
-                   df_hl08$dec_lon,
-                   ma,
-                   radius = df_hl08$rws, add = TRUE,
-                   col=c(colra)
-)
+# mapplots::draw.pie(df_hl08$dec_lat,
+#                    df_hl08$dec_lon,
+#                    ma,
+#                    radius = df_hl08$rws, add = TRUE,
+#                    col=c(colra)
+# )
 # https://stackoverflow.com/questions/51799118/writing-the-symbol-degrees-celsius-in-axis-titles-with-r-plotly
 #longwE <- paste(seq(-12, 16,4),"\u00B0E",sep="")
 longwW <- paste(c(16,12,8,4),"\u00B0W",sep="")
@@ -775,12 +785,12 @@ maps::map('worldHires', add=TRUE, fill=TRUE,
 #add new title
 #mtext("a", side=3, adj=0, line=0.4, cex=1.2, font=2)
 #dev.off()
-mapplots::draw.pie(df_hl05$dec_lon,
-                   df_hl05$dec_lon,
-                   ma,
-                   radius = df_hl05$rws, add = TRUE,
-                   col=c(colra)
-)
+# mapplots::draw.pie(df_hl05$dec_lon,
+#                    df_hl05$dec_lat,
+#                    ma,
+#                    radius = df_hl05$rws, add = TRUE,
+#                    col=c(colra)
+# )
 #https://stackoverflow.com/questions/51799118/writing-the-symbol-degrees-celsius-in-axis-titles-with-r-plotly
 longwE <- paste(5*(0:4),"\u00B0E",sep="")
 axis(1, at=c(5*(0:4)), labels=longwE,cex.axis = 1.1)
@@ -795,7 +805,7 @@ legend.bubble(5,54.4,z=legend.z,round=0,maxradius=(1*0.6),bty="n",txt.cex=1.1)
 text(5,55.2,"samples",cex=1.1) 
 #add legend to plot
 legend("topright", inset=c(0.03, 0), legend=c(Hpts), pch=c(rep(22,nHpt)), 
-       bg="white",title="Haplotype", pt.bg=colra, cex=0.8, pt.cex = 1.2, ncol=3,
+       bg="white",title="Haplotype", pt.bg=colra, cex=0.96, pt.cex = 1.2, ncol=3,
        x.intersp = 0.6,y.intersp = 0.9)
 
 # end plot
@@ -803,7 +813,6 @@ dev.off()
 #______________________________________________________________
 #___________end plot map halpotype v 13____________________
 #______________________________________________________________
-
 
 
 # define name for outpu plot file
@@ -843,12 +852,12 @@ maps::map('worldHires', add=TRUE, fill=TRUE,
           #xlab = "Longitude", ylab = "Latitude",
           col="azure3", bg=transp_col)
 #mtext("a", side=3, adj=0, line=0.4, cex=1.2, font=2)
-mapplots::draw.pie(df_hl08$dec_lat,
-                   df_hl08$dec_lon,
-                   ma,
-                   radius = df_hl08$rws, add = TRUE,
-                   col=c(colra)
-)
+# mapplots::draw.pie(df_hl08$dec_lat,
+#                    df_hl08$dec_lon,
+#                    ma,
+#                    radius = (sqrt(df_hl08$rws/pi)), add = TRUE,
+#                    col=c(colra)
+# )
 # https://stackoverflow.com/questions/51799118/writing-the-symbol-degrees-celsius-in-axis-titles-with-r-plotly
 #longwE <- paste(seq(-12, 16,4),"\u00B0E",sep="")
 longwW <- paste(c(80,60,40,20),"\u00B0W",sep="")
@@ -858,9 +867,9 @@ longwE <- paste(c(seq(20,60,20)),"\u00B0E",sep="")
 longwW0E<- c(longwW,longw0,longwE)
 #axis(1, at=c(-16,-12,-8,4,0,4,8,12,16), labels=longwW0E,cex.axis = 0.6)
 
-axis(1, at=c(seq(-80,60, by=20)), labels=longwW0E,cex.axis = 0.8)
+axis(1, at=c(seq(-80,60, by=20)), labels=longwW0E,cex.axis = 1.0)
 lattwN <- paste(round(seq(10, 60,10),0),"\u00B0N",sep="")
-axis(2, at=c(round(seq(6, 60,10),0)), labels=lattwN, las=1,cex.axis = 0.8)
+axis(2, at=c(round(seq(6, 60,10),0)), labels=lattwN, las=1,cex.axis = 1.0)
 
 #add pies to map
 draw.pie(xyz.Hpt$x, xyz.Hpt$y, xyz.Hpt$z, radius = 1.6, col=scales::alpha(colra,0.7))
@@ -872,8 +881,8 @@ legend.bubble(-40,40,z=legend.z*1.875,round=0,maxradius=(1.6*1.875),bty="n",txt.
 text(-40,44,"samples",cex=0.8) 
 #add legend to plot
 legend("bottomright", inset=c(0.03, 0), legend=c(Hpts), pch=c(rep(22,nHpt)), 
-       bg="white",title="Haplotype", pt.bg=colra, cex=0.8, pt.cex = 1.2, ncol=4,
-       x.intersp = 0.6,y.intersp = 0.9)
+       bg="white",title="Haplotype", pt.bg=colra, cex=0.98, pt.cex = 1.2, ncol=6,
+       x.intersp = 0.88,y.intersp = 0.9)
 
 # end plot
 dev.off()
