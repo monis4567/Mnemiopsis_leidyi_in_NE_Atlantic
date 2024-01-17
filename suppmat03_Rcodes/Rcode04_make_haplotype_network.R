@@ -5,55 +5,15 @@
 rm(list=ls())
 # Read in package libraries
 library(pegas)
+library(phangorn)
 library(ape)
+library(scales) # to be able to use alpha for setting opacity in colours
 packageVersion("pegas")
 #[1] ‘1.1’
 packageVersion("ape")
 # [1] ‘5.6.2’
 #install.packages("pegas")
 R.Version()
-# $platform
-# [1] "x86_64-pc-linux-gnu"
-# 
-# $arch
-# [1] "x86_64"
-# 
-# $os
-# [1] "linux-gnu"
-# 
-# $system
-# [1] "x86_64, linux-gnu"
-# 
-# $status
-# [1] ""
-# 
-# $major
-# [1] "4"
-# 
-# $minor
-# [1] "1.2"
-# 
-# $year
-# [1] "2021"
-# 
-# $month
-# [1] "11"
-# 
-# $day
-# [1] "01"
-# 
-# $`svn rev`
-# [1] "81115"
-# 
-# $language
-# [1] "R"
-# 
-# $version.string
-# [1] "R version 4.1.2 (2021-11-01)"
-# 
-# $nickname
-# [1] "Bird Hippie"
-
 # Or the development version from GitHub:
 # install.packages("devtools")
 #devtools::install_github("r-lib/devtools")
@@ -127,46 +87,6 @@ lrNm <- strsplit(as.character(rownames(dnb_pip4)), "_")
 smplno1 <- sapply(lrNm, "[[", 1)
 smplno2 <- sapply(lrNm, "[[", 2)
 smplno3 <- sapply(lrNm, "[[", 3)
-# #create haplotypes from dna.bin
-# pip4Haps <- pegas::haplotype(pip4)
-# #prepare hpt table
-# ind.hap<-with(
-#   stack(setNames(attr(pip4Haps, "index"), rownames(pip4Haps))),
-#   table(hap=ind, pop=rownames(pip4)[values]))
-# #make it a dataframe
-# df_ihpt01 <- as.data.frame(ind.hap)
-# #limit to include only 'Freq' that equals 1
-# df_ihpt02 <- df_ihpt01[df_ihpt01$Freq == 1,]
-# # get sample numbers from haplotype table
-# liht2Nm <- strsplit(as.character(df_ihpt02$pop), "_")
-# # get the first element of the split string
-# liht2Nm.1 <- sapply(liht2Nm, "[[", 2)
-# # copy the vector
-# liht2Nm.1a <- liht2Nm.1
-# # grep for long (5) numeric characters in the string, and substitute, to only get accession number 
-# liht2Nm.1a[grepl("[0-9]{5}",liht2Nm.1a)] <- gsub("Mnelei","",liht2Nm.1[grepl("[0-9]{5}",liht2Nm.1)])
-# # get the sampling year
-# yearsmpl4 <- sapply(liht2Nm, "[[", 3)
-# # bind them by column in a new data frame
-# df_smpl.yer4 <- as.data.frame(cbind(liht2Nm.1a,yearsmpl4))
-# # change the column names
-# colnames(df_smpl.yer4) <- c("smplNo5","smplyer5")
-# #copy the vector
-# smplno1a <- smplno1
-# # replace in the copied vector
-# smplno1a[grepl("Mnemiopsis",smplno1)] <- smplno3[grepl("Mnemiopsis",smplno1)]
-# # match back to get sampling year
-# smplno5 <- df_smpl.yer4$smplyer5[match(smplno1a,df_smpl.yer4$smplNo5)]
-# # combine to a data frame
-# df_rNm_lblNm2 <- cbind(smplno1a,df_rNm_lblNm, smplno5)
-# # change column name
-# colnames(df_rNm_lblNm2) <- c("longNm1","longNm2","locat","smplyear")
-# # change row names in data frame with sequences
-# rownames(df_pip4) <- paste0(df_rNm_lblNm2$longNm1,"_",df_rNm_lblNm2$locat,"_",df_rNm_lblNm2$smplyear)
-# # grep for "Bolinopsis" to exclude this sequence from the data frame
-# df_pip4 <- df_pip4[!grepl("Bolinopsis",rownames(df_pip4)),]
-# #make the date frame a matrix and a DNAbin object again
-# dnb_pip4 <- as.DNAbin(as.matrix(df_pip4))
 # make a distance matrix 
 dst_pip4 <- ape::dist.dna(dnb_pip4, model= "raw")
 # make it a matrix
@@ -193,7 +113,7 @@ ht4 <- haplotype(dnb_pip4,labels=c(labs.ht4))
 # make haplonet object
 hN4 <- pegas::haploNet(ht4)
 #prepare hpt table
-ind.hap4<-with(
+ind.hap4 <- with(
   stack(setNames(attr(ht4, "index"), rownames(ht4))),
   table(hap=ind, pop=rownames(dnb_pip4)[values]))
 #make it a dataframe
@@ -291,18 +211,14 @@ df_ihpt05 <- df_ihpt05[df_ihpt05$Freq >= 1,]
 # make a table of locations and haplotype numbers
 hsl4 <- table(df_ihpt04$hap.ab, df_ihpt04$pop.loc)
 hsl5 <- table(df_ihpt05$hap.ab, df_ihpt05$pop.loc)
-
-
 # get colours to use for pies
 colfh<- df_cll$colfcol_loc[match(colnames(hsl4),df_cll$coll_loc)]
 colfh_y <- df_cfy3$colour[match(colnames(hsl5),df_cfy3$smplyr)]
-
-flnm <- c(paste("Fig02_v03_haplotype_network_",inf01,"02.jpg",  sep = ""))
+# define output file name
+flnm <- c(paste("Fig03_v03_haplotype_network_",inf01,"02.jpg",  sep = ""))
 #paste output directory and filename together in a string
 outflnm <- paste(wd00_wd05,"/",flnm,sep="")
-# Exporting PFD files via postscript()           
-# pdf(outflnm,
-#     width=(1*1.0*8.2677),height=(4*1.0*2.9232))
+# Exporting jpg file via postscript()           
 jpeg(outflnm,
      width=(3200),height=(4800),res=300)
 #define lpot arrangement
@@ -365,9 +281,280 @@ par(tbt.par)
 dev.off()  
 #reset this par parameter
 par(mfrow = c(1, 1)) 
+#_______________________________________________________________________________
+# start - 
+# make a figure  with only the haplotype network colored by collection locality 
+#_______________________________________________________________________________
+# define output file name
+flnm <- c(paste("Fig03_v05_haplotype_network_",inf01,"02.jpg",  sep = ""))
+#paste output directory and filename together in a string
+outflnm <- paste(wd00_wd05,"/",flnm,sep="")
+# Exporting jpg file via postscript()           
+jpeg(outflnm,
+     width=(3200),height=(2400),res=300)
+#define lpot arrangement
+tbt.par <- par(mfrow=c(1, 1),
+               oma=c(0,0,0,0), #define outer margins
+               mai=c(0,0,0,0), #define inner margins
+               mar=c(0,0,2,0))
+# plot the network with colours
+plot(hN4, 
+     size = sqrt(attr(hN4,"freq")/pi), 
+     #size = log10(attr(hN4,"freq")), 
+     scale.ratio = 0.6, 
+     cex = 1.1, # set size of roman numerals on circles for haplotype ID
+     #bg= colfh,
+     # use the 'alpha' function on the color to make the color fill more transparent
+     #bg=alpha(c(colfh),c(0.7)),
+     bg=alpha(c(colfh),c(1.0)),
+     pie = hsl4, 
+     show.mutation = 2, threshold = 0, labels(T), xy=xy)
+#add a legend to the plot
+legend("bottomleft",colnames(hsl4), 
+       # use the 'alpha' function on the color to make the color fill more transparent
+       #pt.bg=alpha(c(colfh),c(0.7))
+       pt.bg=alpha(c(colfh),c(1.0))
+       ,box.col=NA,
+       #col=rainbow(ncol(new.hap.smplloc)), 
+       pt.lwd=0.4,
+       pch=21, ncol=2, cex=1.2)
 
+# use the par settings defined above
+par(tbt.par)
+# end file to save as
+dev.off()  
+#reset this par parameter
+par(mfrow = c(1, 1)) 
 
+#_______________________________________________________________________________
+# end - 
+# make a figure  with only the haplotype network colored by collection locality 
+#_______________________________________________________________________________
 
+#_______________________________________________________________________________
+#_______________________________________________________________________________
+#_______________________________________________________________________________
+#_______________________________________________________________________________
+# start
+# subset the DNAbin object and make a haplotype network only on Danish- German
+# samples from 2017-2018
+#_______________________________________________________________________________
+# make the dnabin object a phydata object
+phyd_pip4 <- phangorn::as.phyDat(dnb_pip4)
+# strsplit names and turn into characters
+# and rowbind the nested lists to a dataframe
+df_pp4Nm <- data.frame(do.call
+                       ('rbind', 
+                         strsplit(as.character(names(phyd_pip4)),
+                                  "_")))
+# modify columns names
+colnames(df_pp4Nm) <- c("smplNm","loc","yer")
+# get unique location names
+uloc <- unique(df_pp4Nm$loc)
+# order the unique location names
+uloc <- uloc[order(uloc)]
+# make a vector that categorizes the overall sampling locations for :
+# North East Atlantic, Caspian Sea, Central Western Atlantic and Mediterranean
+ovloc <- c("NEA", "CS", "CWA", "NEA", "NEA", "NEA", "NEA", "NEA", "NEA", 
+           "NEA", "NEA", "M", "NEA", "NWA", "NEA", "NEA")
+# combine in to a data frame
+df_ovl <- as.data.frame(cbind(uloc, ovloc))
+# subset to only comprise the NEA overall location names
+df_ovlNEA <- subset(df_ovl, ovloc=="NEA")
+# get unique NEA locatoins and all full sample names
+NEAloc <- df_ovlNEA$uloc
+Nmsloc <- names(phyd_pip4)
+# use grepl instead of dplyr, to get all NEA full sample names
+# but first collapse and paste with '|' sign to be able to grep for
+# multiple chracteristics
+# https://stackoverflow.com/questions/45357806/dplyr-select-and-starts-with-on-multiple-values-in-a-variable-list?noredirect=1&lq=1
+NmslocNEA <- Nmsloc[grepl(paste(NEAloc, collapse="|"),Nmsloc)]
+# now subset the phydat object by the full names that match bein NEA samples
+phyd_pip5 <- subset(phyd_pip4, NmslocNEA)
+# limit to only include samples collected in 2017 and 2018
+Nmswy17_18 <- NmslocNEA[grepl(paste(c("2017","2018"), collapse="|"),NmslocNEA)]
+# subset the phy dat object - I am replacing the previous object
+phyd_pip5 <- subset(phyd_pip4, Nmswy17_18)
+# make the phy-dat object a DNAbin object instead
+dnb_pip5 <- as.DNAbin(phyd_pip5)
+# make the DNAbin object a distance matrix 
+dst_pip5 <- ape::dist.dna(dnb_pip5, model= "raw")
+# make it a matrix
+mtx_pip5 <- as.matrix(dst_pip5)
+# make it a data frame
+df_pip5 <- as.data.frame(mtx_pip5)
+# split the row name string by a character 
+lpip5 <- strsplit(as.character(row.names(mtx_pip5)), "_")
+# get the 2 nd element per vector in the list - this holds the abbreviated 
+# location name
+grp.loc5 <- sapply(lpip5, "[[", 2)
+#make haplotype object
+ht5 <- pegas::haplotype(dnb_pip5)
+#which polyps belong to which haplotype?
+ht5_indices<-attr(ht5, "index")
+# get number of labels 
+hlab5 <- length(labels(ht5))
+#assign labels
+names(ht5_indices)<-c(1:hlab5)
+# make roman numerals arabic numerals instead
+labs.ht5 <- as.numeric(as.roman(labels(ht5)))
+# use arabian numerals instead of roman numerals for haplotypes
+ht5 <- haplotype(dnb_pip5,labels=c(labs.ht5))
+# make haplonet object
+hN5 <- pegas::haploNet(ht5)
+#prepare hpt table
+ind.hap5 <- with(
+  stack(setNames(attr(ht5, "index"), rownames(ht5))),
+  table(hap=ind, pop=rownames(dnb_pip5)[values]))
+#make it a dataframe
+df_ihpt05 <- as.data.frame(ind.hap5)
+# make haplotype labels arabic numerals instead of roman numerals 
+df_ihpt05$hap.ab <- as.numeric(as.roman(as.character(df_ihpt05$hap)))
+# split the string with sequence name which holds the location name
+lbf5  <- strsplit(as.character(df_ihpt05$pop), "_")
+# copy table
+df_ihpt06 <- df_ihpt05
+# get the second element from this string split
+df_ihpt05$pop.loc <- sapply(lbf5, "[[", 2)
+df_ihpt06$pop.yer <- sapply(lbf5, "[[", 3)
+#remove any zero occurences
+df_ihpt05 <- df_ihpt05[df_ihpt05$Freq >= 1,]	
+df_ihpt06 <- df_ihpt06[df_ihpt06$Freq >= 1,]	
+# make a table of locations and haplotype numbers
+hsl5 <- table(df_ihpt05$hap.ab, df_ihpt05$pop.loc)
+hsl6 <- table(df_ihpt06$hap.ab, df_ihpt06$pop.yer)
+#make the plot
+plot(hN5, 
+     size = sqrt(attr(hN5,"freq")/pi), 
+     scale.ratio = 0.6, 
+     cex = 1.1, # set size of roman numerals on circles for haplotype ID
+     #bg= colfh, 
+     pie = hsl5, 
+     show.mutation = 2, threshold = 0, labels(T))
+
+# Use the replot function to be able to move pies around in the plot
+# run the out-commented line below
+#xy <- replot()
+# and rearrange your pies as you want them to be placed.
+# NOTICE !!! This replot function does not work in Rstudio. You must start up R in a terminal, and then 
+# run all the code above, including the replot part
+
+xy5 <- list(x = c(8.66363124977374, 8.69510647585978, -1.90604716942197, 
+                  0.717364470464012, -1.9238625496861, 1.97153611237931, -0.525514312021597, 
+                  1.17247997657102, 0.694097013873619, 1.79674258267125, -1.04989490114579, 
+                  -2.79783019822642, -0.325750278069525, -1.87392154119809, 0.298512328030701, 
+                  1.42327940925485), y = c(-7.21792524346822, -6.08870375872413, 
+                                           -6.03592443419948, -5.9768678161571, -8.43274854419809, -7.34288699699029, 
+                                           -4.08179179867645, -5.1424298051031, -7.35168790390372, -5.54230741637374, 
+                                           -8.43740391336429, -8.33096261227681, -7.96656543470199, -3.52043797295862, 
+                                           -5.20644758037513, -6.46987292586405))
+  
+
+# get colours to use for pies
+colfh5<- df_cll$colfcol_loc[match(colnames(hsl5),df_cll$coll_loc)]
+colfh_y6 <- df_cfy3$colour[match(colnames(hsl6),df_cfy3$smplyr)]
+
+# define output file name
+flnm <- c(paste("Fig03_v04_haplotype_network_",inf01,"02.jpg",  sep = ""))
+#paste output directory and filename together in a string
+outflnm <- paste(wd00_wd05,"/",flnm,sep="")
+# Exporting jpg file via postscript()           
+jpeg(outflnm,
+     width=(3200),height=(4800),res=300)
+#define lpot arrangement
+tbt.par <- par(mfrow=c(2, 1),
+               oma=c(0,0,0,0), #define outer margins
+               mai=c(0,0,0,0), #define inner margins
+               mar=c(0,0,2,0))
+# plot the network with colours
+plot(hN5, 
+     size = sqrt(attr(hN5,"freq")/pi), 
+     scale.ratio = 0.6, 
+     cex = 1.1, # set size of roman numerals on circles for haplotype ID
+     #bg= colfh,
+     # use the 'alpha' function on the color to make the color fill more transparent
+     #bg=alpha(c(colfh),c(0.7)),
+     bg=alpha(c(colfh5),c(1.0)),
+     pie = hsl5, 
+     show.mutation = 2, threshold = 0, labels(T), xy=xy5)
+
+#add a legend to the plot
+legend("bottomleft",colnames(hsl5), 
+       # use the 'alpha' function on the color to make the color fill more transparent
+       #pt.bg=alpha(c(colfh),c(0.7))
+       pt.bg=alpha(c(colfh5),c(1.0))
+       ,box.col=NA,
+       #col=rainbow(ncol(new.hap.smplloc)), 
+       pt.lwd=0.4,
+       pch=21, ncol=2, cex=1.2)
+# add subfigure letter
+title(main = "a",
+      cex.main = 2.2,   font.main= 2, col.main= "black",
+      adj = 0.01, line = 0.1)
+
+# plot for years
+plot(hN5, 
+     size = sqrt(attr(hN5,"freq")/pi), 
+     scale.ratio = 0.6, 
+     cex = 1.1, # set size of roman numerals on circles for haplotype ID
+     #bg= colfh,
+     # use the 'alpha' function on the color to make the color fill more transparent
+     #bg=alpha(c(colfh),c(0.7)),
+     bg=alpha(c(colfh_y6),c(1.0)),
+     pie = hsl6, 
+     show.mutation = 2, threshold = 0, labels(T), xy=xy5)
+#add a legend to the plot
+legend("bottomleft",colnames(hsl6), 
+       #col=rainbow(ncol(new.hap.smplye)), 
+       # use the 'alpha' function on the color to make the color fill more transparent
+       #pt.bg=alpha(c(colfh_y),c(0.7))
+       pt.bg=alpha(c(colfh_y6),c(1.0))
+       ,box.col=NA,pt.lwd=0.4,
+       pch=21, ncol=1, cex=1.2)
+# add subfigure letter
+title(main = "b",
+      cex.main = 2.2,   font.main= 2, col.main= "black",
+      adj = 0.01, line = 0.1)
+# use the par settings defined above
+par(tbt.par)
+# end file to save as
+dev.off()  
+#reset this par parameter
+par(mfrow = c(1, 1)) 
+#_______________________________________________________________________________
+# end
+# subset the DNAbin object and make a haplotype network only on Danish- German
+# samples from 2017-2018
+#_______________________________________________________________________________
+# make the dnabin object a phydata object
+phyd_pip4 <- as.phyDat(dnb_pip4)
+mltalgn_pip4 <- phangorn::phyDat2MultipleAlignment(phyd_pip4)
+algn_pip4 <- phangorn::phyDat2alignment(phyd_pip4)
+no_of_seq_pip4 <- algn_pip4$nb
+# get the alignment
+seq_lng_pip4 <- nchar(algn_pip4$seq[1])
+df_apip4 <- as.data.frame(algn_pip4$seq)
+str1_apip4 <- paste (df_apip4,collapse = "")
+nofchars_apip4 <- nchar(str1_apip4)
+no_char_in_mtrx_apip4 <- seq_lng_pip4*no_of_seq_pip4
+library(stringr)
+indel_cnt_apip4 <- stringr::str_count(str1_apip4, pattern = "-")
+perc_indel_apip4 <- indel_cnt_apip4/no_char_in_mtrx_apip4*100
+100-perc_indel_apip4
+
+# make the dnabin object a phydata object
+phyd_pip5 <- as.phyDat(dnb_pip5)
+mltalgn_pip5 <- phangorn::phyDat2MultipleAlignment(phyd_pip5)
+algn_pip5 <- phangorn::phyDat2alignment(phyd_pip5)
+no_of_seq_pip5 <- algn_pip5$nb
+# get the alignment
+seq_lng_pip5 <- nchar(algn_pip5$seq[1])
+df_apip5 <- as.data.frame(algn_pip5$seq)
+str1_apip5 <- paste (df_apip5,collapse = "")
+nofchars_apip5 <- nchar(str1_apip5)
+no_char_in_mtrx_apip5 <- seq_lng_pip5*no_of_seq_pip5
+indel_cnt_apip5 <- str_count(str1_apip5, pattern = "-")
+perc_indel_apip5 <- indel_cnt_apip5/no_char_in_mtrx_apip5*100
 # #_______________________________________________________________________________
 # Another solution which works only with pegas: set the lengths of the links between haplotypes equal to the sum of the sizes of their respective symbols:
 #   ## extract the size of the haplotype symbols:

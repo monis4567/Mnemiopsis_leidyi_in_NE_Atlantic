@@ -41,16 +41,25 @@ DNA_sequence_subset<-function(df,PositionVariable=Posn,ValueVariable=Value,
     mutate(id=1:nrow(dfs1)) %>%
     select(id,Start={{PositionVariable}})
   
-  
-  
   # find positions indicating the end of an "OK" block
   # previous position was OK and this one is not OK
   dfs2 <- df_sum %>%
     filter(OK==F & OKprev==T)
-  dfs2 <- dfs2 %>%
-    mutate(id=1:nrow(dfs2)) %>%
-    select(id,End={{PositionVariable}}) %>%
-    mutate(End=End-1) # this is the first position which is not OK - we want the one just before
+  if(nrow(dfs2)>0){
+    dfs2 <- dfs2 %>%
+      mutate(id=1:nrow(dfs2)) %>%
+      select(id,End={{PositionVariable}}) %>%
+      mutate(End=End-1) # this is the first position which is not OK - we want the one just before
+    if(nrow(dfs2)<nrow(dfs1)){
+      dfs2 <- dfs2 %>%
+        add_row(id=nrow(dfs1),End=nrow(df_sum))
+    }
+  }else{
+    # if there are no OK=FALSE rows after the start of the last block of OK=TRUE
+    # then we should stop at the 
+    dfs2 <- data.frame(id=1,End=nrow(df_sum))
+  }
+  
   
   dfs <- dfs1 %>%
     left_join(dfs2,by="id")

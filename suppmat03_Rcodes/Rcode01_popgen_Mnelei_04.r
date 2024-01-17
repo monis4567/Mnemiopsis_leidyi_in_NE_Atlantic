@@ -3,9 +3,6 @@
 
 # This code is able  to run in:
 
-#NOTICE that the 'haplotypes' package requires 
-# R v3.6.2
-
 #remove everything in the working environment, without a warning!!
 rm(list=ls())
 
@@ -29,15 +26,20 @@ library(pegas)
 # gaston had issues installing. Returning the error: “failed to create lock directory”
 # I looked here: https://stackoverflow.com/questions/14382209/r-install-packages-returns-failed-to-create-lock-directory
 if(!require("gaston")){
+  install.packages("Rcpp", dependencies = TRUE, INSTALL_opts = '--no-lock')
+  install.packages("RcppParallel", dependencies = TRUE, INSTALL_opts = '--no-lock')
   install.packages("gaston", dependencies = TRUE, INSTALL_opts = '--no-lock')
-  library("gaston")
+
 }
+library("gaston")
 # The 'hierfstat' package has many functions for various pop gen 
 # calculations
 if(!require("hierfstat")){
   install.packages("hierfstat", dependencies = TRUE, INSTALL_opts = '--no-lock')
 }
 library("hierfstat")
+library("ggrepel")
+
 # the 'haplotypes' package is used for calculating Phist values
 # unfortunately 'haplotypes will not work in R v3.3, and will
 # not work in R v4.0.2, which is why this code is prepared for
@@ -51,18 +53,57 @@ library("hierfstat")
 # }
 
 #https://www.rdocumentation.org/packages/strataG/versions/2.4.905
-if(!require(strataG)){
-  # make sure you have Rtools installed
-  if (!require('devtools')) install.packages('devtools')
-  # install from GitHub
-  devtools::install_github('ericarcher/strataG', build_vignettes = TRUE)
-}
+# if(!require(strataG)){
+#   # make sure you have Rtools installed
+#   if (!require('devtools')) install.packages('devtools')
+#   # install from GitHub
+#   devtools::install_github('ericarcher/strataG', build_vignettes = TRUE)
+# }
 # get ips packge to write dnabin to fasta files
 if(!require("ips")){
   install.packages("ips", dependencies = TRUE, INSTALL_opts = '--no-lock')
   library("ips")
 }
 library("ips")
+
+# to be able to install 'dartR' 'rjags' must be installed
+# first. 'rjags' requires that 'jags' is installed.
+# 'jags' can be installed in the terminal
+# see this problem
+# https://github.com/r-hub/rhub/issues/296
+# in a terminal type:
+# $ sudo apt install jags
+if(!require("rjags")){
+  install.packages("rjags", dependencies = TRUE, INSTALL_opts = '--no-lock')
+}
+library("rjags")
+# to install 'dartR' it is rquired that 'SNPRelate' is
+# installed.
+# this website explains how "SNPRelate" can be installed
+# https://www.bioconductor.org/packages/release/bioc/html/SNPRelate.html
+if(!require("SNPRelate")){
+  if (!require("BiocManager", quietly = TRUE))
+    install.packages("BiocManager", force =T)
+  BiocManager::install("SNPRelate", force =T)
+}
+library("SNPRelate")
+#install the 'dartR' package
+if(!require("dartR")){
+  install.packages("dartR", dependencies = TRUE, INSTALL_opts = '--no-lock')
+}
+library("dartR")
+
+
+if(!require("ecodist")){
+  install.packages("ecodist", dependencies = TRUE, 
+                   force=T,INSTALL_opts = '--no-lock')
+}
+library("ecodist")
+
+if(!require("hierfstat")){
+  install.packages("hierfstat", dependencies = TRUE, INSTALL_opts = '--no-lock')
+}
+library("hierfstat")
 # get textclean packge to replace non ASCII characters
 if(!require("textclean")){
   install.packages("textclean", dependencies = TRUE, INSTALL_opts = '--no-lock')
@@ -73,35 +114,39 @@ library("textclean")
 # making the colored tables
 if(!require("tidyverse")){
   install.packages("tidyverse", dependencies = TRUE, INSTALL_opts = '--no-lock')
-  library("tidyverse")
 }
+library("tidyverse")
 # the 'pals' enables you to make color gradients - here used for colored tables
 if(!require("pals")){
   install.packages("pals", dependencies = TRUE, INSTALL_opts = '--no-lock')
-  library("pals")
+
 }
+library("pals")
 # strataG package can calculate Tajimas D,
 
 #But the 'strata' package is not available for R v3.6.2
-# The strataG package works for R v4.0.2
-# if(!require("strataG")){
-#   install.packages("strataG", dependencies = TRUE, INSTALL_opts = '--no-lock')
-#   library("strataG")
-# }
-#install apex package
-if(!require("apex")){
-  install.packages("apex", dependencies = TRUE)
-  library("apex")
+#The strataG package works for R v4.0.2
+if(!require("strataG")){
+  #install.packages("strataG", dependencies = TRUE, INSTALL_opts = '--no-lock')
+  # make sure you have Rtools installed
+  if (!require('devtools')) install.packages('devtools')
+  library("devtools")
+  # 'apex' package is required for 'strataG'
+  install_version("apex", "1.0.4")
+  library(apex)
+  # install from GitHub
+  devtools::install_github('ericarcher/strataG', build_vignettes = F)
 }
+library("strataG")
+
 #install mmod package
 if(!require("mmod")){
   install.packages("mmod", dependencies = TRUE)
-  library("mmod")
 }
+library("mmod")
 
 if(!require(sf)){
   install.packages("sf")
-  
 }
 library(sf)
 
@@ -175,9 +220,16 @@ if(!require(dartR)){
   gl.install.vanilla.dartR()
   }
 library(dartR)
-# get the biogeo package 
+# # get the biogeo package 
 if(!require(biogeo)){
-  install.packages("biogeo", repos='http://cran.us.r-project.org')
+  # check if the package is available
+  ap <- available.packages()
+  "biogeo" %in% rownames(ap)
+  # https://stackoverflow.com/questions/25721884/how-should-i-deal-with-package-xxx-is-not-available-for-r-version-x-y-z-wa
+  # it is out of date. So install it from the archive
+  # install.packages("biogeo")
+  library(remotes)
+  install_version("biogeo", "1.0")
 }
 library(biogeo)
 # get the BiocManager package
@@ -189,9 +241,24 @@ library(BiocManager)
 # get the htmlTable package
 if (!require("htmlTable", quietly = TRUE))
   if(!require(htmlTable)){
-    install.packages("htmlTable")
+    install.packages("htmlTable", force=T)
   }
 library(htmlTable)
+
+# get the scatterpie package
+if (!require("scatterpie", quietly = TRUE))
+  if(!require(scatterpie)){
+    install.packages("scatterpie", force=T)
+  }
+library(scatterpie)
+
+# get the tableHTML package
+if (!require("tableHTML", quietly = TRUE))
+  if(!require(tableHTML)){
+    install.packages("tableHTML", force=T)
+  }
+library(tableHTML)
+
 
 # get the ggtree package
 if(!require(ggtree)){
@@ -213,8 +280,22 @@ if(!require("kableExtra")){
   install.packages("devtools")
   devtools::install_github("haozhu233/kableExtra")
   
-  library("kableExtra")
 }
+library("kableExtra")
+
+
+ # I installed the Bioconductor package  DECIPHER
+# some of the dependencies that came with the DECIPHER
+# package appear to block out some of the base functions
+# even though I tried to call the namespace for each for the 
+# functions I could not call the base functions, and I 
+# could not uninstall single Bioconductor packages.
+# Instead I found this webiste
+#https://support.bioconductor.org/p/7071/
+# That suggested that I can remove everything
+# so in my R library I decided to run 'rm -rf' in a terminal
+# to get rid of everything
+# Unfortunately, I need to reinstall everything. 
 #define path for input dir
 wd01 <- "/suppmat01_inp_files"
 wd05 <- "/suppmat05_out_files"
@@ -644,6 +725,9 @@ df_clo03$locality8[grepl("Skovshoved",df_clo03$locality4)] <- "SSk"
 #_______________________________________________________________________________
 #read FASTA as dna.bin
 pip <- ape::read.dna(pth_inpf01, format = "fasta")
+nrow(pip)
+ncol(pip)
+
 #make the DNAbin object a genind object
 geni_pip <- adegenet::DNAbin2genind(pip)
 #make the genind object a dataframe
@@ -748,6 +832,9 @@ df_pip02$rwnm07 <- NULL
 df_pip02$rwnm08 <- NULL
 # replace all NAs
 df_pip02 <- df_pip02 %>% replace(is.na(.), "-")
+
+nrow(df_pip02)
+ncol(df_pip02)
 #make the date frame a matrix and a DNAbin object again
 dnb_pip02 <- as.DNAbin(as.matrix(df_pip02))
 # define a filename to write the data frame to as a csv file
@@ -766,7 +853,7 @@ pipHaps <- pegas::haplotype(pip)
 #as.matrix(pipHaps)
 #prepare hpt table
 ind.hap<-with(
-	stack(setNames(attr(pipHaps, "index"), rownames(pipHaps))),
+	utils::stack(setNames(attr(pipHaps, "index"), rownames(pipHaps))),
 	table(hap=ind, pop=rownames(pip)[values]))
 #make it a dataframe
 df_ihpt01 <- as.data.frame(ind.hap)
@@ -1055,7 +1142,7 @@ p %<+% dd +
 #_______________________________________________________________________________
 #define variable
 inp.f.fnm <- "Mnelei"
-flnm <- c(paste("Fig03_NJ_tree_",inp.f.fnm,".pdf",  sep = ""))
+flnm <- c(paste("Fig02_NJ_tree_",inp.f.fnm,".pdf",  sep = ""))
 #paste output directory and filename together in a string
 outflnm <- paste(wd00_wd05,"/",flnm,sep="")
 # # Exporting PFD files via postscript()           
@@ -1392,6 +1479,18 @@ dnb_pip03 <- ape::read.dna(pth_inpf03, format = "fasta")
 
 # see the trimmed alignment
 plot(mltdn_pip03, cex = 0.2)
+# count the number sequences in the alignment
+no_of_seq_pip3 <- mltdn_pip03@n.ind
+# get the alignment
+algn_pip03 <- apex::multidna2alignment(mltdn_pip03)
+# count the characters in the sequence string
+seq_lng_pip3 <- nchar(algn_pip03$seq[1])
+df_apip3 <- as.data.frame(algn_pip03$seq)
+str1_apip3 <- paste (df_apip3,collapse = "")
+nofchars_apip3 <- nchar(str1_apip3)
+no_char_in_mtrx_apip3 <- seq_lng_pip3*no_of_seq_pip3
+indel_cnt_apip3 <- str_count(str1_apip3, pattern = "-")
+perc_indel_apip3 <- indel_cnt_apip3/no_char_in_mtrx_apip3*100
 # see the names of the sequences
 #mltdn_pip03@labels
 # rowbind the nested lists to a dataframe
@@ -1856,7 +1955,7 @@ pip3 <- ape::read.dna(pth_inpf03, format = "fasta")
 pipHaps3 <- pegas::haplotype(pip3)
 #prepare hpt table
 ind.hap3<-with(
-  stack(setNames(attr(pipHaps3, "index"), rownames(pipHaps3))),
+  utils::stack(setNames(attr(pipHaps3, "index"), rownames(pipHaps3))),
   table(hap=ind, pop=rownames(pip3)[values]))
 #make it a dataframe
 df_ihpt01.3 <- as.data.frame(ind.hap3)
@@ -2444,7 +2543,7 @@ ht4 <- haplotype(dnb_pip4,labels=c(labs.ht4))
 hN4 <- pegas::haploNet(ht4)
 #prepare hpt table
 ind.hap4<-with(
-  stack(setNames(attr(ht4, "index"), rownames(ht4))),
+  utils::stack(setNames(attr(ht4, "index"), rownames(ht4))),
   table(hap=ind, pop=rownames(dnb_pip4)[values]))
 #make it a dataframe
 df_ihpt04 <- as.data.frame(ind.hap4)
@@ -2498,8 +2597,8 @@ colfh_y <- df_cfy3$colour[match(colnames(hsl5),df_cfy3$smplyr)]
 write.csv(df_cfy3,file=paste0(wd00_wd05,"/df_cfy3.csv"))
 #_______________________________________________________________________________
 #_______________________________________________________________________________
-flnm <- c(paste("Fig02_v01_haplotype_network_",inp.f.fnm,"02.pdf",  sep = ""))
-flnm <- c(paste("Fig02_v01_haplotype_network_",inp.f.fnm,"02.jpg",  sep = ""))
+flnm <- c(paste("Fig03_v01_haplotype_network_",inp.f.fnm,"02.pdf",  sep = ""))
+flnm <- c(paste("Fig03_v01_haplotype_network_",inp.f.fnm,"02.jpg",  sep = ""))
 #paste output directory and filename together in a string
 outflnm <- paste(wd00_wd05,"/",flnm,sep="")
 # Exporting PFD files via postscript()           
@@ -3147,7 +3246,7 @@ df_dd02$smpl_loc <- rownames(df_dd02)
 write.csv(df_dd02,file=paste0(wd00_wd05,"/df_dd02.csv"))
 #dev.off()
 #make filename to save plot to
-figname01 <- paste0("Fig03_v02_NJtree_",inpf01,".png")
+figname01 <- paste0("Fig02_v02_NJtree_",inpf01,".png")
 
 figname02 <- paste(wd00_wd05,"/",figname01,sep="")
 if(bSaveFigures==T){
@@ -3698,7 +3797,7 @@ if(bSaveFigures==T){
 
 #_______________________________________________________________________________
 #_______________________________________________________________________________
-figname01 <- "Fig02_v02_network.jpg"
+figname01 <- "Fig03_v02_network.jpg"
 pthfignm01 <- paste(wd00_wd05,"/",figname01,sep="")
 # set to save plot as pdf file with dimensions 8.26 to 2.9
 # 8.26 inches and 2.9 inhes equals 210 mm and 74.25 mm
@@ -4504,7 +4603,7 @@ par(mfrow = c(1, 1))
 #_______________________________________________________________________________
 
 #_______________________________________________________________________________
-# ANOSIM test on locations - start
+# ANOSIM test on locations 01 - start
 #_______________________________________________________________________________
 #  read in the fasta file which makes it a DNAbin object
 pip4 <- read.dna(file=pth_inpf03,format="fasta")
@@ -4584,8 +4683,115 @@ dev.off()
 par(mfrow = c(1, 1)) 
 
 #_______________________________________________________________________________
-# ANOSIM test on locations - end
+# ANOSIM test on locations 01 - end
 #_______________________________________________________________________________
+
+#_______________________________________________________________________________
+# ANOSIM test on locations 02 - start
+#_______________________________________________________________________________
+#  read in the fasta file which makes it a DNAbin object
+pip4 <- read.dna(file=pth_inpf03,format="fasta")
+#make the DNAbin object a genind object
+geni_pip4 <- adegenet::DNAbin2genind(pip4)
+#make the genind object a dataframe
+df_pip4 <- adegenet::genind2df(geni_pip4)
+#get the row names
+orig_rwnm <- row.names(df_pip4)
+# split the string with the row name
+# and rowbind the nested lists to a dataframe
+# to get the different elements
+df_pp4Nm <- data.frame(do.call
+                       ('rbind', 
+                         strsplit(as.character(orig_rwnm),
+                                  "_")))
+# modify the column names to something more meaningful
+colnames(df_pp4Nm) <- c("smplNm",
+                        "smplloc",
+                        "smplyear")
+# identify the unique column names, and use dput to limit the vector
+# manually afterwards to only include the NE Atlantic samples
+locNm5 <- unique(df_pp4Nm$smplloc)
+locNm5 <- locNm5[order(locNm5)]
+#dput(locNm5)
+# make a vector with sample location names to keep
+smplloc.tk <- c("B", "FBo", "FKe", "GBu", "GHe", "GKi", "GWi", 
+                "JLi", "JMa", "NEA", "SBa", "SSk")
+# use this vector to only keep the rows that has the NE Atlantic samples
+df_pip4 <- df_pip4[(df_pp4Nm$smplloc %in% smplloc.tk),]
+# replace all NAs
+df_pip4 <- df_pip4 %>% replace(is.na(.), "-")
+#make the date frame a matrix and a DNAbin object again
+dnb_pip4 <- as.DNAbin(as.matrix(df_pip4))
+# make a distance matrix 
+dst_pip4 <- ape::dist.dna(dnb_pip4, model= "raw")
+# make it a matrix
+mtx_pip4 <- as.matrix(dst_pip4)
+# make it a data frame
+df_pip5 <- as.data.frame(mtx_pip4)
+# split the row name string by a character 
+lpip5 <- strsplit(as.character(row.names(mtx_pip4)), "_")
+# get the 2 nd element per vector in the list - this holds the abbreviated 
+# location name
+# 'grp.loc5' needs to hold location names
+grp.loc5 <- sapply(lpip5, "[[", 2)
+# order locations alphabetically
+grp.l5 <- unique(grp.loc5)[order(unique(grp.loc5))]
+# make a sequence of numbers to use as index numbers for the locations
+nof.l5 <- seq(1,length(grp.l5))
+# bind the columns in a data frame that has index numbers per location
+df_nfl5 <- as.data.frame(cbind(nof.l5,grp.l5))
+# attach the group location back to the data frame
+df_pip5$grp.loc <- grp.loc5
+# match the location name to get an index number, and ensure this number is numeric
+# each location needs to have number assigned, in order to make the ANOSIM test work
+df_pip5$grp.loc <- as.numeric(df_nfl5$nof.l5[match(df_pip5$grp.loc,df_nfl5$grp.l5)])
+#make community matrix
+m_comp5 <- sapply(df_pip5[,1:ncol(df_pip5)],as.numeric)
+# ensure the row names in the matrix are as in the data frame
+row.names(m_comp5) <- row.names(df_pip5)
+# group by site
+df_comp5 <- as.data.frame(m_comp5)
+# remove all non duplicated rows - the ANOSIM test requires that there are
+# multiple representations per group
+df_comp5 <- df_comp5[duplicated(df_comp5[c('grp.loc')]), ]
+#row.names(df_comp5)
+slpip5 <- strsplit(as.character(row.names(df_comp5)), "_")
+# get second elements
+grp5 <- as.factor(sapply(slpip5, "[[", 2))
+# make it a matrix
+m_comp5 <- as.matrix(df_comp5)
+# make the ANOSIM test
+pip5.ano <- anosim(m_comp5,grp5)
+# turn off previous plots
+dev.off()
+# plot the test
+# define name for outpu plot file
+figname08 <- "Fig08_v02_ANOSIMplot_location_NEAtl_smpls.jpg"
+pthfignm08 <- paste(wd00_wd05,"/",figname08,sep="")
+# set to save plot as pdf file with dimensions 8.26 to 2.9
+# 8.26 inches and 2.9 inhes equals 210 mm and 74.25 mm
+# and 210 mm and 74.25 mm matches 1/4 of a A4 page
+#pdf(pthfignm01,width=(1.6*2.9),height=(0.8*8.26))
+jpeg(pthfignm08,width = 3600, height = 2400, res =300)#,width=(1.6*2.9),height=(0.8*8.26))
+
+#summary(pip5.ano)
+par(mar=c(4, 5, 1, 1), xpd=FALSE,
+    oma=c(0,0,0,0),
+    mfrow = c(1, 1))
+
+plot(pip5.ano,
+     xlab="Location",
+     ylab="Dissimilarity ranks between \n and within classes")
+# end plot
+dev.off()
+#reset this parameter
+par(mfrow = c(1, 1)) 
+
+#_______________________________________________________________________________
+# ANOSIM test on locations 02 - end
+#_______________________________________________________________________________
+
+
 #_______________________________________________________________________________
 # ANOSIM test on year - start
 #_______________________________________________________________________________
@@ -4633,7 +4839,7 @@ pip6.ano <- anosim(m_comp6,grp6)
 dev.off()
 # plot the test
 # define name for outpu plot file
-figname08 <- "Fig08_v02_ANOSIMplot_year.jpg"
+figname08 <- "Fig08_v03_ANOSIMplot_year.jpg"
 pthfignm08 <- paste(wd00_wd05,"/",figname08,sep="")
 # set to save plot as pdf file with dimensions 8.26 to 2.9
 # 8.26 inches and 2.9 inhes equals 210 mm and 74.25 mm
@@ -4657,6 +4863,331 @@ par(mfrow = c(1, 1))
 #_______________________________________________________________________________
 # ANOSIM test on year - end
 #_______________________________________________________________________________
+
+# make the dnabin object a phydata object
+phyd_pip4 <- as.phyDat(dnb_pip4)
+# strsplit names and turn into characters
+# and rowbind the nested lists to a dataframe
+df_pp4Nm <- data.frame(do.call
+                       ('rbind', 
+                         strsplit(as.character(names(phyd_pip4)),
+                                  "_")))
+# modify columns names
+colnames(df_pp4Nm) <- c("smplNm","loc","yer")
+# get unique location names
+uloc <- unique(df_pp4Nm$loc)
+# order the unique location names
+uloc <- uloc[order(uloc)]
+# make a vector that categorizes the overall sampling locations for :
+# North East Atlantic, Caspian Sea, Central Western Atlantic and Mediterranean
+ovloc <- c("NEA", "CS", "CWA", "NEA", "NEA", "NEA", "NEA", "NEA", "NEA", 
+           "NEA", "NEA", "M", "NEA", "NWA", "NEA", "NEA")
+# combine in to a data frame
+df_ovl <- as.data.frame(cbind(uloc, ovloc))
+# subset to only comprise the NEA overall location names
+df_ovlNEA <- subset(df_ovl, ovloc=="NEA")
+# get unique NEA locatoins and all full sample names
+NEAloc <- df_ovlNEA$uloc
+Nmsloc <- names(phyd_pip4)
+# use grepl instead of dplyr, to get all NEA full sample names
+# but first collapse and paste with '|' sign to be able to grep for
+# multiple chracteristics
+# https://stackoverflow.com/questions/45357806/dplyr-select-and-starts-with-on-multiple-values-in-a-variable-list?noredirect=1&lq=1
+NmslocNEA <- Nmsloc[grepl(paste(NEAloc, collapse="|"),Nmsloc)]
+# now subset the phydat object by the full names that match bein NEA samples
+phyd_pip5 <- subset(phyd_pip4, NmslocNEA)
+dnb_pip5 <- as.DNAbin(phyd_pip5)
+# make a distance matrix 
+dst_pip4 <- ape::dist.dna(dnb_pip4, model= "raw")
+dst_pip5 <- ape::dist.dna(dnb_pip5, model= "raw")
+# make it a matrix
+mtx_pip4 <- as.matrix(dst_pip4)
+mtx_pip5 <- as.matrix(dst_pip5)
+
+
+
+# copy data frame
+dnb_pip5.1 <- dnb_pip5
+ovlcNm5.2 <- gsub("(.*)_(.*)_(.*)","\\2",labels(dnb_pip5))
+dnb_pip5.2 <- updateLabel(dnb_pip5.1, labels(dnb_pip5.1), ovlcNm5.2)
+#make the DNAbin object a genind object
+geni_pip5.2 <- adegenet::DNAbin2genind(dnb_pip5.2)
+#make the genind object a dataframe
+df_pip5.2 <- adegenet::genind2df(geni_pip5.2)
+# replace all NAs
+df_pip5.2 <- df_pip5.2 %>% replace(is.na(.), "-")
+
+hfst_pip_lo5.2 <- hierfstat::genind2hierfstat(geni_pip5.2,pop=ovlcNm5.2)
+hfst_pip_lo5.2 <- hfst_pip_lo5.2[order(hfst_pip_lo5.2$pop),]
+#replace all NAs with 0
+hfst_pip_lo5.2 <- hfst_pip_lo5.2 %>% replace(is.na(.), 0)
+# as the 'hierfstat::pairwise.WCfst'
+# function cannot handle the unique pop rows only  represented by only a single individual
+hfst_pip_lo5.2 <- hfst_pip_lo5.2[hfst_pip_lo5.2$pop %in% hfst_pip_lo5.2$pop[duplicated(hfst_pip_lo5.2$pop)],]
+#pairwise fst test Nei - this takes an 'hierfstat' object as input
+#pw_Nei_pip_un <- hierfstat::pairwise.neifst(hfst_pip_un, diploid = FALSE)
+pw_Nei_pip_lo5.2 <- hierfstat::pairwise.neifst(hfst_pip_lo5.2, diploid = FALSE)
+df_pw_pip5.2 <- as.data.frame(pw_Nei_pip_lo5.2)
+#replace NAs with zeroes
+df_pw_pip5.2[is.na(df_pw_pip5.2)] = 0
+library(MASS)
+#ape::dist.dna(dlo)
+dst5.2 <- dist(df_pw_pip5.2) # euclidean distances between the rows
+library("ecodist")
+#
+pip5.2.nmds <- ecodist::nmds(dst5.2, nits=20, mindim=1, maxdim=4)
+# get the mean stress level
+m.stress <- mean(pip5.2.nmds$stress)
+strslvl2 <- round(m.stress,3)
+
+locNm5.2 <- colnames(df_pw_pip5.2)
+# choose the best two-dimensional solution to work with
+pip5.2.nmin <- min(pip5.2.nmds, dims=2)
+pip5.2.vf <- vf(pip5.2.nmin, dst5.2, nperm=1000)
+
+
+
+mxlcNm5.2 <- max(unique(as.numeric(factor(locNm5.2))))
+rmxlcNm5.2<- ceiling((mxlcNm5.2)/5)
+pchsL5.2 <- rep(c(21,22,23,24,25),rmxlcNm5.2)
+colL5.2 <- c(rep("white",5),
+             rep("black",5),
+             rep("blue",5),
+             rep("seagreen",5))
+pchsL5.2 <- pchsL5.2[1:mxlcNm5.2]
+colL5.2 <- colL5.2[1:mxlcNm5.2]
+df_pip5.2cl <- as.data.frame(cbind(unique(as.numeric(factor(locNm5.2))),pchsL5.2,colL5.2,unique(locNm5.2)))
+colnames(df_pip5.2cl) <- c("locNo","pchsym","col5.2","locNm")
+
+pip5.2lcNm <- cbind(pip5.2.nmin,locNm5.2)
+df_pip5.2cl$colfcol_loc <- df_cll$colfcol_loc[match(df_pip5.2cl$locNm,df_cll$coll_loc)]
+pchsL5.2 <- df_pip5.2cl$pchsym[match(locNm5.2,df_pip5.2cl$locNm)]
+colfL5.2 <- df_pip5.2cl$colfcol_loc[match(locNm5.2,df_pip5.2cl$locNm)]
+# get min and max from NMDS data frame
+# to be able to plot the stress level on ggplot plot
+mny <- min(pip5.2.nmin$X2)
+mnx <- min(pip5.2.nmin$X1)
+mxy <- max(pip5.2.nmin$X2)
+mxx <- max(pip5.2.nmin$X1)
+xdf <- mxx-mnx
+ydf <- mxy-mny
+spot.x.f <- -0.2*xdf
+spot.y.f <- 0.7*ydf
+
+library(ggrepel)
+# use ggplot to make a nmds plot with all samples
+p.nmds.p5.2 <- ggplot(pip5.2.nmin, aes(x=X1,y=X2,
+                                       label=locNm5.2,
+                                       shape=locNm5.2,
+                                       fill=locNm5.2)) +
+  theme_classic() +
+  #geom_point() +
+  geom_jitter(width = 0.0003, height = 0.0001, size = 3) +
+  xlab("NMDS1") + ylab("NMDS2")
+p.nmds.p5.2 <- p.nmds.p5.2 + 
+  #geom_text() +
+  # use : https://cran.r-project.org/web/packages/ggrepel/vignettes/ggrepel.html
+  # also see : https://stackoverflow.com/questions/6996538/dynamic-position-for-ggplot2-objects-especially-geom-text
+  ggrepel::geom_text_repel(min.segment.length = 21.1,
+                           max.overlaps=2,
+                           box.padding = 0.3, na.rm = T) +
+  ggplot2::scale_shape_manual(values = as.numeric(pchsL5.2) ) +
+  ggplot2::scale_fill_manual(values = colfL5.2 ) +
+  #http://www.sthda.com/english/wiki/ggplot2-texts-add-text-annotations-to-a-graph-in-r-software
+  annotate(geom="text", 
+                 x=spot.x.f, y=spot.y.f, size= 4,
+                 label=paste0("stress level: ",strslvl2),
+                 color="black")
+# see the nmds plot
+p.nmds.p5.2
+
+
+
+# p.nmds.p5.2 <- p.nmds.p5.2 + theme(panel.background = element_rect(fill = 'white', 
+#                                                                    color = 'white'))#,
+p.nmds.p5.2 <- p.nmds.p5.2 + labs(fill='Location')
+p.nmds.p5.2 <- p.nmds.p5.2 + labs(color='Location')
+p.nmds.p5.2 <- p.nmds.p5.2 + labs(shape='Location')
+#make filename to save plot to
+figname15 <- paste0("Fig07_v06_smpl_loc_NMDS_",inpf01,".png")
+# define pathe and file together in a string
+figname02 <- paste(wd00_wd05,"/",figname15,sep="")
+# make an if test to check whether the plot should be saved
+# i.e. set to FALSE if you do not want the plot to be saved
+if(bSaveFigures==T){
+  ggsave(p.nmds.p5.2,file=figname02,
+         #width=210,height=297,
+         width=210,height=(297*0.5),
+         units="mm",dpi=300)
+}
+
+
+
+# make a distance matrix 
+dst_pip4 <- ape::dist.dna(dnb_pip4, model= "raw")
+dst_pip5 <- ape::dist.dna(dnb_pip5, model= "raw")
+# make it a matrix
+mtx_pip4 <- as.matrix(dst_pip4)
+mtx_pip5 <- as.matrix(dst_pip5)
+
+
+
+# copy data frame
+dnb_pip4.1 <- dnb_pip4
+ovlcNm4.2 <- gsub("(.*)_(.*)_(.*)","\\2",labels(dnb_pip4))
+dnb_pip4.2 <- updateLabel(dnb_pip4.1, labels(dnb_pip4.1), ovlcNm4.2)
+#make the DNAbin object a genind object
+geni_pip4.2 <- adegenet::DNAbin2genind(dnb_pip4.2)
+#make the genind object a dataframe
+df_pip4.2 <- adegenet::genind2df(geni_pip4.2)
+# replace all NAs
+df_pip4.2 <- df_pip4.2 %>% replace(is.na(.), "-")
+
+hfst_pip_lo4.2 <- hierfstat::genind2hierfstat(geni_pip4.2,pop=ovlcNm4.2)
+hfst_pip_lo4.2 <- hfst_pip_lo4.2[order(hfst_pip_lo4.2$pop),]
+#replace all NAs with 0
+hfst_pip_lo4.2 <- hfst_pip_lo4.2 %>% replace(is.na(.), 0)
+# as the 'hierfstat::pairwise.WCfst'
+# function cannot handle the unique pop rows only  represented by only a single individual
+hfst_pip_lo4.2 <- hfst_pip_lo4.2[hfst_pip_lo4.2$pop %in% hfst_pip_lo4.2$pop[duplicated(hfst_pip_lo4.2$pop)],]
+#pairwise fst test Nei - this takes an 'hierfstat' object as input
+#pw_Nei_pip_un <- hierfstat::pairwise.neifst(hfst_pip_un, diploid = FALSE)
+pw_Nei_pip_lo4.2 <- hierfstat::pairwise.neifst(hfst_pip_lo4.2, diploid = FALSE)
+df_pw_pip4.2 <- as.data.frame(pw_Nei_pip_lo4.2)
+#replace NAs with zeroes
+df_pw_pip4.2[is.na(df_pw_pip4.2)] = 0
+library(MASS)
+#ape::dist.dna(dlo)
+dst4.2 <- dist(df_pw_pip4.2) # euclidean distances between the rows
+#dst4.3 <- ape::dist.dna(dnb_pip4) # euclidean distances between the rows
+#dst4.3[is.na(dst4.3)] <- 0
+library("ecodist")
+#
+pip4.2.nmds <- ecodist::nmds(dst4.2, nits=20, mindim=1, maxdim=2)
+#pip4.3.nmds <- ecodist::nmds(dst4.3, nits=20, mindim=1, maxdim=2)
+locNm4.2 <- colnames(df_pw_pip4.2)
+#locNm4.3 <- labels(dnb_pip4)
+#row.names(df_comp6)
+#locNm4.3 <- strsplit(as.character(locNm4.3), "_")
+# get third elements
+#locNm4.3 <- as.factor(sapply(locNm4.3, "[[", 2))
+# choose the best two-dimensional solution to work with
+pip4.2.nmin <- min(pip4.2.nmds, dims=2)
+#pip4.3.nmin <- min(pip4.3.nmds, dims=2)
+pip4.2.vf <- ecodist::vf(pip4.2.nmin, dst4.2, nperm=1000)
+#pip4.3.vf <- ecodist::vf(pip4.3.nmin, dst4.3, nperm=1000)
+
+
+mxlcNm4.2 <- max(unique(as.numeric(factor(locNm4.2))))
+#mxlcNm4.3 <- max(unique(as.numeric(factor(locNm4.3))))
+rmxlcNm4.2 <- ceiling((mxlcNm4.2)/5)
+#rmxlcNm4.3 <- ceiling((mxlcNm4.3)/5)
+pchsL4.2 <- rep(c(21,22,23,24,25),rmxlcNm4.2)
+#pchsL4.3 <- rep(c(21,22,23,24,25),rmxlcNm4.3)
+colL4.0 <- c(rep("white",5),
+             rep("black",5),
+             rep("blue",5),
+             rep("seagreen",5))
+pchsL4.2 <- pchsL4.2[1:mxlcNm4.2]
+#pchsL4.3 <- pchsL4.3[1:mxlcNm4.3]
+colL4.2 <- colL4.0[1:mxlcNm4.2]
+#colL4.3 <- colL4.0[1:mxlcNm4.3]
+df_pip4.2cl <- as.data.frame(cbind(unique(as.numeric(factor(locNm4.2))),pchsL4.2,colL4.2,unique(locNm4.2)))
+
+# df_pip4.3cl <- as.data.frame(
+#   cbind(
+#     unique(factor(locNm4.3)),
+#     pchsL4.3,
+#     colL4.3,
+#     as.character(unique(locNm4.3))
+#   ))
+colnames(df_pip4.2cl) <- c("locNo","pchsym","col4.2","locNm")
+#colnames(df_pip4.3cl) <- c("locNo","pchsym","col4.3","locNm")
+pip4.2lcNm <- cbind(pip4.2.nmin,locNm4.2)
+#pip4.3lcNm <- cbind(pip4.3.nmin,locNm4.3)
+df_pip4.2cl$colfcol_loc <- df_cll$colfcol_loc[match(df_pip4.2cl$locNm,df_cll$coll_loc)]
+#df_pip4.3cl$colfcol_loc <- df_cll$colfcol_loc[match(df_pip4.3cl$locNm,df_cll$coll_loc)]
+pchsL4.2 <- df_pip4.2cl$pchsym[match(locNm4.2,df_pip4.2cl$locNm)]
+#pchsL4.3 <- df_pip4.3cl$pchsym[match(locNm4.3,df_pip4.3cl$locNm)]
+colfL4.2 <- df_pip4.2cl$colfcol_loc[match(locNm4.2,df_pip4.2cl$locNm)]
+#colfL4.3 <- df_pip4.3cl$colfcol_loc[match(locNm4.3,df_pip4.3cl$locNm)]
+
+
+library(ggrepel)
+# use ggplot to make a nmds plot with all samples
+p.nmds.p4.2 <- ggplot(pip4.2.nmin, aes(x=X1,y=X2,
+                                       label=locNm4.2,
+                                       shape=locNm4.2,
+                                       fill=locNm4.2)) +
+  theme_classic() +
+  #geom_point() +
+  geom_jitter(width = 0.0003, height = 0.0001, size = 3) +
+  xlab("NMDS1") + ylab("NMDS2")
+p.nmds.p4.2 <- p.nmds.p4.2 + 
+  #geom_text() +
+  # use : https://cran.r-project.org/web/packages/ggrepel/vignettes/ggrepel.html
+  # also see : https://stackoverflow.com/questions/6996538/dynamic-position-for-ggplot2-objects-especially-geom-text
+  ggrepel::geom_text_repel(min.segment.length = 21.1,
+                           max.overlaps=2,
+                           box.padding = 0.3, na.rm = T) +
+  ggplot2::scale_shape_manual(values = as.numeric(pchsL4.2) ) +
+  ggplot2::scale_fill_manual(values = colfL4.2 )
+# see the nmds plot
+p.nmds.p4.2
+
+
+
+# p.nmds.p4.2 <- p.nmds.p4.2 + theme(panel.background = element_rect(fill = 'white', 
+#                                                                    color = 'white'))#,
+p.nmds.p4.2 <- p.nmds.p4.2 + labs(fill='Location')
+p.nmds.p4.2 <- p.nmds.p4.2 + labs(color='Location')
+p.nmds.p4.2 <- p.nmds.p4.2 + labs(shape='Location')
+#make filename to save plot to
+figname15 <- paste0("Fig07_v07_smpl_loc_NMDS_",inpf01,".jpg")
+# define pathe and file together in a string
+figname02 <- paste(wd00_wd05,"/",figname15,sep="")
+# make an if test to check whether the plot should be saved
+# i.e. set to FALSE if you do not want the plot to be saved
+if(bSaveFigures==T){
+  ggsave(p.nmds.p4.2,file=figname02,
+         #width=210,height=297,
+         width=210,height=(297*0.5),
+         units="mm",dpi=300)
+}
+
+# df_pip4.3cl <- df_pip4.3cl[order(df_pip4.3cl$locNo),]
+# clf4.3 <- df_pip4.3cl$colfcol_loc
+# pchsL4.3 <- df_pip4.3cl$pchsym
+# p.nmds.p4.3 <- ggplot(pip4.3.nmin, aes(x=X1,y=X2,
+#                                        label=locNm4.3,
+#                                        shape=locNm4.3,
+#                                        fill=locNm4.3)) +
+#   theme_classic() +
+#   #geom_point() +
+#   geom_jitter(width = 0.0003, height = 0.0001, size = 3) +
+#   xlab("NMDS1") + ylab("NMDS2")
+# p.nmds.p4.3 <- p.nmds.p4.3 + 
+#   #geom_text() +
+#   # use : https://cran.r-project.org/web/packages/ggrepel/vignettes/ggrepel.html
+#   # also see : https://stackoverflow.com/questions/6996538/dynamic-position-for-ggplot2-objects-especially-geom-text
+#   ggrepel::geom_text_repel(min.segment.length = 1.41,
+#                            max.overlaps=522,
+#                            box.padding = 0.103, na.rm = T) +
+#   ggplot2::scale_shape_manual(values = as.numeric(pchsL4.3) ) +
+#   ggplot2::scale_fill_manual(values = clf4.3 )
+# # see the nmds plot
+# p.nmds.p4.3
+# 
+# 
+# 
+# dst5.3 <- ape::dist.dna(dnb_pip5) # euclidean distances between the rows
+# #as.matrix(dnb_pip5)
+# dst5.3[is.na(dst5.3)] <- 0
+# library("ecodist")
+# #head(dst5.3)
+# mtxds5.3 <- as.matrix(dst5.3)!=0
+# ldst5.3_0 <- length(as.matrix(dst5.3)[as.matrix(dst5.3)==0])
+# ldst5.3_0==dim(mtxds5.3)[1]*dim(mtxds5.3)[2]
 
 #_______________________________________________________________________________
 # make nucleotide diversity tables - start
