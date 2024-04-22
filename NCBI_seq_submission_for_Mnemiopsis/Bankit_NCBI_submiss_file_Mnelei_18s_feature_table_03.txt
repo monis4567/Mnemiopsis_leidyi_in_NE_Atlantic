@@ -1,0 +1,2100 @@
+>Feature Mnelei164
+
+<1    >791    gene
+                                    gene          18Sr
+            <1    >791    mRNA
+                                    product       18Sr ribosomal RNA
+
+                    <1    >791    gene
+                                    gene          its1
+            <1    791    CDS
+                                    product       internal transcribed spacer 1
+                                    product       internal transcribed spacer 1
+                                    codon_start   2
+            <1    >791    mRNA
+                                    product       internal transcribed spacer 1
+                   	<1    >791    gene
+                                    gene          5.8Sr
+            <1    >791    mRNA
+                                    product       5.8S ribosomal RNA
+
+                    <1    >791    gene
+                                    gene          its2
+            <1    791    CDS
+                                    product       internal transcribed spacer 2
+                                    product       internal transcribed spacer 2
+                                    codon_start   1
+            <1    >791    mRNA
+                                    product       internal transcribed spacer 1
+                    
+                    <1    >791    gene
+                                    gene          28Sr ribosomal RNA
+            
+            <1    >791    mRNA
+                                    product       28Sr
+                                    
+>Feature Mnelei163
+
+<1    >790    gene
+                                    gene          18Sr
+            <1    >790    mRNA
+                                    product       18Sr ribosomal RNA
+
+                    <1    >790    gene
+                                    gene          its1
+            <1    790    CDS
+                                    product       internal transcribed spacer 1
+                                    product       internal transcribed spacer 1
+                                    codon_start   2
+            <1    >790    mRNA
+                                    product       internal transcribed spacer 1
+                   	<1    >790    gene
+                                    gene          5.8Sr
+            <1    >790    mRNA
+                                    product       5.8S ribosomal RNA
+
+                    <1    >790    gene
+                                    gene          its2
+            <1    790    CDS
+                                    product       internal transcribed spacer 2
+                                    product       internal transcribed spacer 2
+                                    codon_start   1
+            <1    >790    mRNA
+                                    product       internal transcribed spacer 1
+                    
+                    <1    >790    gene
+                                    gene          28Sr ribosomal RNA
+            
+            <1    >790    mRNA
+                                    product       28Sr
+                                    
+>Feature Mnelei162
+
+<1    >790    gene
+                                    gene          18Sr
+            <1    >790    mRNA
+                                    product       18Sr ribosomal RNA
+
+                    <1    >790    gene
+                                    gene          its1
+            <1    790    CDS
+                                    product       internal transcribed spacer 1
+                                    product       internal transcribed spacer 1
+                                    codon_start   2
+            <1    >790    mRNA
+                                    product       internal transcribed spacer 1
+                   	<1    >790    gene
+                                    gene          5.8Sr
+            <1    >790    mRNA
+                                    product       5.8S ribosomal RNA
+
+                    <1    >790    gene
+                                    gene          its2
+            <1    790    CDS
+                                    product       internal transcribed spacer 2
+                                    product       internal transcribed spacer 2
+                                    codon_start   1
+            <1    >790    mRNA
+                                    product       internal transcribed spacer 1
+                    
+                    <1    >790    gene
+                                    gene          28Sr ribosomal RNA
+            
+            <1    >790    mRNA
+                                    product       28Sr
+                                    
+>Feature Mnelei159
+
+<1    >790    gene
+                                    gene          18Sr
+            <1    >790    mRNA
+                                    product       18Sr ribosomal RNA
+
+                    <1    >790    gene
+                                    gene          its1
+            <1    790    CDS
+                                    product       internal transcribed spacer 1
+                                    product       internal transcribed spacer 1
+                                    codon_start   2
+            <1    >790    mRNA
+                                    product       internal transcribed spacer 1
+                   	<1    >790    gene
+                                    gene          5.8Sr
+            <1    >790    mRNA
+                                    product       5.8S ribosomal RNA
+
+                    <1    >790    gene
+                                    gene          its2
+            <1    790    CDS
+                                    product       internal transcribed spacer 2
+                                    product       internal transcribed spacer 2
+                                    codon_start   1
+            <1    >790    mRNA
+                                    product       internal transcribed spacer 1
+                    
+                    <1    >790    gene
+                                    gene          28Sr ribosomal RNA
+            
+            <1    >790    mRNA
+                                    product       28Sr
+                                    
+>Feature Mnelei158
+
+<1    >790    gene
+                                    gene          18Sr
+            <1    >790    mRNA
+                                    product       18Sr ribosomal RNA
+
+                    <1    >790    gene
+                                    gene          its1
+            <1    790    CDS
+                                    product       internal transcribed spacer 1
+                                    product       internal transcribed spacer 1
+                                    codon_start   2
+            <1    >790    mRNA
+                                    product       internal transcribed spacer 1
+                   	<1    >790    gene
+                                    gene          5.8Sr
+            <1    >790    mRNA
+                                    product       5.8S ribosomal RNA
+
+                    <1    >790    gene
+                                    gene          its2
+            <1    790    CDS
+                                    product       internal transcribed spacer 2
+                                    product       internal transcribed spacer 2
+                                    codon_start   1
+            <1    >790    mRNA
+                                    product       internal transcribed spacer 1
+                    
+                    <1    >790    gene
+                                    gene          28Sr ribosomal RNA
+            
+            <1    >790    mRNA
+                                    product       28Sr
+                                    
+>Feature Mnelei157
+
+<1    >790    gene
+                                    gene          18Sr
+            <1    >790    mRNA
+                                    product       18Sr ribosomal RNA
+
+                    <1    >790    gene
+                                    gene          its1
+            <1    790    CDS
+                                    product       internal transcribed spacer 1
+                                    product       internal transcribed spacer 1
+                                    codon_start   2
+            <1    >790    mRNA
+                                    product       internal transcribed spacer 1
+                   	<1    >790    gene
+                                    gene          5.8Sr
+            <1    >790    mRNA
+                                    product       5.8S ribosomal RNA
+
+                    <1    >790    gene
+                                    gene          its2
+            <1    790    CDS
+                                    product       internal transcribed spacer 2
+                                    product       internal transcribed spacer 2
+                                    codon_start   1
+            <1    >790    mRNA
+                                    product       internal transcribed spacer 1
+                    
+                    <1    >790    gene
+                                    gene          28Sr ribosomal RNA
+            
+            <1    >790    mRNA
+                                    product       28Sr
+                                    
+>Feature Mnelei156
+
+<1    >790    gene
+                                    gene          18Sr
+            <1    >790    mRNA
+                                    product       18Sr ribosomal RNA
+
+                    <1    >790    gene
+                                    gene          its1
+            <1    790    CDS
+                                    product       internal transcribed spacer 1
+                                    product       internal transcribed spacer 1
+                                    codon_start   2
+            <1    >790    mRNA
+                                    product       internal transcribed spacer 1
+                   	<1    >790    gene
+                                    gene          5.8Sr
+            <1    >790    mRNA
+                                    product       5.8S ribosomal RNA
+
+                    <1    >790    gene
+                                    gene          its2
+            <1    790    CDS
+                                    product       internal transcribed spacer 2
+                                    product       internal transcribed spacer 2
+                                    codon_start   1
+            <1    >790    mRNA
+                                    product       internal transcribed spacer 1
+                    
+                    <1    >790    gene
+                                    gene          28Sr ribosomal RNA
+            
+            <1    >790    mRNA
+                                    product       28Sr
+                                    
+>Feature Mnelei155
+
+<1    >790    gene
+                                    gene          18Sr
+            <1    >790    mRNA
+                                    product       18Sr ribosomal RNA
+
+                    <1    >790    gene
+                                    gene          its1
+            <1    790    CDS
+                                    product       internal transcribed spacer 1
+                                    product       internal transcribed spacer 1
+                                    codon_start   2
+            <1    >790    mRNA
+                                    product       internal transcribed spacer 1
+                   	<1    >790    gene
+                                    gene          5.8Sr
+            <1    >790    mRNA
+                                    product       5.8S ribosomal RNA
+
+                    <1    >790    gene
+                                    gene          its2
+            <1    790    CDS
+                                    product       internal transcribed spacer 2
+                                    product       internal transcribed spacer 2
+                                    codon_start   1
+            <1    >790    mRNA
+                                    product       internal transcribed spacer 1
+                    
+                    <1    >790    gene
+                                    gene          28Sr ribosomal RNA
+            
+            <1    >790    mRNA
+                                    product       28Sr
+                                    
+>Feature Mnelei154
+
+<1    >789    gene
+                                    gene          18Sr
+            <1    >789    mRNA
+                                    product       18Sr ribosomal RNA
+
+                    <1    >789    gene
+                                    gene          its1
+            <1    789    CDS
+                                    product       internal transcribed spacer 1
+                                    product       internal transcribed spacer 1
+                                    codon_start   2
+            <1    >789    mRNA
+                                    product       internal transcribed spacer 1
+                   	<1    >789    gene
+                                    gene          5.8Sr
+            <1    >789    mRNA
+                                    product       5.8S ribosomal RNA
+
+                    <1    >789    gene
+                                    gene          its2
+            <1    789    CDS
+                                    product       internal transcribed spacer 2
+                                    product       internal transcribed spacer 2
+                                    codon_start   1
+            <1    >789    mRNA
+                                    product       internal transcribed spacer 1
+                    
+                    <1    >789    gene
+                                    gene          28Sr ribosomal RNA
+            
+            <1    >789    mRNA
+                                    product       28Sr
+                                    
+>Feature Mnelei152
+
+<1    >790    gene
+                                    gene          18Sr
+            <1    >790    mRNA
+                                    product       18Sr ribosomal RNA
+
+                    <1    >790    gene
+                                    gene          its1
+            <1    790    CDS
+                                    product       internal transcribed spacer 1
+                                    product       internal transcribed spacer 1
+                                    codon_start   2
+            <1    >790    mRNA
+                                    product       internal transcribed spacer 1
+                   	<1    >790    gene
+                                    gene          5.8Sr
+            <1    >790    mRNA
+                                    product       5.8S ribosomal RNA
+
+                    <1    >790    gene
+                                    gene          its2
+            <1    790    CDS
+                                    product       internal transcribed spacer 2
+                                    product       internal transcribed spacer 2
+                                    codon_start   1
+            <1    >790    mRNA
+                                    product       internal transcribed spacer 1
+                    
+                    <1    >790    gene
+                                    gene          28Sr ribosomal RNA
+            
+            <1    >790    mRNA
+                                    product       28Sr
+                                    
+>Feature Mnelei151
+
+<1    >791    gene
+                                    gene          18Sr
+            <1    >791    mRNA
+                                    product       18Sr ribosomal RNA
+
+                    <1    >791    gene
+                                    gene          its1
+            <1    791    CDS
+                                    product       internal transcribed spacer 1
+                                    product       internal transcribed spacer 1
+                                    codon_start   2
+            <1    >791    mRNA
+                                    product       internal transcribed spacer 1
+                   	<1    >791    gene
+                                    gene          5.8Sr
+            <1    >791    mRNA
+                                    product       5.8S ribosomal RNA
+
+                    <1    >791    gene
+                                    gene          its2
+            <1    791    CDS
+                                    product       internal transcribed spacer 2
+                                    product       internal transcribed spacer 2
+                                    codon_start   1
+            <1    >791    mRNA
+                                    product       internal transcribed spacer 1
+                    
+                    <1    >791    gene
+                                    gene          28Sr ribosomal RNA
+            
+            <1    >791    mRNA
+                                    product       28Sr
+                                    
+>Feature Mnelei150
+
+<1    >790    gene
+                                    gene          18Sr
+            <1    >790    mRNA
+                                    product       18Sr ribosomal RNA
+
+                    <1    >790    gene
+                                    gene          its1
+            <1    790    CDS
+                                    product       internal transcribed spacer 1
+                                    product       internal transcribed spacer 1
+                                    codon_start   2
+            <1    >790    mRNA
+                                    product       internal transcribed spacer 1
+                   	<1    >790    gene
+                                    gene          5.8Sr
+            <1    >790    mRNA
+                                    product       5.8S ribosomal RNA
+
+                    <1    >790    gene
+                                    gene          its2
+            <1    790    CDS
+                                    product       internal transcribed spacer 2
+                                    product       internal transcribed spacer 2
+                                    codon_start   1
+            <1    >790    mRNA
+                                    product       internal transcribed spacer 1
+                    
+                    <1    >790    gene
+                                    gene          28Sr ribosomal RNA
+            
+            <1    >790    mRNA
+                                    product       28Sr
+                                    
+>Feature Mnelei149
+
+<1    >790    gene
+                                    gene          18Sr
+            <1    >790    mRNA
+                                    product       18Sr ribosomal RNA
+
+                    <1    >790    gene
+                                    gene          its1
+            <1    790    CDS
+                                    product       internal transcribed spacer 1
+                                    product       internal transcribed spacer 1
+                                    codon_start   2
+            <1    >790    mRNA
+                                    product       internal transcribed spacer 1
+                   	<1    >790    gene
+                                    gene          5.8Sr
+            <1    >790    mRNA
+                                    product       5.8S ribosomal RNA
+
+                    <1    >790    gene
+                                    gene          its2
+            <1    790    CDS
+                                    product       internal transcribed spacer 2
+                                    product       internal transcribed spacer 2
+                                    codon_start   1
+            <1    >790    mRNA
+                                    product       internal transcribed spacer 1
+                    
+                    <1    >790    gene
+                                    gene          28Sr ribosomal RNA
+            
+            <1    >790    mRNA
+                                    product       28Sr
+                                    
+>Feature Mnelei147
+
+<1    >790    gene
+                                    gene          18Sr
+            <1    >790    mRNA
+                                    product       18Sr ribosomal RNA
+
+                    <1    >790    gene
+                                    gene          its1
+            <1    790    CDS
+                                    product       internal transcribed spacer 1
+                                    product       internal transcribed spacer 1
+                                    codon_start   2
+            <1    >790    mRNA
+                                    product       internal transcribed spacer 1
+                   	<1    >790    gene
+                                    gene          5.8Sr
+            <1    >790    mRNA
+                                    product       5.8S ribosomal RNA
+
+                    <1    >790    gene
+                                    gene          its2
+            <1    790    CDS
+                                    product       internal transcribed spacer 2
+                                    product       internal transcribed spacer 2
+                                    codon_start   1
+            <1    >790    mRNA
+                                    product       internal transcribed spacer 1
+                    
+                    <1    >790    gene
+                                    gene          28Sr ribosomal RNA
+            
+            <1    >790    mRNA
+                                    product       28Sr
+                                    
+>Feature Mnelei136
+
+<1    >790    gene
+                                    gene          18Sr
+            <1    >790    mRNA
+                                    product       18Sr ribosomal RNA
+
+                    <1    >790    gene
+                                    gene          its1
+            <1    790    CDS
+                                    product       internal transcribed spacer 1
+                                    product       internal transcribed spacer 1
+                                    codon_start   2
+            <1    >790    mRNA
+                                    product       internal transcribed spacer 1
+                   	<1    >790    gene
+                                    gene          5.8Sr
+            <1    >790    mRNA
+                                    product       5.8S ribosomal RNA
+
+                    <1    >790    gene
+                                    gene          its2
+            <1    790    CDS
+                                    product       internal transcribed spacer 2
+                                    product       internal transcribed spacer 2
+                                    codon_start   1
+            <1    >790    mRNA
+                                    product       internal transcribed spacer 1
+                    
+                    <1    >790    gene
+                                    gene          28Sr ribosomal RNA
+            
+            <1    >790    mRNA
+                                    product       28Sr
+                                    
+>Feature Mnelei135
+
+<1    >791    gene
+                                    gene          18Sr
+            <1    >791    mRNA
+                                    product       18Sr ribosomal RNA
+
+                    <1    >791    gene
+                                    gene          its1
+            <1    791    CDS
+                                    product       internal transcribed spacer 1
+                                    product       internal transcribed spacer 1
+                                    codon_start   2
+            <1    >791    mRNA
+                                    product       internal transcribed spacer 1
+                   	<1    >791    gene
+                                    gene          5.8Sr
+            <1    >791    mRNA
+                                    product       5.8S ribosomal RNA
+
+                    <1    >791    gene
+                                    gene          its2
+            <1    791    CDS
+                                    product       internal transcribed spacer 2
+                                    product       internal transcribed spacer 2
+                                    codon_start   1
+            <1    >791    mRNA
+                                    product       internal transcribed spacer 1
+                    
+                    <1    >791    gene
+                                    gene          28Sr ribosomal RNA
+            
+            <1    >791    mRNA
+                                    product       28Sr
+                                    
+>Feature Mnelei134
+
+<1    >790    gene
+                                    gene          18Sr
+            <1    >790    mRNA
+                                    product       18Sr ribosomal RNA
+
+                    <1    >790    gene
+                                    gene          its1
+            <1    790    CDS
+                                    product       internal transcribed spacer 1
+                                    product       internal transcribed spacer 1
+                                    codon_start   2
+            <1    >790    mRNA
+                                    product       internal transcribed spacer 1
+                   	<1    >790    gene
+                                    gene          5.8Sr
+            <1    >790    mRNA
+                                    product       5.8S ribosomal RNA
+
+                    <1    >790    gene
+                                    gene          its2
+            <1    790    CDS
+                                    product       internal transcribed spacer 2
+                                    product       internal transcribed spacer 2
+                                    codon_start   1
+            <1    >790    mRNA
+                                    product       internal transcribed spacer 1
+                    
+                    <1    >790    gene
+                                    gene          28Sr ribosomal RNA
+            
+            <1    >790    mRNA
+                                    product       28Sr
+                                    
+>Feature Mnelei133
+
+<1    >752    gene
+                                    gene          18Sr
+            <1    >752    mRNA
+                                    product       18Sr ribosomal RNA
+
+                    <1    >752    gene
+                                    gene          its1
+            <1    752    CDS
+                                    product       internal transcribed spacer 1
+                                    product       internal transcribed spacer 1
+                                    codon_start   2
+            <1    >752    mRNA
+                                    product       internal transcribed spacer 1
+                   	<1    >752    gene
+                                    gene          5.8Sr
+            <1    >752    mRNA
+                                    product       5.8S ribosomal RNA
+
+                    <1    >752    gene
+                                    gene          its2
+            <1    752    CDS
+                                    product       internal transcribed spacer 2
+                                    product       internal transcribed spacer 2
+                                    codon_start   1
+            <1    >752    mRNA
+                                    product       internal transcribed spacer 1
+                    
+                    <1    >752    gene
+                                    gene          28Sr ribosomal RNA
+            
+            <1    >752    mRNA
+                                    product       28Sr
+                                    
+>Feature Mnelei132
+
+<1    >790    gene
+                                    gene          18Sr
+            <1    >790    mRNA
+                                    product       18Sr ribosomal RNA
+
+                    <1    >790    gene
+                                    gene          its1
+            <1    790    CDS
+                                    product       internal transcribed spacer 1
+                                    product       internal transcribed spacer 1
+                                    codon_start   2
+            <1    >790    mRNA
+                                    product       internal transcribed spacer 1
+                   	<1    >790    gene
+                                    gene          5.8Sr
+            <1    >790    mRNA
+                                    product       5.8S ribosomal RNA
+
+                    <1    >790    gene
+                                    gene          its2
+            <1    790    CDS
+                                    product       internal transcribed spacer 2
+                                    product       internal transcribed spacer 2
+                                    codon_start   1
+            <1    >790    mRNA
+                                    product       internal transcribed spacer 1
+                    
+                    <1    >790    gene
+                                    gene          28Sr ribosomal RNA
+            
+            <1    >790    mRNA
+                                    product       28Sr
+                                    
+>Feature Mnelei131
+
+<1    >790    gene
+                                    gene          18Sr
+            <1    >790    mRNA
+                                    product       18Sr ribosomal RNA
+
+                    <1    >790    gene
+                                    gene          its1
+            <1    790    CDS
+                                    product       internal transcribed spacer 1
+                                    product       internal transcribed spacer 1
+                                    codon_start   2
+            <1    >790    mRNA
+                                    product       internal transcribed spacer 1
+                   	<1    >790    gene
+                                    gene          5.8Sr
+            <1    >790    mRNA
+                                    product       5.8S ribosomal RNA
+
+                    <1    >790    gene
+                                    gene          its2
+            <1    790    CDS
+                                    product       internal transcribed spacer 2
+                                    product       internal transcribed spacer 2
+                                    codon_start   1
+            <1    >790    mRNA
+                                    product       internal transcribed spacer 1
+                    
+                    <1    >790    gene
+                                    gene          28Sr ribosomal RNA
+            
+            <1    >790    mRNA
+                                    product       28Sr
+                                    
+>Feature Mnelei130
+
+<1    >790    gene
+                                    gene          18Sr
+            <1    >790    mRNA
+                                    product       18Sr ribosomal RNA
+
+                    <1    >790    gene
+                                    gene          its1
+            <1    790    CDS
+                                    product       internal transcribed spacer 1
+                                    product       internal transcribed spacer 1
+                                    codon_start   2
+            <1    >790    mRNA
+                                    product       internal transcribed spacer 1
+                   	<1    >790    gene
+                                    gene          5.8Sr
+            <1    >790    mRNA
+                                    product       5.8S ribosomal RNA
+
+                    <1    >790    gene
+                                    gene          its2
+            <1    790    CDS
+                                    product       internal transcribed spacer 2
+                                    product       internal transcribed spacer 2
+                                    codon_start   1
+            <1    >790    mRNA
+                                    product       internal transcribed spacer 1
+                    
+                    <1    >790    gene
+                                    gene          28Sr ribosomal RNA
+            
+            <1    >790    mRNA
+                                    product       28Sr
+                                    
+>Feature Mnelei129
+
+<1    >790    gene
+                                    gene          18Sr
+            <1    >790    mRNA
+                                    product       18Sr ribosomal RNA
+
+                    <1    >790    gene
+                                    gene          its1
+            <1    790    CDS
+                                    product       internal transcribed spacer 1
+                                    product       internal transcribed spacer 1
+                                    codon_start   2
+            <1    >790    mRNA
+                                    product       internal transcribed spacer 1
+                   	<1    >790    gene
+                                    gene          5.8Sr
+            <1    >790    mRNA
+                                    product       5.8S ribosomal RNA
+
+                    <1    >790    gene
+                                    gene          its2
+            <1    790    CDS
+                                    product       internal transcribed spacer 2
+                                    product       internal transcribed spacer 2
+                                    codon_start   1
+            <1    >790    mRNA
+                                    product       internal transcribed spacer 1
+                    
+                    <1    >790    gene
+                                    gene          28Sr ribosomal RNA
+            
+            <1    >790    mRNA
+                                    product       28Sr
+                                    
+>Feature Mnelei127
+
+<1    >790    gene
+                                    gene          18Sr
+            <1    >790    mRNA
+                                    product       18Sr ribosomal RNA
+
+                    <1    >790    gene
+                                    gene          its1
+            <1    790    CDS
+                                    product       internal transcribed spacer 1
+                                    product       internal transcribed spacer 1
+                                    codon_start   2
+            <1    >790    mRNA
+                                    product       internal transcribed spacer 1
+                   	<1    >790    gene
+                                    gene          5.8Sr
+            <1    >790    mRNA
+                                    product       5.8S ribosomal RNA
+
+                    <1    >790    gene
+                                    gene          its2
+            <1    790    CDS
+                                    product       internal transcribed spacer 2
+                                    product       internal transcribed spacer 2
+                                    codon_start   1
+            <1    >790    mRNA
+                                    product       internal transcribed spacer 1
+                    
+                    <1    >790    gene
+                                    gene          28Sr ribosomal RNA
+            
+            <1    >790    mRNA
+                                    product       28Sr
+                                    
+>Feature Mnelei126
+
+<1    >790    gene
+                                    gene          18Sr
+            <1    >790    mRNA
+                                    product       18Sr ribosomal RNA
+
+                    <1    >790    gene
+                                    gene          its1
+            <1    790    CDS
+                                    product       internal transcribed spacer 1
+                                    product       internal transcribed spacer 1
+                                    codon_start   2
+            <1    >790    mRNA
+                                    product       internal transcribed spacer 1
+                   	<1    >790    gene
+                                    gene          5.8Sr
+            <1    >790    mRNA
+                                    product       5.8S ribosomal RNA
+
+                    <1    >790    gene
+                                    gene          its2
+            <1    790    CDS
+                                    product       internal transcribed spacer 2
+                                    product       internal transcribed spacer 2
+                                    codon_start   1
+            <1    >790    mRNA
+                                    product       internal transcribed spacer 1
+                    
+                    <1    >790    gene
+                                    gene          28Sr ribosomal RNA
+            
+            <1    >790    mRNA
+                                    product       28Sr
+                                    
+>Feature Mnelei125
+
+<1    >789    gene
+                                    gene          18Sr
+            <1    >789    mRNA
+                                    product       18Sr ribosomal RNA
+
+                    <1    >789    gene
+                                    gene          its1
+            <1    789    CDS
+                                    product       internal transcribed spacer 1
+                                    product       internal transcribed spacer 1
+                                    codon_start   2
+            <1    >789    mRNA
+                                    product       internal transcribed spacer 1
+                   	<1    >789    gene
+                                    gene          5.8Sr
+            <1    >789    mRNA
+                                    product       5.8S ribosomal RNA
+
+                    <1    >789    gene
+                                    gene          its2
+            <1    789    CDS
+                                    product       internal transcribed spacer 2
+                                    product       internal transcribed spacer 2
+                                    codon_start   1
+            <1    >789    mRNA
+                                    product       internal transcribed spacer 1
+                    
+                    <1    >789    gene
+                                    gene          28Sr ribosomal RNA
+            
+            <1    >789    mRNA
+                                    product       28Sr
+                                    
+>Feature Mnelei122
+
+<1    >790    gene
+                                    gene          18Sr
+            <1    >790    mRNA
+                                    product       18Sr ribosomal RNA
+
+                    <1    >790    gene
+                                    gene          its1
+            <1    790    CDS
+                                    product       internal transcribed spacer 1
+                                    product       internal transcribed spacer 1
+                                    codon_start   2
+            <1    >790    mRNA
+                                    product       internal transcribed spacer 1
+                   	<1    >790    gene
+                                    gene          5.8Sr
+            <1    >790    mRNA
+                                    product       5.8S ribosomal RNA
+
+                    <1    >790    gene
+                                    gene          its2
+            <1    790    CDS
+                                    product       internal transcribed spacer 2
+                                    product       internal transcribed spacer 2
+                                    codon_start   1
+            <1    >790    mRNA
+                                    product       internal transcribed spacer 1
+                    
+                    <1    >790    gene
+                                    gene          28Sr ribosomal RNA
+            
+            <1    >790    mRNA
+                                    product       28Sr
+                                    
+>Feature Mnelei121
+
+<1    >790    gene
+                                    gene          18Sr
+            <1    >790    mRNA
+                                    product       18Sr ribosomal RNA
+
+                    <1    >790    gene
+                                    gene          its1
+            <1    790    CDS
+                                    product       internal transcribed spacer 1
+                                    product       internal transcribed spacer 1
+                                    codon_start   2
+            <1    >790    mRNA
+                                    product       internal transcribed spacer 1
+                   	<1    >790    gene
+                                    gene          5.8Sr
+            <1    >790    mRNA
+                                    product       5.8S ribosomal RNA
+
+                    <1    >790    gene
+                                    gene          its2
+            <1    790    CDS
+                                    product       internal transcribed spacer 2
+                                    product       internal transcribed spacer 2
+                                    codon_start   1
+            <1    >790    mRNA
+                                    product       internal transcribed spacer 1
+                    
+                    <1    >790    gene
+                                    gene          28Sr ribosomal RNA
+            
+            <1    >790    mRNA
+                                    product       28Sr
+                                    
+>Feature Mnelei120
+
+<1    >790    gene
+                                    gene          18Sr
+            <1    >790    mRNA
+                                    product       18Sr ribosomal RNA
+
+                    <1    >790    gene
+                                    gene          its1
+            <1    790    CDS
+                                    product       internal transcribed spacer 1
+                                    product       internal transcribed spacer 1
+                                    codon_start   2
+            <1    >790    mRNA
+                                    product       internal transcribed spacer 1
+                   	<1    >790    gene
+                                    gene          5.8Sr
+            <1    >790    mRNA
+                                    product       5.8S ribosomal RNA
+
+                    <1    >790    gene
+                                    gene          its2
+            <1    790    CDS
+                                    product       internal transcribed spacer 2
+                                    product       internal transcribed spacer 2
+                                    codon_start   1
+            <1    >790    mRNA
+                                    product       internal transcribed spacer 1
+                    
+                    <1    >790    gene
+                                    gene          28Sr ribosomal RNA
+            
+            <1    >790    mRNA
+                                    product       28Sr
+                                    
+>Feature Mnelei109
+
+<1    >791    gene
+                                    gene          18Sr
+            <1    >791    mRNA
+                                    product       18Sr ribosomal RNA
+
+                    <1    >791    gene
+                                    gene          its1
+            <1    791    CDS
+                                    product       internal transcribed spacer 1
+                                    product       internal transcribed spacer 1
+                                    codon_start   2
+            <1    >791    mRNA
+                                    product       internal transcribed spacer 1
+                   	<1    >791    gene
+                                    gene          5.8Sr
+            <1    >791    mRNA
+                                    product       5.8S ribosomal RNA
+
+                    <1    >791    gene
+                                    gene          its2
+            <1    791    CDS
+                                    product       internal transcribed spacer 2
+                                    product       internal transcribed spacer 2
+                                    codon_start   1
+            <1    >791    mRNA
+                                    product       internal transcribed spacer 1
+                    
+                    <1    >791    gene
+                                    gene          28Sr ribosomal RNA
+            
+            <1    >791    mRNA
+                                    product       28Sr
+                                    
+>Feature Mnelei108
+
+<1    >790    gene
+                                    gene          18Sr
+            <1    >790    mRNA
+                                    product       18Sr ribosomal RNA
+
+                    <1    >790    gene
+                                    gene          its1
+            <1    790    CDS
+                                    product       internal transcribed spacer 1
+                                    product       internal transcribed spacer 1
+                                    codon_start   2
+            <1    >790    mRNA
+                                    product       internal transcribed spacer 1
+                   	<1    >790    gene
+                                    gene          5.8Sr
+            <1    >790    mRNA
+                                    product       5.8S ribosomal RNA
+
+                    <1    >790    gene
+                                    gene          its2
+            <1    790    CDS
+                                    product       internal transcribed spacer 2
+                                    product       internal transcribed spacer 2
+                                    codon_start   1
+            <1    >790    mRNA
+                                    product       internal transcribed spacer 1
+                    
+                    <1    >790    gene
+                                    gene          28Sr ribosomal RNA
+            
+            <1    >790    mRNA
+                                    product       28Sr
+                                    
+>Feature Mnelei107
+
+<1    >790    gene
+                                    gene          18Sr
+            <1    >790    mRNA
+                                    product       18Sr ribosomal RNA
+
+                    <1    >790    gene
+                                    gene          its1
+            <1    790    CDS
+                                    product       internal transcribed spacer 1
+                                    product       internal transcribed spacer 1
+                                    codon_start   2
+            <1    >790    mRNA
+                                    product       internal transcribed spacer 1
+                   	<1    >790    gene
+                                    gene          5.8Sr
+            <1    >790    mRNA
+                                    product       5.8S ribosomal RNA
+
+                    <1    >790    gene
+                                    gene          its2
+            <1    790    CDS
+                                    product       internal transcribed spacer 2
+                                    product       internal transcribed spacer 2
+                                    codon_start   1
+            <1    >790    mRNA
+                                    product       internal transcribed spacer 1
+                    
+                    <1    >790    gene
+                                    gene          28Sr ribosomal RNA
+            
+            <1    >790    mRNA
+                                    product       28Sr
+                                    
+>Feature Mnelei106
+
+<1    >790    gene
+                                    gene          18Sr
+            <1    >790    mRNA
+                                    product       18Sr ribosomal RNA
+
+                    <1    >790    gene
+                                    gene          its1
+            <1    790    CDS
+                                    product       internal transcribed spacer 1
+                                    product       internal transcribed spacer 1
+                                    codon_start   2
+            <1    >790    mRNA
+                                    product       internal transcribed spacer 1
+                   	<1    >790    gene
+                                    gene          5.8Sr
+            <1    >790    mRNA
+                                    product       5.8S ribosomal RNA
+
+                    <1    >790    gene
+                                    gene          its2
+            <1    790    CDS
+                                    product       internal transcribed spacer 2
+                                    product       internal transcribed spacer 2
+                                    codon_start   1
+            <1    >790    mRNA
+                                    product       internal transcribed spacer 1
+                    
+                    <1    >790    gene
+                                    gene          28Sr ribosomal RNA
+            
+            <1    >790    mRNA
+                                    product       28Sr
+                                    
+>Feature Mnelei105
+
+<1    >791    gene
+                                    gene          18Sr
+            <1    >791    mRNA
+                                    product       18Sr ribosomal RNA
+
+                    <1    >791    gene
+                                    gene          its1
+            <1    791    CDS
+                                    product       internal transcribed spacer 1
+                                    product       internal transcribed spacer 1
+                                    codon_start   2
+            <1    >791    mRNA
+                                    product       internal transcribed spacer 1
+                   	<1    >791    gene
+                                    gene          5.8Sr
+            <1    >791    mRNA
+                                    product       5.8S ribosomal RNA
+
+                    <1    >791    gene
+                                    gene          its2
+            <1    791    CDS
+                                    product       internal transcribed spacer 2
+                                    product       internal transcribed spacer 2
+                                    codon_start   1
+            <1    >791    mRNA
+                                    product       internal transcribed spacer 1
+                    
+                    <1    >791    gene
+                                    gene          28Sr ribosomal RNA
+            
+            <1    >791    mRNA
+                                    product       28Sr
+                                    
+>Feature Mnelei104
+
+<1    >790    gene
+                                    gene          18Sr
+            <1    >790    mRNA
+                                    product       18Sr ribosomal RNA
+
+                    <1    >790    gene
+                                    gene          its1
+            <1    790    CDS
+                                    product       internal transcribed spacer 1
+                                    product       internal transcribed spacer 1
+                                    codon_start   2
+            <1    >790    mRNA
+                                    product       internal transcribed spacer 1
+                   	<1    >790    gene
+                                    gene          5.8Sr
+            <1    >790    mRNA
+                                    product       5.8S ribosomal RNA
+
+                    <1    >790    gene
+                                    gene          its2
+            <1    790    CDS
+                                    product       internal transcribed spacer 2
+                                    product       internal transcribed spacer 2
+                                    codon_start   1
+            <1    >790    mRNA
+                                    product       internal transcribed spacer 1
+                    
+                    <1    >790    gene
+                                    gene          28Sr ribosomal RNA
+            
+            <1    >790    mRNA
+                                    product       28Sr
+                                    
+>Feature Mnelei103
+
+<1    >791    gene
+                                    gene          18Sr
+            <1    >791    mRNA
+                                    product       18Sr ribosomal RNA
+
+                    <1    >791    gene
+                                    gene          its1
+            <1    791    CDS
+                                    product       internal transcribed spacer 1
+                                    product       internal transcribed spacer 1
+                                    codon_start   2
+            <1    >791    mRNA
+                                    product       internal transcribed spacer 1
+                   	<1    >791    gene
+                                    gene          5.8Sr
+            <1    >791    mRNA
+                                    product       5.8S ribosomal RNA
+
+                    <1    >791    gene
+                                    gene          its2
+            <1    791    CDS
+                                    product       internal transcribed spacer 2
+                                    product       internal transcribed spacer 2
+                                    codon_start   1
+            <1    >791    mRNA
+                                    product       internal transcribed spacer 1
+                    
+                    <1    >791    gene
+                                    gene          28Sr ribosomal RNA
+            
+            <1    >791    mRNA
+                                    product       28Sr
+                                    
+>Feature Mnelei102
+
+<1    >792    gene
+                                    gene          18Sr
+            <1    >792    mRNA
+                                    product       18Sr ribosomal RNA
+
+                    <1    >792    gene
+                                    gene          its1
+            <1    792    CDS
+                                    product       internal transcribed spacer 1
+                                    product       internal transcribed spacer 1
+                                    codon_start   2
+            <1    >792    mRNA
+                                    product       internal transcribed spacer 1
+                   	<1    >792    gene
+                                    gene          5.8Sr
+            <1    >792    mRNA
+                                    product       5.8S ribosomal RNA
+
+                    <1    >792    gene
+                                    gene          its2
+            <1    792    CDS
+                                    product       internal transcribed spacer 2
+                                    product       internal transcribed spacer 2
+                                    codon_start   1
+            <1    >792    mRNA
+                                    product       internal transcribed spacer 1
+                    
+                    <1    >792    gene
+                                    gene          28Sr ribosomal RNA
+            
+            <1    >792    mRNA
+                                    product       28Sr
+                                    
+>Feature Mnelei101
+
+<1    >790    gene
+                                    gene          18Sr
+            <1    >790    mRNA
+                                    product       18Sr ribosomal RNA
+
+                    <1    >790    gene
+                                    gene          its1
+            <1    790    CDS
+                                    product       internal transcribed spacer 1
+                                    product       internal transcribed spacer 1
+                                    codon_start   2
+            <1    >790    mRNA
+                                    product       internal transcribed spacer 1
+                   	<1    >790    gene
+                                    gene          5.8Sr
+            <1    >790    mRNA
+                                    product       5.8S ribosomal RNA
+
+                    <1    >790    gene
+                                    gene          its2
+            <1    790    CDS
+                                    product       internal transcribed spacer 2
+                                    product       internal transcribed spacer 2
+                                    codon_start   1
+            <1    >790    mRNA
+                                    product       internal transcribed spacer 1
+                    
+                    <1    >790    gene
+                                    gene          28Sr ribosomal RNA
+            
+            <1    >790    mRNA
+                                    product       28Sr
+                                    
+>Feature Mnelei099
+
+<1    >790    gene
+                                    gene          18Sr
+            <1    >790    mRNA
+                                    product       18Sr ribosomal RNA
+
+                    <1    >790    gene
+                                    gene          its1
+            <1    790    CDS
+                                    product       internal transcribed spacer 1
+                                    product       internal transcribed spacer 1
+                                    codon_start   2
+            <1    >790    mRNA
+                                    product       internal transcribed spacer 1
+                   	<1    >790    gene
+                                    gene          5.8Sr
+            <1    >790    mRNA
+                                    product       5.8S ribosomal RNA
+
+                    <1    >790    gene
+                                    gene          its2
+            <1    790    CDS
+                                    product       internal transcribed spacer 2
+                                    product       internal transcribed spacer 2
+                                    codon_start   1
+            <1    >790    mRNA
+                                    product       internal transcribed spacer 1
+                    
+                    <1    >790    gene
+                                    gene          28Sr ribosomal RNA
+            
+            <1    >790    mRNA
+                                    product       28Sr
+                                    
+>Feature Mnelei079
+
+<1    >790    gene
+                                    gene          18Sr
+            <1    >790    mRNA
+                                    product       18Sr ribosomal RNA
+
+                    <1    >790    gene
+                                    gene          its1
+            <1    790    CDS
+                                    product       internal transcribed spacer 1
+                                    product       internal transcribed spacer 1
+                                    codon_start   2
+            <1    >790    mRNA
+                                    product       internal transcribed spacer 1
+                   	<1    >790    gene
+                                    gene          5.8Sr
+            <1    >790    mRNA
+                                    product       5.8S ribosomal RNA
+
+                    <1    >790    gene
+                                    gene          its2
+            <1    790    CDS
+                                    product       internal transcribed spacer 2
+                                    product       internal transcribed spacer 2
+                                    codon_start   1
+            <1    >790    mRNA
+                                    product       internal transcribed spacer 1
+                    
+                    <1    >790    gene
+                                    gene          28Sr ribosomal RNA
+            
+            <1    >790    mRNA
+                                    product       28Sr
+                                    
+>Feature Mnelei078
+
+<1    >790    gene
+                                    gene          18Sr
+            <1    >790    mRNA
+                                    product       18Sr ribosomal RNA
+
+                    <1    >790    gene
+                                    gene          its1
+            <1    790    CDS
+                                    product       internal transcribed spacer 1
+                                    product       internal transcribed spacer 1
+                                    codon_start   2
+            <1    >790    mRNA
+                                    product       internal transcribed spacer 1
+                   	<1    >790    gene
+                                    gene          5.8Sr
+            <1    >790    mRNA
+                                    product       5.8S ribosomal RNA
+
+                    <1    >790    gene
+                                    gene          its2
+            <1    790    CDS
+                                    product       internal transcribed spacer 2
+                                    product       internal transcribed spacer 2
+                                    codon_start   1
+            <1    >790    mRNA
+                                    product       internal transcribed spacer 1
+                    
+                    <1    >790    gene
+                                    gene          28Sr ribosomal RNA
+            
+            <1    >790    mRNA
+                                    product       28Sr
+                                    
+>Feature Mnelei077
+
+<1    >790    gene
+                                    gene          18Sr
+            <1    >790    mRNA
+                                    product       18Sr ribosomal RNA
+
+                    <1    >790    gene
+                                    gene          its1
+            <1    790    CDS
+                                    product       internal transcribed spacer 1
+                                    product       internal transcribed spacer 1
+                                    codon_start   2
+            <1    >790    mRNA
+                                    product       internal transcribed spacer 1
+                   	<1    >790    gene
+                                    gene          5.8Sr
+            <1    >790    mRNA
+                                    product       5.8S ribosomal RNA
+
+                    <1    >790    gene
+                                    gene          its2
+            <1    790    CDS
+                                    product       internal transcribed spacer 2
+                                    product       internal transcribed spacer 2
+                                    codon_start   1
+            <1    >790    mRNA
+                                    product       internal transcribed spacer 1
+                    
+                    <1    >790    gene
+                                    gene          28Sr ribosomal RNA
+            
+            <1    >790    mRNA
+                                    product       28Sr
+                                    
+>Feature Mnelei076
+
+<1    >790    gene
+                                    gene          18Sr
+            <1    >790    mRNA
+                                    product       18Sr ribosomal RNA
+
+                    <1    >790    gene
+                                    gene          its1
+            <1    790    CDS
+                                    product       internal transcribed spacer 1
+                                    product       internal transcribed spacer 1
+                                    codon_start   2
+            <1    >790    mRNA
+                                    product       internal transcribed spacer 1
+                   	<1    >790    gene
+                                    gene          5.8Sr
+            <1    >790    mRNA
+                                    product       5.8S ribosomal RNA
+
+                    <1    >790    gene
+                                    gene          its2
+            <1    790    CDS
+                                    product       internal transcribed spacer 2
+                                    product       internal transcribed spacer 2
+                                    codon_start   1
+            <1    >790    mRNA
+                                    product       internal transcribed spacer 1
+                    
+                    <1    >790    gene
+                                    gene          28Sr ribosomal RNA
+            
+            <1    >790    mRNA
+                                    product       28Sr
+                                    
+>Feature Mnelei075
+
+<1    >790    gene
+                                    gene          18Sr
+            <1    >790    mRNA
+                                    product       18Sr ribosomal RNA
+
+                    <1    >790    gene
+                                    gene          its1
+            <1    790    CDS
+                                    product       internal transcribed spacer 1
+                                    product       internal transcribed spacer 1
+                                    codon_start   2
+            <1    >790    mRNA
+                                    product       internal transcribed spacer 1
+                   	<1    >790    gene
+                                    gene          5.8Sr
+            <1    >790    mRNA
+                                    product       5.8S ribosomal RNA
+
+                    <1    >790    gene
+                                    gene          its2
+            <1    790    CDS
+                                    product       internal transcribed spacer 2
+                                    product       internal transcribed spacer 2
+                                    codon_start   1
+            <1    >790    mRNA
+                                    product       internal transcribed spacer 1
+                    
+                    <1    >790    gene
+                                    gene          28Sr ribosomal RNA
+            
+            <1    >790    mRNA
+                                    product       28Sr
+                                    
+>Feature Mnelei074
+
+<1    >790    gene
+                                    gene          18Sr
+            <1    >790    mRNA
+                                    product       18Sr ribosomal RNA
+
+                    <1    >790    gene
+                                    gene          its1
+            <1    790    CDS
+                                    product       internal transcribed spacer 1
+                                    product       internal transcribed spacer 1
+                                    codon_start   2
+            <1    >790    mRNA
+                                    product       internal transcribed spacer 1
+                   	<1    >790    gene
+                                    gene          5.8Sr
+            <1    >790    mRNA
+                                    product       5.8S ribosomal RNA
+
+                    <1    >790    gene
+                                    gene          its2
+            <1    790    CDS
+                                    product       internal transcribed spacer 2
+                                    product       internal transcribed spacer 2
+                                    codon_start   1
+            <1    >790    mRNA
+                                    product       internal transcribed spacer 1
+                    
+                    <1    >790    gene
+                                    gene          28Sr ribosomal RNA
+            
+            <1    >790    mRNA
+                                    product       28Sr
+                                    
+>Feature Mnelei073
+
+<1    >790    gene
+                                    gene          18Sr
+            <1    >790    mRNA
+                                    product       18Sr ribosomal RNA
+
+                    <1    >790    gene
+                                    gene          its1
+            <1    790    CDS
+                                    product       internal transcribed spacer 1
+                                    product       internal transcribed spacer 1
+                                    codon_start   2
+            <1    >790    mRNA
+                                    product       internal transcribed spacer 1
+                   	<1    >790    gene
+                                    gene          5.8Sr
+            <1    >790    mRNA
+                                    product       5.8S ribosomal RNA
+
+                    <1    >790    gene
+                                    gene          its2
+            <1    790    CDS
+                                    product       internal transcribed spacer 2
+                                    product       internal transcribed spacer 2
+                                    codon_start   1
+            <1    >790    mRNA
+                                    product       internal transcribed spacer 1
+                    
+                    <1    >790    gene
+                                    gene          28Sr ribosomal RNA
+            
+            <1    >790    mRNA
+                                    product       28Sr
+                                    
+>Feature Mnelei072
+
+<1    >790    gene
+                                    gene          18Sr
+            <1    >790    mRNA
+                                    product       18Sr ribosomal RNA
+
+                    <1    >790    gene
+                                    gene          its1
+            <1    790    CDS
+                                    product       internal transcribed spacer 1
+                                    product       internal transcribed spacer 1
+                                    codon_start   2
+            <1    >790    mRNA
+                                    product       internal transcribed spacer 1
+                   	<1    >790    gene
+                                    gene          5.8Sr
+            <1    >790    mRNA
+                                    product       5.8S ribosomal RNA
+
+                    <1    >790    gene
+                                    gene          its2
+            <1    790    CDS
+                                    product       internal transcribed spacer 2
+                                    product       internal transcribed spacer 2
+                                    codon_start   1
+            <1    >790    mRNA
+                                    product       internal transcribed spacer 1
+                    
+                    <1    >790    gene
+                                    gene          28Sr ribosomal RNA
+            
+            <1    >790    mRNA
+                                    product       28Sr
+                                    
+>Feature Mnelei071
+
+<1    >790    gene
+                                    gene          18Sr
+            <1    >790    mRNA
+                                    product       18Sr ribosomal RNA
+
+                    <1    >790    gene
+                                    gene          its1
+            <1    790    CDS
+                                    product       internal transcribed spacer 1
+                                    product       internal transcribed spacer 1
+                                    codon_start   2
+            <1    >790    mRNA
+                                    product       internal transcribed spacer 1
+                   	<1    >790    gene
+                                    gene          5.8Sr
+            <1    >790    mRNA
+                                    product       5.8S ribosomal RNA
+
+                    <1    >790    gene
+                                    gene          its2
+            <1    790    CDS
+                                    product       internal transcribed spacer 2
+                                    product       internal transcribed spacer 2
+                                    codon_start   1
+            <1    >790    mRNA
+                                    product       internal transcribed spacer 1
+                    
+                    <1    >790    gene
+                                    gene          28Sr ribosomal RNA
+            
+            <1    >790    mRNA
+                                    product       28Sr
+                                    
+>Feature Mnelei070
+
+<1    >790    gene
+                                    gene          18Sr
+            <1    >790    mRNA
+                                    product       18Sr ribosomal RNA
+
+                    <1    >790    gene
+                                    gene          its1
+            <1    790    CDS
+                                    product       internal transcribed spacer 1
+                                    product       internal transcribed spacer 1
+                                    codon_start   2
+            <1    >790    mRNA
+                                    product       internal transcribed spacer 1
+                   	<1    >790    gene
+                                    gene          5.8Sr
+            <1    >790    mRNA
+                                    product       5.8S ribosomal RNA
+
+                    <1    >790    gene
+                                    gene          its2
+            <1    790    CDS
+                                    product       internal transcribed spacer 2
+                                    product       internal transcribed spacer 2
+                                    codon_start   1
+            <1    >790    mRNA
+                                    product       internal transcribed spacer 1
+                    
+                    <1    >790    gene
+                                    gene          28Sr ribosomal RNA
+            
+            <1    >790    mRNA
+                                    product       28Sr
+                                    
+>Feature Mnelei069
+
+<1    >790    gene
+                                    gene          18Sr
+            <1    >790    mRNA
+                                    product       18Sr ribosomal RNA
+
+                    <1    >790    gene
+                                    gene          its1
+            <1    790    CDS
+                                    product       internal transcribed spacer 1
+                                    product       internal transcribed spacer 1
+                                    codon_start   2
+            <1    >790    mRNA
+                                    product       internal transcribed spacer 1
+                   	<1    >790    gene
+                                    gene          5.8Sr
+            <1    >790    mRNA
+                                    product       5.8S ribosomal RNA
+
+                    <1    >790    gene
+                                    gene          its2
+            <1    790    CDS
+                                    product       internal transcribed spacer 2
+                                    product       internal transcribed spacer 2
+                                    codon_start   1
+            <1    >790    mRNA
+                                    product       internal transcribed spacer 1
+                    
+                    <1    >790    gene
+                                    gene          28Sr ribosomal RNA
+            
+            <1    >790    mRNA
+                                    product       28Sr
+                                    
+>Feature Mnelei068
+
+<1    >790    gene
+                                    gene          18Sr
+            <1    >790    mRNA
+                                    product       18Sr ribosomal RNA
+
+                    <1    >790    gene
+                                    gene          its1
+            <1    790    CDS
+                                    product       internal transcribed spacer 1
+                                    product       internal transcribed spacer 1
+                                    codon_start   2
+            <1    >790    mRNA
+                                    product       internal transcribed spacer 1
+                   	<1    >790    gene
+                                    gene          5.8Sr
+            <1    >790    mRNA
+                                    product       5.8S ribosomal RNA
+
+                    <1    >790    gene
+                                    gene          its2
+            <1    790    CDS
+                                    product       internal transcribed spacer 2
+                                    product       internal transcribed spacer 2
+                                    codon_start   1
+            <1    >790    mRNA
+                                    product       internal transcribed spacer 1
+                    
+                    <1    >790    gene
+                                    gene          28Sr ribosomal RNA
+            
+            <1    >790    mRNA
+                                    product       28Sr
+                                    
+>Feature Mnelei067
+
+<1    >790    gene
+                                    gene          18Sr
+            <1    >790    mRNA
+                                    product       18Sr ribosomal RNA
+
+                    <1    >790    gene
+                                    gene          its1
+            <1    790    CDS
+                                    product       internal transcribed spacer 1
+                                    product       internal transcribed spacer 1
+                                    codon_start   2
+            <1    >790    mRNA
+                                    product       internal transcribed spacer 1
+                   	<1    >790    gene
+                                    gene          5.8Sr
+            <1    >790    mRNA
+                                    product       5.8S ribosomal RNA
+
+                    <1    >790    gene
+                                    gene          its2
+            <1    790    CDS
+                                    product       internal transcribed spacer 2
+                                    product       internal transcribed spacer 2
+                                    codon_start   1
+            <1    >790    mRNA
+                                    product       internal transcribed spacer 1
+                    
+                    <1    >790    gene
+                                    gene          28Sr ribosomal RNA
+            
+            <1    >790    mRNA
+                                    product       28Sr
+                                    
+>Feature Mnelei066
+
+<1    >790    gene
+                                    gene          18Sr
+            <1    >790    mRNA
+                                    product       18Sr ribosomal RNA
+
+                    <1    >790    gene
+                                    gene          its1
+            <1    790    CDS
+                                    product       internal transcribed spacer 1
+                                    product       internal transcribed spacer 1
+                                    codon_start   2
+            <1    >790    mRNA
+                                    product       internal transcribed spacer 1
+                   	<1    >790    gene
+                                    gene          5.8Sr
+            <1    >790    mRNA
+                                    product       5.8S ribosomal RNA
+
+                    <1    >790    gene
+                                    gene          its2
+            <1    790    CDS
+                                    product       internal transcribed spacer 2
+                                    product       internal transcribed spacer 2
+                                    codon_start   1
+            <1    >790    mRNA
+                                    product       internal transcribed spacer 1
+                    
+                    <1    >790    gene
+                                    gene          28Sr ribosomal RNA
+            
+            <1    >790    mRNA
+                                    product       28Sr
+                                    
+>Feature Mnelei060
+
+<1    >790    gene
+                                    gene          18Sr
+            <1    >790    mRNA
+                                    product       18Sr ribosomal RNA
+
+                    <1    >790    gene
+                                    gene          its1
+            <1    790    CDS
+                                    product       internal transcribed spacer 1
+                                    product       internal transcribed spacer 1
+                                    codon_start   2
+            <1    >790    mRNA
+                                    product       internal transcribed spacer 1
+                   	<1    >790    gene
+                                    gene          5.8Sr
+            <1    >790    mRNA
+                                    product       5.8S ribosomal RNA
+
+                    <1    >790    gene
+                                    gene          its2
+            <1    790    CDS
+                                    product       internal transcribed spacer 2
+                                    product       internal transcribed spacer 2
+                                    codon_start   1
+            <1    >790    mRNA
+                                    product       internal transcribed spacer 1
+                    
+                    <1    >790    gene
+                                    gene          28Sr ribosomal RNA
+            
+            <1    >790    mRNA
+                                    product       28Sr
+                                    
+>Feature Mnelei059
+
+<1    >790    gene
+                                    gene          18Sr
+            <1    >790    mRNA
+                                    product       18Sr ribosomal RNA
+
+                    <1    >790    gene
+                                    gene          its1
+            <1    790    CDS
+                                    product       internal transcribed spacer 1
+                                    product       internal transcribed spacer 1
+                                    codon_start   2
+            <1    >790    mRNA
+                                    product       internal transcribed spacer 1
+                   	<1    >790    gene
+                                    gene          5.8Sr
+            <1    >790    mRNA
+                                    product       5.8S ribosomal RNA
+
+                    <1    >790    gene
+                                    gene          its2
+            <1    790    CDS
+                                    product       internal transcribed spacer 2
+                                    product       internal transcribed spacer 2
+                                    codon_start   1
+            <1    >790    mRNA
+                                    product       internal transcribed spacer 1
+                    
+                    <1    >790    gene
+                                    gene          28Sr ribosomal RNA
+            
+            <1    >790    mRNA
+                                    product       28Sr
+                                    
+>Feature Mnelei058
+
+<1    >790    gene
+                                    gene          18Sr
+            <1    >790    mRNA
+                                    product       18Sr ribosomal RNA
+
+                    <1    >790    gene
+                                    gene          its1
+            <1    790    CDS
+                                    product       internal transcribed spacer 1
+                                    product       internal transcribed spacer 1
+                                    codon_start   2
+            <1    >790    mRNA
+                                    product       internal transcribed spacer 1
+                   	<1    >790    gene
+                                    gene          5.8Sr
+            <1    >790    mRNA
+                                    product       5.8S ribosomal RNA
+
+                    <1    >790    gene
+                                    gene          its2
+            <1    790    CDS
+                                    product       internal transcribed spacer 2
+                                    product       internal transcribed spacer 2
+                                    codon_start   1
+            <1    >790    mRNA
+                                    product       internal transcribed spacer 1
+                    
+                    <1    >790    gene
+                                    gene          28Sr ribosomal RNA
+            
+            <1    >790    mRNA
+                                    product       28Sr
+                                    
+>Feature Mnelei057
+
+<1    >790    gene
+                                    gene          18Sr
+            <1    >790    mRNA
+                                    product       18Sr ribosomal RNA
+
+                    <1    >790    gene
+                                    gene          its1
+            <1    790    CDS
+                                    product       internal transcribed spacer 1
+                                    product       internal transcribed spacer 1
+                                    codon_start   2
+            <1    >790    mRNA
+                                    product       internal transcribed spacer 1
+                   	<1    >790    gene
+                                    gene          5.8Sr
+            <1    >790    mRNA
+                                    product       5.8S ribosomal RNA
+
+                    <1    >790    gene
+                                    gene          its2
+            <1    790    CDS
+                                    product       internal transcribed spacer 2
+                                    product       internal transcribed spacer 2
+                                    codon_start   1
+            <1    >790    mRNA
+                                    product       internal transcribed spacer 1
+                    
+                    <1    >790    gene
+                                    gene          28Sr ribosomal RNA
+            
+            <1    >790    mRNA
+                                    product       28Sr
+                                    
+>Feature Mnelei056
+
+<1    >791    gene
+                                    gene          18Sr
+            <1    >791    mRNA
+                                    product       18Sr ribosomal RNA
+
+                    <1    >791    gene
+                                    gene          its1
+            <1    791    CDS
+                                    product       internal transcribed spacer 1
+                                    product       internal transcribed spacer 1
+                                    codon_start   2
+            <1    >791    mRNA
+                                    product       internal transcribed spacer 1
+                   	<1    >791    gene
+                                    gene          5.8Sr
+            <1    >791    mRNA
+                                    product       5.8S ribosomal RNA
+
+                    <1    >791    gene
+                                    gene          its2
+            <1    791    CDS
+                                    product       internal transcribed spacer 2
+                                    product       internal transcribed spacer 2
+                                    codon_start   1
+            <1    >791    mRNA
+                                    product       internal transcribed spacer 1
+                    
+                    <1    >791    gene
+                                    gene          28Sr ribosomal RNA
+            
+            <1    >791    mRNA
+                                    product       28Sr
+                                    
+>Feature Mnelei053
+
+<1    >793    gene
+                                    gene          18Sr
+            <1    >793    mRNA
+                                    product       18Sr ribosomal RNA
+
+                    <1    >793    gene
+                                    gene          its1
+            <1    793    CDS
+                                    product       internal transcribed spacer 1
+                                    product       internal transcribed spacer 1
+                                    codon_start   2
+            <1    >793    mRNA
+                                    product       internal transcribed spacer 1
+                   	<1    >793    gene
+                                    gene          5.8Sr
+            <1    >793    mRNA
+                                    product       5.8S ribosomal RNA
+
+                    <1    >793    gene
+                                    gene          its2
+            <1    793    CDS
+                                    product       internal transcribed spacer 2
+                                    product       internal transcribed spacer 2
+                                    codon_start   1
+            <1    >793    mRNA
+                                    product       internal transcribed spacer 1
+                    
+                    <1    >793    gene
+                                    gene          28Sr ribosomal RNA
+            
+            <1    >793    mRNA
+                                    product       28Sr
+                                    
+>Feature Mnelei052
+
+<1    >793    gene
+                                    gene          18Sr
+            <1    >793    mRNA
+                                    product       18Sr ribosomal RNA
+
+                    <1    >793    gene
+                                    gene          its1
+            <1    793    CDS
+                                    product       internal transcribed spacer 1
+                                    product       internal transcribed spacer 1
+                                    codon_start   2
+            <1    >793    mRNA
+                                    product       internal transcribed spacer 1
+                   	<1    >793    gene
+                                    gene          5.8Sr
+            <1    >793    mRNA
+                                    product       5.8S ribosomal RNA
+
+                    <1    >793    gene
+                                    gene          its2
+            <1    793    CDS
+                                    product       internal transcribed spacer 2
+                                    product       internal transcribed spacer 2
+                                    codon_start   1
+            <1    >793    mRNA
+                                    product       internal transcribed spacer 1
+                    
+                    <1    >793    gene
+                                    gene          28Sr ribosomal RNA
+            
+            <1    >793    mRNA
+                                    product       28Sr
+                                    
+>Feature Mnelei051
+
+<1    >793    gene
+                                    gene          18Sr
+            <1    >793    mRNA
+                                    product       18Sr ribosomal RNA
+
+                    <1    >793    gene
+                                    gene          its1
+            <1    793    CDS
+                                    product       internal transcribed spacer 1
+                                    product       internal transcribed spacer 1
+                                    codon_start   2
+            <1    >793    mRNA
+                                    product       internal transcribed spacer 1
+                   	<1    >793    gene
+                                    gene          5.8Sr
+            <1    >793    mRNA
+                                    product       5.8S ribosomal RNA
+
+                    <1    >793    gene
+                                    gene          its2
+            <1    793    CDS
+                                    product       internal transcribed spacer 2
+                                    product       internal transcribed spacer 2
+                                    codon_start   1
+            <1    >793    mRNA
+                                    product       internal transcribed spacer 1
+                    
+                    <1    >793    gene
+                                    gene          28Sr ribosomal RNA
+            
+            <1    >793    mRNA
+                                    product       28Sr
+                                    

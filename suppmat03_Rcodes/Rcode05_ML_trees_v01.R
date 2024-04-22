@@ -83,6 +83,8 @@ wd00 <- "/home/hal9000/Documents/Documents/MS_Mnemiopsis/Mnemiopsis_leidyi_in_NE
 #define input working directories
 wd01 <- "suppmat01_inp_files"
 wd05 <- "suppmat05_out_files"
+
+wd_NCBI <- "NCBI_seq_submission_for_Mnemiopsis"
 setwd(wd00)
 #define paths for in and output directories
 wd00_wd01 <- paste0(wd00,"/",wd01)
@@ -113,12 +115,76 @@ df_dd02 <- read.csv(wd00_wd05_inf05)
 df_cfy3 <- read.csv(wd00_wd05_inf06) 
 # remove first column
 df_dd02 <- df_dd02[,-1]
+
+# READ in accession numbers
+
+# file name for the text file with accession numbers
+GBaccsF <- "GenBank_accession_numbers_for_the_Mnelei_submitted_sequences_2024apr17.txt"
+# After having obtained the accession numbers from NCBI
+# I got an email back with accession numbers
+inf_accNos <- paste0(wd00,"/",
+                     wd_NCBI,"/",
+                     GBaccsF)
+# read in the file using 'stringr'
+library(stringr) # For str_trim 
+# Read string data and split into data frame
+txAcNdat <- readLines(inf_accNos)
+# only keep rows that begin with 'SUB'
+txAcNdat <- txAcNdat[grepl("^SUB",txAcNdat)]
+# make it a data frame
+df_accNos <- as.data.frame(do.call(rbind, strsplit(txAcNdat, 
+                                                   split=" ")), stringsAsFactors=FALSE)
+# only keep columns 1,2 and 5 
+df_accNos <- df_accNos[,c(1,2,5)]
+# change the column names to something more meaningful
+colnames(df_accNos) <- c("SUBNo","MneleiAbbr","AccNo") 
+
+
 # then read in the fasta file which makes it a DNAbinxn object
 dnb_pip4 <- read.dna(file=wd00_wd05_inf01,format="fasta")
+
 #make the DNAbin object a genind object
 geni_pip4 <- adegenet::DNAbin2genind(dnb_pip4)
 #make the genind object a dataframe
 df_pip4 <- adegenet::genind2df(geni_pip4)
+
+# To be able to replace the labels in the DNAbin object
+# the replacement of labels names has to be done on the data frame version
+# of the DNAbin object, afterwards the  data frame version can then be 
+# turned back in to a DNAbin object
+lbN <- row.names(df_pip4)
+# then grep for any names that has 'Mnelei' in the name
+lb.Ml <- lbN[grepl("Mnelei",lbN)]
+# prepare the name as a data frame that can be accessed
+dlb.Ml <- data.frame(do.call
+                     ('rbind', 
+                       strsplit(as.character(lb.Ml),
+                                "_")))
+# change the column names of this data frame to something meaningful
+colnames(dlb.Ml) <- c("MneleiAbbrNo","locAbbr","smplYr")
+# use match to get the corresponding NCBI accession number
+dlb.Ml$AccNo <- df_accNos$AccNo[match(dlb.Ml$MneleiAbbrNo,
+                                      df_accNos$MneleiAbbr)]
+# use the columns in the data frame to paste together a new name
+lb.Nw <- paste(dlb.Ml$AccNo,
+               dlb.Ml$locAbbr,
+               dlb.Ml$smplYr,sep="_")
+# then get the names that match 'Mnelei, and replace these names
+lbN[grepl("Mnelei",lbN)] <- lb.Nw
+# then overwrite the old names with this new vector of new names
+row.names(df_pip4) <- lbN
+
+# ::::::::::: IMPORTANT !! START ::::::::::: 
+# In order to get the 'pml' function from phangorn  working  
+# all cases of NA in the sequences must be replaced, with '-'
+# otherwise R will crash
+df_pip4[is.na(df_pip4)] <- "-"
+# 
+# ::::::::::: IMPORTANT !! END ::::::::::: 
+#View(df_pip4)
+#make the date frame a matrix and a DNAbin object again
+dnb_pip4 <- as.DNAbin(as.matrix(df_pip4))
+#labels(dnb_pip4)
 #:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 #https://www.molecularecologist.com/2016/02/26/quick-and-dirty-tree-building-in-r/
 
@@ -149,6 +215,23 @@ df_pp4Nm <- data.frame(do.call
                                   "_")))
 # modify columns names
 colnames(df_pp4Nm) <- c("smplNm","loc","yer")
+
+# replace the Mnelei abbr numbers with NCBI accession numbers obtained
+# after depositing sequences on NCBI
+# then get the names
+lbN <- df_pp4Nm$smplNm
+# then grep for any names that has 'Mnelei' in the name
+lb.Ml <- lbN[grepl("Mnelei",lbN)]
+# use match to get the corresponding NCBI accession number
+lb.AccNo <- df_accNos$AccNo[match(lb.Ml,
+                                      df_accNos$MneleiAbbr)]
+
+lbN[grepl("Mnelei",lbN)] <- lb.AccNo
+# then overwrite the old names with this new vector of new names
+df_pp4Nm$smplNm <- lbN
+
+
+
 # get unique location names
 uloc <- unique(df_pp4Nm$loc)
 # order the unique location names
@@ -167,6 +250,7 @@ Nmsloc <- names(phyd_pip4)
 # use grepl instead of dplyr, to get all NEA full sample names
 # but first collapse and paste with '|' sign to be able to grep for
 # multiple chracteristics
+
 # https://stackoverflow.com/questions/45357806/dplyr-select-and-starts-with-on-multiple-values-in-a-variable-list?noredirect=1&lq=1
 NmslocNEA <- Nmsloc[grepl(paste(NEAloc, collapse="|"),Nmsloc)]
 # now subset the phydat object by the full names that match bein NEA samples
@@ -177,17 +261,25 @@ df_phdp4 <- as.data.frame(as.matrix(phyd_pip4))
 nrd4 <- nrow(df_phdp4)
 ncd4 <- ncol(df_phdp4)
 
+library(phangorn)
 
+class(phyd_pip4)
 # calculate distances
+
+dm4 <- phangorn::dist.p(phyd_pip4)
+dm5 <- phangorn::dist.p(phyd_pip5)
+
 dm4 <- phangorn::dist.ml(phyd_pip4, "F81")
 dm5 <- phangorn::dist.ml(phyd_pip5, "F81")
 tree_NJ4 <- NJ(dm4)
 tree_NJ5 <- NJ(dm5)
+
 # as alternative for a starting tree:
-tree4 <- pratchet(phyd_pip4)          # parsimony tree
-tree5 <- pratchet(phyd_pip5)          # parsimony tree
-tree4 <- nnls.phylo(tree4, dm4)   # need edge weights
-tree5 <- nnls.phylo(tree5, dm5)   # need edge weights
+# tree4 <- pratchet(phyd_pip4)          # parsimony tree
+# tree5 <- pratchet(phyd_pip5)          # parsimony tree
+# tree4 <- nnls.phylo(tree4, dm4)   # need edge weights
+# tree5 <- nnls.phylo(tree5, dm5)   # need edge weights
+
 # 1. alternative: quick and dirty: GTR + G
 #(fit <- pml_bb(phyd_pip4, model="GTR+G"))
 #(fit4 <- pml_bb(phyd_pip4, model="GTR+G"))
@@ -299,7 +391,12 @@ tree5 <- nnls.phylo(tree5, dm5)   # need edge weights
 #_______________________________________________________________________________
 
 (fit4 <- pml_bb(phyd_pip4, model="GTR+G"))
-fit_pip4 <- pml(tree_NJ4, phyd_pip4)
+#(fit4 <- pml_bb(phyd_pip4, model="F81"))
+#dna_dist <- dist.ml(mammals10, model="JC69")
+
+class(tree_NJ4)
+class(phyd_pip4)
+fit_pip4 <- phangorn::pml(tree_NJ4, phyd_pip4)
 bs_pip4 <- bootstrap.pml(fit4, bs=100, optNni=TRUE, multicore=TRUE)
 tree_ml_pip4 <- plotBS(fit_pip4$tree, bs_pip4)
 
@@ -380,4 +477,64 @@ if(bSaveFigures==T){
 # # https://cran.r-project.org/web/packages/phangorn/vignettes/Trees.html
 ## 2.4 Inferring Phylogeny using Maximum Likelihood in R (phangorn)
 ## https://wiki.duke.edu/pages/viewpage.action?pageId=131172124
+
+# read in file with accession numbers to use for replacing Mnelei sample numbers
+infl02 <- "list_of_Mnelei_numbers_in_table_to_replace_w_acc_nos.txt"
+wd_NCBI.infl02 <- paste0(wd00,"/",
+                         wd_NCBI,"/",
+                         infl02)
+df_acct01 <- read.csv(wd_NCBI.infl02, header=F,sep=",")
+# rearrange the data frame to a longer format.
+# use tidyr::pivot_longer
+df_acct01 <- df_acct01 %>% tibble::rownames_to_column(var = "rowid") %>%
+  tidyr::pivot_longer(-rowid, names_to = "colVNm",
+                      values_to = "AbbrNm.smpl") %>%
+  dplyr::group_by(AbbrNm.smpl)
+# substitute all ' ' with nothing
+df_acct01$AbbrNm.smpl <- gsub(" ","",df_acct01$AbbrNm.smpl)
+# pick the Mnelei samples
+Mnelei.smpls<- df_acct01$AbbrNm.smpl[grepl("Mnelei",df_acct01$AbbrNm.smpl)]
+# make it a data frame
+df_Mnelei.smpls <- as.data.frame(do.call(rbind, strsplit(Mnelei.smpls, 
+                    split="-")), stringsAsFactors=FALSE)
+# apply gsub to the entire data frame to get only numbers
+# and make them numeric
+mtx_smplNos <- apply(df_Mnelei.smpls, 2, function(y) as.numeric(gsub("Mnelei", "", y)))
+df_smplNos <- as.data.frame(mtx_smplNos)
+# make an empty column to add to
+df_smplNos$Nw.spml.rng <- NA
+df_smplNos$accno.rng <- NA
+# iterrate over sample ranges
+for (rn in (1:nrow(df_smplNos)))
+{
+  print(rn)
+  rn <- 12
+  # make a sequence of numbers to cover the range in the samples listed
+  sqrng <- seq(df_smplNos$V1[rn],df_smplNos$V2[rn],1)
+  #pad with zeros to three characters for own Mnelei samples
+  #see this website: https://stackoverflow.com/questions/5812493/adding-leading-zeros-using-r
+  sqrng <- ifelse(nchar(sqrng)<3,stringr::str_pad(sqrng, 3, pad = "0"),
+                  sqrng)
+  # paste the species abbreviation onto the numbers
+  smpl.rng <- paste0("Mnelei",sqrng)  
+  # get the new accesion numbers
+  Nw.accsNos<- df_accNos$AccNo[match(smpl.rng,df_accNos$MneleiAbbr)]
+  Nw.accsNos <- Nw.accsNos[order(Nw.accsNos)]
+  Nw.accsNos.1line <- paste(Nw.accsNos, collapse = ", ")
+  smpl.rng.1line  <- paste(smpl.rng, collapse = ", ")
+  df_smplNos$Nw.spml.rng[rn] <- smpl.rng.1line
+  df_smplNos$accno.rng[rn] <- Nw.accsNos.1line
+}
+# combine to a new data frame
+df_Mneleispml.w.accs <- cbind(df_Mnelei.smpls,df_smplNos,Mnelei.smpls)
+# paste together a path and a filename
+wd00_NCBI.outf <- paste0(wd00,"/",
+                         wd_NCBI,
+                         "/table_w_new_acc_nos_matched_w_Mnelei_smpl_nos.csv")
+# write a csv file that has the data frame
+write.table(df_Mneleispml.w.accs,
+            file=wd00_NCBI.outf,
+            col.names = T,
+          sep=";")
+
 

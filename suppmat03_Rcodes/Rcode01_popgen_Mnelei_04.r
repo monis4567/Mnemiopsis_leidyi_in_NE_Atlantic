@@ -1444,6 +1444,7 @@ fnm01_2 <- gsub("18s_16","18s_17",fnm01_2)
 fnm02 <- gsub("\\.txt","",fnm01_2)
 #check if row names are as they are supposed to be
 #row.names(al_dt02)
+fnm_towrite2 <- paste0(outdir,"/",fnm02)
 fnm_towrite <- paste0(outdir,"/",fnm02)
 #write the trimmed alignment as a fasta file
 ape::write.dna(al_dt02, file=fnm_towrite, format="fasta", nbcol=-1, colsep="")
@@ -1467,10 +1468,297 @@ sAbbrv <- gsub("^(.*)_(.*)_(.*)$","\\2",row.names(al_dt02))
 sNoAbbrv <- gsub("^(.*)_(.*)_(.*)$","\\1",row.names(al_dt02))
 smplolNm <- row.names(al_dt01)
 df_olnwNm <- as.data.frame(cbind(smplolNm,smplnwNm,sAbbrv,sNoAbbrv))
+
+# also write a faste file with only the sequences that are to be submitted to
+# NCBI GenBank
+fnm_towrite <- gsub("18s_17","18s_18",fnm_towrite)
+#fnm01_3 <- gsub("triplefin_out04_","triplefin_out06_",fnm01_2)
+fnm02 <- gsub("\\.txt","",fnm01_2)
+#check if row names are as they are supposed to be
+#row.names(al_dt02)
+
+# make it a bioseq tibble
+sbt_al_dt02 <- bioseq::as_tibble.DNAbin(al_dt02)
+# get the index number for the rows with Mneli in the label name
+rw.indx_sbs_al_dt02 <- which(grepl("Mnelei",sbt_al_dt02$label) )
+# use this index numbering to subset the tibble data frame
+sbt_al_dt03 <- sbt_al_dt02[rw.indx_sbs_al_dt02,]
+
+# get the number of sequences to be able to iterate over them
+nosq <- nrow(sbt_al_dt03)
+
+wd_NCBI <- "NCBI_seq_submission_for_Mnemiopsis"
+outdir_NCBI <- paste0(wd00,"/",wd_NCBI)
+outfile_NCBI <- paste0(outdir_NCBI,"/",fnm02)
+# remove any previous versions of the file you are about to save
+unlink(fnm_towrite)
+unlink(outfile_NCBI)
+
+
+
+infl01 <- paste0(outdir_NCBI,"/Mnemiopsis_18s_2024apr15_v01.fas")
+bsq_Mnelei_18s <- bioseq::read_fasta(infl01)
+# make it a tible bioseq data frame
+tib.bsq_Mnelei_18s <- bioseq::as_tibble.DNAbin(bsq_Mnelei_18s)
+
+
+# strsplit names and turn into characters
+# and rowbind the nested lists to a dataframe
+df_lbl05 <- data.frame(do.call
+                       ('rbind', 
+                         strsplit(as.character(tib.bsq_Mnelei_18s$label),
+                                  "_")))
+
+# modify columns names
+colnames(df_lbl05) <- c("smplNm",
+                        "loc01",
+                        "loc02",
+                        "yer",
+                        "mnth")
+# rpelace if there is no sample month
+df_lbl05$mnth[grepl("Mnel",df_lbl05$mnth)] <- "Sep"
+
+# the sequence name identifier needs to be shorter in order for NCBI GenBank 
+# BankIt to accept the fasta file
+tib.bsq_Mnelei_18s$label <- df_lbl05$smplNm
+NCBIBankit.fnm_towrite <- paste0(wd00 ,"/",
+                          wd_NCBI,"/",
+                          "Bankit_NCBI_seqs_submiss_file_Mnelei_18s.fasta")
+# remove any previous versions of the file you are about to save to
+unlink(NCBIBankit.fnm_towrite)
+
+NCBIBankit.fnm_feature.f <- paste0(wd00 ,"/",
+                                 wd_NCBI,"/",
+                                 "Bankit_NCBI_feature_file_Mnelei_18s.txt")
+
+# remove any previous versions of the file you are about to save to
+unlink(NCBIBankit.fnm_feature.f)
+#fileConn <- file(NCBIBankit.fnm_feature.f)
+# write("NA_line", 
+#       file=fileConn,
+#       append=TRUE)
+# close(fileConn)
+
+fileConn <- file(NCBIBankit.fnm_feature.f,open="a")
+# iterate over every single line to write out a fasta file
+for (e in seq(1,nrow(tib.bsq_Mnelei_18s),1))
+{print(e)
+  
+  lblN <- tib.bsq_Mnelei_18s$label[e]
+  seqN <- tib.bsq_Mnelei_18s$sequence[e]
+  # use sub to replace the first occurence of multiple Ns
+  seqN.noN<- 
+    sub("^[N]+{1}", "",seqN)
+  # then use sub to replace the  occurence of multiple Ns from the other end
+  seqN.noN <- sub("[N]+{1}$", "",seqN.noN)
+  # use this funciotn to reverse the seq toi check how it ended up looking
+  # https://stackoverflow.com/questions/13612967/how-to-reverse-a-string-in-r
+  strReverse <- function(x)
+    sapply(lapply(strsplit(x, NULL), rev), paste, collapse="")
+  strReverse(c(seqN.noN))
+  # replace the previous version of the sequence
+  seqN <- seqN.noN
+  seqinr::write.fasta( seqN.noN,
+                        lblN,
+                       NCBIBankit.fnm_towrite,
+                        open="a")
+  # get end and start nucleotide position of the annotations
+  idntf_18s_end <- (stringr::str_locate(seqN, "GATCATTA"))[2]
+  idntfITS1_str <- (stringr::str_locate(seqN, "ACGAATCCAA"))[1]
+  idntfITS1_end <- (stringr::str_locate(seqN, "CTAAAAGCGAA"))[2]
+  idntf5.8s_str <- (stringr::str_locate(seqN, "CAACTTTAAACGG"))[1]
+  idntf5.8s_end <- (stringr::str_locate(seqN, "GAGCGTCGTTT"))[2]
+  idntfITS2_str <- (stringr::str_locate(seqN, "CTCACATCCCAT"))[1]
+  
+  if (T==is.na(idntf_18s_end)){idntf_18s_end <- idntfITS1_str-1}
+  
+  if (T==is.na(idntfITS1_str)){idntfITS1_str <- idntf_18s_end+1}
+  if (T==is.na(idntfITS1_end)){idntfITS1_end <- idntf5.8s_str-1}
+  
+  if (T==is.na(idntf5.8s_str)){idntf5.8s_str <- idntfITS1_end+1}
+  if (T==is.na(idntf5.8s_end)){idntf5.8s_end <- idntfITS2_str-1}
+  
+  if (T==is.na(idntfITS2_str)){idntfITS2_str <- idntf5.8s_end+1}
+  
+  # get the length of the seq
+  seqL <- nchar(seqN)
+  # make a feature text
+Ft_tx <- paste0(">Feature ",lblN,"
+  
+<1    ",idntf_18s_end,"     gene
+                            gene          18Sr
+<1    ",idntf_18s_end,"     mRNA
+                            product       18Sr ribosomal RNA
+
+",idntfITS1_str,"    ",idntfITS1_end,"    gene
+                                          gene          its1
+",idntfITS1_str,"    ",idntfITS1_end,"    CDS
+                                          product       internal transcribed spacer 1
+",idntfITS1_str,"    ",idntfITS1_end,"    mRNA
+                                          product       internal transcribed spacer 1
+                                          transl_table     1
+                                          
+",idntf5.8s_str,"    ",idntf5.8s_end,"    gene
+                                          gene          5.8Sr
+",idntf5.8s_str,"    ",idntf5.8s_end,"    mRNA
+                                          product       5.8S ribosomal RNA
+                                          
+",idntfITS2_str,"    >",seqL,"     gene
+                                   gene          its2
+",idntfITS2_str,"    >",seqL,"     CDS
+                                   product       internal transcribed spacer 2
+",idntfITS2_str,"    >",seqL,"     mRNA
+                                   product       internal transcribed spacer 2
+                                   transl_table     1
+                ")
+  
+
+                  #print(Ft_tx)
+                  write(Ft_tx, 
+                        file=fileConn,
+                        append=TRUE)
+                  
+  }
+close(fileConn)
+
+
+# and rowbind the nested lists to a dataframe
+df_lbl_d03 <- data.frame(do.call
+                       ('rbind', 
+                         strsplit(as.character(sbt_al_dt03$label),
+                                  "_")))
+# modify columns names
+colnames(df_lbl_d03) <- c("smplNm",
+                        "loc01",
+                        "yer")
+#
+hd_src_tbl <- c( "Sequence_ID",
+                 "Organism",
+                  "Collected_by",
+                  "Collection_date",
+                  "Country",
+                  # "Isolation_source",
+                  # "Isolate",
+                  "Lat_Lon")
+                  # "Specimen_voucher")
+# get  population location names
+collcloc03 <- strsplit(as.character(sbt_al_dt03$label), "_")
+collcloc03 <- as.factor(sapply(collcloc03, "[[", 2))
+cntr <- rep("Denmark",length(collcloc03))
+Gidx <- which(grepl("^G",collcloc03))
+cntr[Gidx] <- "Germany"
+clctBy <- rep("Florian Luskow",length(collcloc03))
+
+tib.bsq_Mnelei_18s_02 <- bioseq::as_tibble.DNAbin(bsq_Mnelei_18s)
+# replace collectors name for Ballen samples
+clctBy[grepl("Ballen",tib.bsq_Mnelei_18s_02$label)] <- "Steen Knudsen"
+
+# get the latitude and the longitude
+clo03.lat2rnd <- round(as.numeric(df_clo03$dec_lat2[match(collcloc03,df_clo03$locality2)]),digits = 2)
+clo03.lon2rnd <- round(as.numeric(df_clo03$dec_lon2[match(collcloc03,df_clo03$locality2)]),digits = 2)
+pos_Lat_lLon_for_NCBI <- paste0(clo03.lat2rnd," N ",clo03.lon2rnd," E")
+# get the sampling year
+collcyer03 <- strsplit(as.character(sbt_al_dt03$label), "_")
+collcyer03 <- as.factor(sapply(collcyer03, "[[", 3))
+# get all elements for the NCBI 'Sample Source Modifiers Table file'
+Sequence_ID <- tib.bsq_Mnelei_18s$label
+Collected_by  <- clctBy
+Collection_year <- collcyer03 
+Country <- cntr
+Lat_Lon <- pos_Lat_lLon_for_NCBI
+Organism <- "Mnemiopsis leidyi"
+# combine as columns to get a NCBI 'Sample Source Modifiers Table file'
+df_NCBI_src_tbl <- cbind(Sequence_ID,
+                         Organism,
+                          Collected_by,
+                          Collection_year, 
+                          Country,
+                          Lat_Lon,
+                         df_lbl_d03)
+#make it a data frame
+df_NCBI_src_tbl <- as.data.frame(df_NCBI_src_tbl)
+df_NCBI_src_tbl$Collection_date <- as.numeric(as.character(collcyer03))
+# also get the- collection month
+df_NCBI_src_tbl$Collection_month <- df_lbl05$mnth[match(df_NCBI_src_tbl$smplNm,df_lbl05$smplNm)]
+# make a collection date
+df_NCBI_src_tbl$Collection_date <- paste0(df_NCBI_src_tbl$Collection_year,"-", 
+df_NCBI_src_tbl$Collection_month,"-01") 
+# only keep required columns
+df_NCBI_src_tbl <- df_NCBI_src_tbl[hd_src_tbl]
+# make a file name
+outfile_NCBI_tab_src <- "Mnelei_sample_data_tab_src_delim_for_NCBI_v01.txt"
+outfile_NCBI_tab_src <- paste0(wd00,"/",wd_NCBI,"/",outfile_NCBI_tab_src)
+
+# write a tabe separated file for NCBI 'Sample Source Modifiers Table file'
+write.table(df_NCBI_src_tbl,file=outfile_NCBI_tab_src, 
+            quote = FALSE,
+             row.names = FALSE,
+            sep = "\t")
+# read in file with annotations
+infl02 <- "Mnemiopsis_18s_2024apr15_annotation_table.txt"
+wd_NCBI.infl02 <- paste0(wd00,"/",
+                         wd_NCBI,"/",
+                         infl02)
+df_annt01 <- read.table(wd_NCBI.infl02, header=T,sep=",")
+
+#colnames(df_annt01)
+# iterate ove characters to replace
+elem_to_rplc <- c(">" ,"," ,"<")
+for (e in elem_to_rplc)
+{
+  # use gsub for multiple colunms on the element to replace
+  df_annt01[c("Minimum",
+            "Maximum",
+            "Length")] <- gsub(e,"", unlist(
+                              df_annt01[c("Minimum",
+                                          "Maximum",
+                                          "Length")]))
+# make the columns numeric
+    df_annt01[c("Minimum",
+              "Maximum",
+              "Length")] <- sapply(df_annt01[c("Minimum",
+                                     "Maximum",
+                                     "Length")],as.numeric)
+}
+
+
+# file name for the text file with accession numbers
+GBaccsF <- "GenBank_accession_numbers_for_the_Mnelei_submitted_sequences_2024apr17.txt"
+# After having obtained the accession numbers from NCBI
+# I got an email back with accession numbers
+inf_accNos <- paste0(wd00,"/",
+                     wd_NCBI,"/",
+                     GBaccsF)
+# read in the file using 'stringr'
+library(stringr) # For str_trim 
+# Read string data and split into data frame
+txAcNdat <- readLines(inf_accNos)
+# only keep rows that begin with 'SUB'
+txAcNdat <- txAcNdat[grepl("^SUB",txAcNdat)]
+# make it a data frame
+df_accNos <- as.data.frame(do.call(rbind, strsplit(txAcNdat, 
+                  split=" ")), stringsAsFactors=FALSE)
+# only keep columns 1,2 and 5 
+df_accNos <- df_accNos[,c(1,2,5)]
+# change the column names to something more meaningful
+colnames(df_accNos) <- c("SUBNo","MneleiAbbr","AccNo") 
+
 #_______________________________________________________________________________
 #_______________________________________________________________________________
+
+# define a file to write to
+fnm01_1 <- gsub("_fastafiles\\.","_",inpf01)
+fnm01_2 <- gsub("fas\\.","trimmed\\.",fnm01_1)
+fnm01_2 <- gsub(".fasta.fas","\\.trimmed\\.fas",fnm01_1)
+fnm01_2 <- gsub("18s_16","18s_17",fnm01_2)
+#fnm01_3 <- gsub("triplefin_out04_","triplefin_out06_",fnm01_2)
+fnm02 <- gsub("\\.txt","",fnm01_2)
+#check if row names are as they are supposed to be
+#row.names(al_dt02)
+fnm_towrite2 <- paste0(outdir,"/",fnm02)
+
 #define input file as variable
-pth_inpf03 <- fnm_towrite
+pth_inpf03 <- fnm_towrite2
 #Test the 'apex' package :
 #read FASTA as multi.dna
 mltdn_pip03 <- apex::read.multiFASTA(pth_inpf03)
@@ -2027,6 +2315,7 @@ cl03 <- pals::inferno(length(unique(df_hap_loc03[,c(2:enc)])))
 ncolHptloc03 <- length(unique(colnames(df_hap_loc03)[2:enc]))
 cbbPalette2 <- c("black","purple","blue","green","yellowgreen",
                  "yellow","white")
+cbbPalette2 <- c("white","yellow","orange","tomato","red","brown","black")
 colfunc <- colorRampPalette(cbbPalette2)
 #https://stackoverflow.com/questions/13353213/gradient-of-n-colors-ranging-from-color-1-and-color-2
 cl03 <- colfunc(ncolHptloc03)
@@ -2237,6 +2526,7 @@ cbbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73",
                 "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
 cbbPalette2 <- c("black","purple","blue","green","yellowgreen",
                  "yellow","white")
+# cbbPalette2 <- c("white","yellow","orange","tomato","red","brown","black")
 colfunc <- colorRampPalette(cbbPalette2)
 
 cl <- cbbPalette
@@ -2303,7 +2593,7 @@ p04 <- p04 + labs(color='Location')
 p04 <- p04 + labs(shape='Location')
 p04 <- p04 + xlab("Longitude") + ylab("Latitude")
 # #https://www.statology.org/ggplot-background-color/
-p04 <- p04 + theme(panel.background = element_rect(fill = 'white', color = 'black'),
+p04 <- p04 + theme(panel.background = element_rect(fill = 'white', color = 'white'),
                    panel.grid.major = element_line(color = 'white')) #, linetype = 'dotted'))#,
 # add border around plot
 p04 <- p04 + theme(panel.border = element_rect(color = "black",
@@ -2318,7 +2608,7 @@ figname06 <- paste0("map_samples_",inpf01,".png")
 
 figname02 <- paste(wd00_wd05,"/",figname06,sep="")
 if(bSaveFigures==T){
-  ggsave(p04,file=figname02,width=210,height=297,
+  ggsave(p04,file=figname02,width=210,height=297*0.5,
          units="mm",dpi=300)
 }
 
@@ -2328,7 +2618,7 @@ figname06 <- paste0("Fig01_map_samples_",inpf01,".png")
 
 figname02 <- paste(wd00_wd05,"/",figname06,sep="")
 if(bSaveFigures==T){
-  ggsave(p04,file=figname02,width=210,height=297,
+  ggsave(p04,file=figname02,width=210,height=297*0.5,
          units="mm",dpi=300)
 }
 
@@ -2479,6 +2769,7 @@ cbbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73",
                 "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
 cbbPalette2 <- c("black","purple","blue","green","yellowgreen",
                  "yellow","white")
+#cbbPalette2 <- c("white","yellow","orange","tomato","red","brown","black")
 # This color range uses very dark red colors, and these might not
 # be easy to see for someone that is red-green colour blind
 cbbPalette1 <- c("firebrick4","firebrick2",#"orange",
@@ -2666,7 +2957,7 @@ par(mfrow = c(1, 1))
 # Make table for samples collected - start
 #______________________________________________________________________________
 # Get rownames from dataframe
-pth_inpf03 <- fnm_towrite
+pth_inpf03 <- fnm_towrite2
 # read in fasta
 df_trimfas16 <- adegenet::genind2df(adegenet::DNAbin2genind(strataG::read.fasta(pth_inpf03 )))
 # get the row names
@@ -2763,6 +3054,18 @@ df_r02$collyear2 <- paste0(df_r02$collyear,", ",df_r02$collmnth)
 # substitute for the year and months pasted incorrectly
 df_r02$collyear2 <- gsub(", NA","",df_r02$collyear2)
 df_r02$collyear2 <- gsub("^([0-9]{4}), [0-9]{4}$","\\1",df_r02$collyear2)
+
+# get the sample names that have Mnelei instead of the correct
+# accession number
+MneleiAbbrcodes <- df_r02$NCBIaccsNosmplnm[grepl("Mnelei",df_r02$NCBIaccsNosmplnm)]
+# use match to get the accession numbers obtained from
+# submitting the sequences to NCBI GenBank
+Mnelei.Acc.Nos <- df_accNos$AccNo[match(MneleiAbbrcodes,df_accNos$MneleiAbbr)]
+# add back the new accession numbers for the sequences deposited
+df_r02$NCBIaccsNosmplnm[grepl("Mnelei",df_r02$NCBIaccsNosmplnm)] <- Mnelei.Acc.Nos
+#df_r02$NCBIaccsNosmplnm
+
+
 # define columns to keep
 keeps <- c("spcNm",
            "NCBIaccsNosmplnm",
@@ -2894,6 +3197,29 @@ df_hap_loc03$rws <- rowSums(df_hap_loc03[,2:enc1])
 rws <- as.numeric(df_hap_loc03$rws)
 #count the columns and subtract 3
 enc <- ncol(df_hap_loc03)-3
+
+
+####
+cbbPalette2 <- c("black","purple","blue","green","yellowgreen",
+                 "yellow","white")
+cbbPalette2 <- c("white","yellow","orange","tomato","red","brown","black")
+colfunc2 <- colorRampPalette(cbbPalette2)
+# limit the data frame to remove any rows that have NAs
+df_hap_loc03 <-  df_hap_loc03[complete.cases(df_hap_loc03), ] 
+#modify the colnames
+colnames(df_hap_loc03) <- c(gsub("Freq\\.","",colnames(df_hap_loc03)))
+# https://towardsdatascience.com/using-ggplot-to-plot-pie-charts-on-a-geographical-map-bb54d22d6e13
+#count the number of columns, and subtract 2
+enc1 <- ncol(df_hap_loc03)-2
+#head(df_hap_loc03,3)
+#sum up for each row
+df_hap_loc03$rws <- rowSums(df_hap_loc03[,2:enc1])
+rws <- as.numeric(df_hap_loc03$rws)
+#count the columns and subtract 3
+enc <- ncol(df_hap_loc03)-3
+
+#make a viridis colour range
+cl03 <- pals::viridis(length(unique(df_hap_loc03[,c(2:enc)])))
 #install the package that allows for making pit charts in ggplot
 if(!require("scatterpie")){
   install.packages("scatterpie", dependencies = TRUE, INSTALL_opts = '--no-lock')
@@ -3080,6 +3406,9 @@ cbbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73",
                 "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
 cbbPalette2 <- c("black","purple","blue","green","yellowgreen",
                  "yellow","white")
+
+
+#cbbPalette2 <- c("white","yellow","orange","tomato","red","brown","black")
 colfunc <- colorRampPalette(cbbPalette2)
 # copy the palette
 cl <- cbbPalette
@@ -3221,6 +3550,7 @@ nct <- length(unique(factor(dd$loc3)))
 # Make another color gradient
 cbbPalette2 <- c("black","purple","blue","green","yellowgreen",
                  "yellow","white")
+#cbbPalette2 <- c("white","yellow","orange","tomato","red","brown","black")
 # make the color palette a ramp of colors
 colfunc <- colorRampPalette(cbbPalette2)
 #https://stackoverflow.com/questions/13353213/gradient-of-n-colors-ranging-from-color-1-and-color-2
@@ -3257,6 +3587,7 @@ if(bSaveFigures==T){
 # Make a color palette
 cbbPalette2 <- c("black","purple","blue","green","yellowgreen",
                  "yellow","white")
+#cbbPalette2 <- c("white","yellow","orange","tomato","red","brown","black")
 # make a color ramp from this palette
 colfunc <- colorRampPalette(cbbPalette2)
 #identify unique localities
@@ -3310,6 +3641,8 @@ cl03 <- pals::inferno(length(unique(df_hap_loc05[,c(2:enc)])))
 ncolHptloc03 <- length(unique(colnames(df_hap_loc05)[2:enc]))
 cbbPalette2 <- c("black","purple","blue","green","yellowgreen",
                  "yellow","white")
+cbbPalette2 <- c("white","yellow","orange","tomato","red","brown","black")
+
 colfunc <- colorRampPalette(cbbPalette2)
 
 #https://stackoverflow.com/questions/13353213/gradient-of-n-colors-ranging-from-color-1-and-color-2
@@ -4224,6 +4557,12 @@ pthfignm01 <- paste(wd00_wd05,"/",figname01,sep="")
 #pdf(pthfignm01,width=(1.6*2.9),height=(0.8*8.26))
 jpeg(pthfignm01,width = 3600, height = 3600, res =300)#,width=(1.6*2.9),height=(0.8*8.26))
 
+# try this example code
+# From this website: https://stackoverflow.com/questions/12302366/positioning-axes-labels/12302557#12302557
+plot(1:100, cumsum(rnorm(100)), type="l", mgp=c(2.4,0.2,.5), las=1)
+#and adjust the 'mgp=c(2.4,0.2,.5)'
+# To see the effects
+
 #add extra space to the right of the plot
 #par(mar=c(5, 4, 4, 8), xpd=TRUE)
 par(mar=c(4, 4, 2, 2), xpd=FALSE)
@@ -4236,14 +4575,26 @@ y <- fit$points[,2]
 plot(x, y, xlab="NMDS1", ylab="NMDS2",
      #main="Nonmetric MDS",
      #pch=21,bg="red"
-     type="n"
+     type="n",
+     mgp=c(2.4,1.1,0.00001), las=1
      )
 text(x, y, labels = row.names(hpl10), cex=1.8) 
-
+#axis(side = 1, col="black")
+#axis(side = 2, col="black")
 # end plot
 dev.off()
 #reset this parameter
 par(mfrow = c(1, 1)) 
+
+
+NMDS1 <- x
+NMDS2 <- y
+hlp10.lbls <- row.names(hpl10)
+df_NMDS_01 <- as.data.frame(cbind(NMDS1,NMDS2,hlp10.lbls))
+ggplot(df_NMDS_01) +
+  geom_point(aes(x=NMDS1,
+             y=NMDS2))
+
 #_______________________________________________________________________________
 
 #_______________________________________________________________________________
@@ -4345,7 +4696,8 @@ p14 <- p14 +  scale_shape_manual(values = c(as.integer(pchnmbs))) +
   #scale_color_manual(values = c(rep("#00AFBB", nrwsfmds))) +
   scale_fill_manual(values = c(colnmbs))
 
-p14 <- p14 + theme(panel.background = element_rect(fill = 'white', color = 'black'))#,
+p14 <- p14 + theme(panel.background = element_rect(fill = 'white', 
+                                                   color = 'white'))#,
 #rect = element_line(color = 'black')) #, linetype = 'dotted'))#,
 # change label for legend - Notice that you need to change for all 3 variables
 # you called 'aes' in 'geom_jitter'
@@ -4361,13 +4713,21 @@ p14 <- p14 + theme(panel.border = element_rect(color = "black",
 # change background of legend
 p14 <- p14 + theme(legend.key = element_rect(fill = "white"))
 
-
+# https://stackoverflow.com/questions/66102618/ggplot-increasing-the-distance-between-axis-labels-and-axis-ticks
 p14 <- p14 + theme(axis.text.x = element_text(color="black", 
-                                              size=12.4),
+                                              size=12.4,
+                  margin = margin(t = 2, 
+                                  unit = "mm")
+                                              ),
+                   
                    axis.text.y = element_text(color="black", 
-                                              size=12.4))
+                                              size=12.4,
+                   margin = margin(l = 0, r=2,
+                                   unit = "mm")))
 #make filename to save plot to
 figname14 <- paste0("Fig07_v02_smpl_location_NMDS_",inpf01,".jpg")
+
+p14
 
 figname02 <- paste(wd00_wd05,"/",figname14,sep="")
 if(bSaveFigures==T){
@@ -4377,10 +4737,21 @@ if(bSaveFigures==T){
          units="mm",dpi=300)
 }
 #_______________________________________________________________________________
+#_______________________________________________________________________________
+
+#_______________________________________________________________________________
+
+
 dly <- df.p.ye
+# exclude the years that are too variable
+yrs_to_excl <- as.character(paste(c("unknown",2007),collapse = "|"))
+indx.r.tk <- which(!grepl(yrs_to_excl,row.names(dly)))
+indx.c.tk <- which(!grepl(yrs_to_excl,colnames(dly)))
+dly <- dly[indx.r.tk,indx.c.tk]
 library(MASS)
 d <- dist(dly) # euclidean distances between the rows
-fit <- isoMDS(d, k=2) # k is the number of dim
+
+fit <- isoMDS(d, k=2, p=80, maxit=100, tol=1e-3) # k is the number of dim
 # make the fitted NMDS a data frame
 fmds <- as.data.frame(fit)
 # get the stress level
@@ -4391,38 +4762,47 @@ strslvl <- round(strslvl,2)
 # add row names as a column
 fmds$smplyear <- row.names(fmds)
 # get the number of unique sampling years
-nyers3 <- length(unique(fmds$smplyear)) 
+nyers3 <- length(unique(fmds$smplyear))
+
+smpl_yrs <- unique(fmds$smplyear)
 # make series of numbers to use for pch shapes
 pchnmbs <- rep(c(21:25),4)
 pchnmbs <- pchnmbs[1:nyers3]
 # make series of colors to use for coloring fill
 #colnmbs <- rep(c("white","white","white","black","black"),3)
 #colnmbs <- rep(c("white","black"),6)
-colnmbs <- rep(c("white","white","white","white","white","black","black","black","black","black","grey","grey","grey"),6)
+colnmbs <- rep(c("white","white","white","white","white"
+                 ,"black","black","black","black","black"
+                 ,"grey","grey","grey"),6)
 colnmbs <- colnmbs[1:nyers3]
 #bind together in a data frame
-df_pcl04 <- as.data.frame(cbind(nyers3,pchnmbs,colnmbs))
+df_pcl04 <- as.data.frame(cbind(smpl_yrs,pchnmbs,colnmbs))
 #check if there are an equal number of colored symbols
 nyers3==length(unique(paste0(df_pcl04$pchnmbs,df_pcl04$colnmbs)))
 # match to fitted MDS data frame
-fmds$pchnmb <- df_pcl04$pchnmbs[match(fmds$smplyear, df_pcl04$nyers3)]
-fmds$flcnmb <- df_pcl04$colnmbs[match(fmds$smplyear, df_pcl04$nyers3)]
+fmds$pchnmb <- df_pcl04$pchnmbs[match(fmds$smplyear, df_pcl04$smpl_yrs)]
+fmds$flcnmb <- df_pcl04$colnmbs[match(fmds$smplyear, df_pcl04$smpl_yrs)]
 # get the number of rows
 nrwsfmds <- length(rownames(fmds))
+fmds
+
+
 # plot it with ggplot
 p15 <- ggplot(fmds, aes(points.1, -points.2, label = rownames(fmds))) +
   #geom_jitter() +
   geom_point(aes(shape= smplyear, 
                  fill=smplyear),size=3.0) +  
-  geom_text(check_overlap = TRUE,
-            #position = position_dodge(width = 1),
-            vjust = -0.75) #+ theme_minimal() + xlab('') + ylab('') +
+  # geom_text(check_overlap = TRUE,
+  #           #position = position_dodge(width = 1),
+  #           vjust = -0.75) #+ theme_minimal() + xlab('') + ylab('') +
+  
+  geom_text_repel()
 # add text to the plot to indicate stress level
 p15 <- p15 +                               # Add text element to plot
   annotate("text", x = 0, y = -5.5, label = paste0("stress level: ",strslvl))
 p15 <- p15 +  scale_shape_manual(values = c(as.integer(pchnmbs))) +
   scale_fill_manual(values = c(colnmbs))
-p15 <- p15 + theme(panel.background = element_rect(fill = 'white', color = 'black'))#,
+p15 <- p15 + theme(panel.background = element_rect(fill = 'white', color = 'white'))#,
 p15 <- p15 + labs(fill='Year')
 p15 <- p15 + labs(color='Year')
 p15 <- p15 + labs(shape='Year')
@@ -4433,11 +4813,17 @@ p15 <- p15 + theme(panel.border = element_rect(color = "black",
                                                size = 1.0))
 # change background of legend
 p15 <- p15 + theme(legend.key = element_rect(fill = "white"))
+# https://stackoverflow.com/questions/66102618/ggplot-increasing-the-distance-between-axis-labels-and-axis-ticks
 p15 <- p15 + theme(axis.text.x = element_text(color="black", 
-                                              size=12.4),
-                   axis.text.y = element_text(color="black", 
-                                              size=12.4))
+                                              size=12.4,
+                                              margin = margin(t = 2, 
+                                                              unit = "mm")
+),
 
+axis.text.y = element_text(color="black", 
+                           size=12.4,
+                           margin = margin(l = 0, r=2,
+                                           unit = "mm")))
 #make filename to save plot to
 figname15 <- paste0("Fig07_v04_smpl_year_NMDS_",inpf01,".jpg")
 # define pathe and file together in a string
@@ -4450,6 +4836,7 @@ if(bSaveFigures==T){
          width=210,height=(297*0.5),
          units="mm",dpi=300)
 }
+
 
 
 #_______________________________________________________________________________
@@ -4661,7 +5048,7 @@ pip5.ano <- anosim(m_comp5,grp5)
 dev.off()
 # plot the test
 # define name for outpu plot file
-figname08 <- "Fig08_v01_ANOSIMplot_location.jpg"
+figname08 <- "Fig08_v01_ANOSIMplot_location_all.jpg"
 pthfignm08 <- paste(wd00_wd05,"/",figname08,sep="")
 # set to save plot as pdf file with dimensions 8.26 to 2.9
 # 8.26 inches and 2.9 inhes equals 210 mm and 74.25 mm
@@ -4793,7 +5180,7 @@ par(mfrow = c(1, 1))
 
 
 #_______________________________________________________________________________
-# ANOSIM test on year - start
+# ANOSIM test on year for only NEA samples - start
 #_______________________________________________________________________________
 
 # make the data frame a  matrix and then a DNAbin object  
@@ -4827,10 +5214,13 @@ df_comp6 <- as.data.frame(m_comp6)
 # remove all non duplicated rows - the ANOSIM test requires that there are
 # multiple representations per group
 df_comp6 <- df_comp6[duplicated(df_comp6[c('grp.yea')]), ]
+
+
 #row.names(df_comp6)
 slpip6 <- strsplit(as.character(row.names(df_comp6)), "_")
 # get third elements
 grp6 <- as.factor(sapply(slpip6, "[[", 3))
+
 # make it a matrix
 m_comp6 <- as.matrix(df_comp6)
 # make the ANOSIM test
@@ -4839,7 +5229,7 @@ pip6.ano <- anosim(m_comp6,grp6)
 dev.off()
 # plot the test
 # define name for outpu plot file
-figname08 <- "Fig08_v03_ANOSIMplot_year.jpg"
+figname08 <- "Fig08_v03_ANOSIMplot_year_for_only_NEA_samples.jpg"
 pthfignm08 <- paste(wd00_wd05,"/",figname08,sep="")
 # set to save plot as pdf file with dimensions 8.26 to 2.9
 # 8.26 inches and 2.9 inhes equals 210 mm and 74.25 mm
@@ -4861,8 +5251,175 @@ dev.off()
 par(mfrow = c(1, 1)) 
 
 #_______________________________________________________________________________
-# ANOSIM test on year - end
+# ANOSIM test on year for only NEA samples - end
 #_______________________________________________________________________________
+
+
+#_______________________________________________________________________________
+# ANOSIM test on locations 01 - start
+#_______________________________________________________________________________
+#  read in the fasta file which makes it a DNAbin object
+pip4 <- read.dna(file=pth_inpf03,format="fasta")
+#make the DNAbin object a genind object
+geni_pip4 <- adegenet::DNAbin2genind(pip4)
+#make the genind object a dataframe
+df_pip4 <- adegenet::genind2df(geni_pip4)
+#get the row names
+orig_rwnm <- row.names(df_pip4)
+# replace all NAs
+df_pip4 <- df_pip4 %>% replace(is.na(.), "-")
+#make the date frame a matrix and a DNAbin object again
+dnb_pip4 <- as.DNAbin(as.matrix(df_pip4))
+# make a distance matrix 
+dst_pip4 <- ape::dist.dna(dnb_pip4, model= "raw")
+# make it a matrix
+mtx_pip4 <- as.matrix(dst_pip4)
+# make it a data frame
+df_pip5 <- as.data.frame(mtx_pip4)
+# split the row name string by a character 
+lpip5 <- strsplit(as.character(row.names(mtx_pip4)), "_")
+# get the 2 nd element per vector in the list - this holds the abbreviated 
+# location name
+# 'grp.loc5' needs to hold location names
+grp.loc5 <- sapply(lpip5, "[[", 2)
+# order locations alphabetically
+grp.l5 <- unique(grp.loc5)[order(unique(grp.loc5))]
+# make a sequence of numbers to use as index numbers for the locations
+nof.l5 <- seq(1,length(grp.l5))
+# bind the columns in a data frame that has index numbers per location
+df_nfl5 <- as.data.frame(cbind(nof.l5,grp.l5))
+# attach the group location back to the data frame
+df_pip5$grp.loc <- grp.loc5
+# match the location name to get an index number, and ensure this number is numeric
+# each location needs to have number assigned, in order to make the ANOSIM test work
+df_pip5$grp.loc <- as.numeric(df_nfl5$nof.l5[match(df_pip5$grp.loc,df_nfl5$grp.l5)])
+#make community matrix
+m_comp5 <- sapply(df_pip5[,1:ncol(df_pip5)],as.numeric)
+# ensure the row names in the matrix are as in the data frame
+row.names(m_comp5) <- row.names(df_pip5)
+# group by site
+df_comp5 <- as.data.frame(m_comp5)
+# remove all non duplicated rows - the ANOSIM test requires that there are
+# multiple representations per group
+df_comp5 <- df_comp5[duplicated(df_comp5[c('grp.loc')]), ]
+#row.names(df_comp5)
+slpip5 <- strsplit(as.character(row.names(df_comp5)), "_")
+# get second elements
+grp5 <- as.factor(sapply(slpip5, "[[", 2))
+grp6 <- as.factor(sapply(slpip5, "[[", 3))
+# make it a matrix
+m_comp5 <- as.matrix(df_comp5)
+# make the ANOSIM test
+pip5.ano <- anosim(m_comp5,grp6)
+# turn off previous plots
+dev.off()
+# plot the test
+# define name for output plot file
+figname08 <- "Fig08_v04_ANOSIMplot_year_for_all_locations.jpg"
+pthfignm08 <- paste(wd00_wd05,"/",figname08,sep="")
+# set to save plot as pdf file with dimensions 8.26 to 2.9
+# 8.26 inches and 2.9 inhes equals 210 mm and 74.25 mm
+# and 210 mm and 74.25 mm matches 1/4 of a A4 page
+#pdf(pthfignm01,width=(1.6*2.9),height=(0.8*8.26))
+jpeg(pthfignm08,width = 3600, height = 2400, res =300)#,width=(1.6*2.9),height=(0.8*8.26))
+
+#summary(pip5.ano)
+par(mar=c(4, 5, 1, 1), xpd=FALSE,
+    oma=c(0,0,0,0),
+    mfrow = c(1, 1))
+
+plot(pip5.ano,
+     xlab="Sampling year",
+     ylab="Dissimilarity ranks between \n and within classes")
+# end plot
+dev.off()
+#reset this parameter
+par(mfrow = c(1, 1)) 
+
+#_______________________________________________________________________________
+# ANOSIM test on locations 01 - end
+#_______________________________________________________________________________
+
+
+#_______________________________________________________________________________
+# ANOSIM test on year for only NEA samples for only 2017-2019 samples - start
+#_______________________________________________________________________________
+
+# make the data frame a  matrix and then a DNAbin object  
+dnb_pip4 <- as.DNAbin(as.matrix(df_pip4))
+# make a distance matrix 
+dst_pip4 <- ape::dist.dna(dnb_pip4, model= "raw")
+# make it a matrix
+mtx_pip4 <- as.matrix(dst_pip4)
+# make it a data frame
+df_pip6 <- as.data.frame(mtx_pip4)
+# split the row name string by a character 
+lpip6 <- strsplit(as.character(row.names(mtx_pip4)), "_")
+# get the 3 rd element per vector in the list - this holds the sample year
+grp.yea6 <- sapply(lpip6, "[[", 3)
+# order years
+grp.y6 <- unique(grp.yea6)[order(unique(grp.yea6))]
+# make a sequence of numbers to use as index numbers for the years
+nof.l6 <- seq(1,length(grp.y6))
+# bind the columns in a data frame that has index numbers per year
+df_nfl6 <- as.data.frame(cbind(nof.l6,grp.y6))
+# attach the group location back to the data frame
+df_pip6$grp.yea <- grp.yea6
+# match the location name to get an index number, and ensure this number is numeric
+df_pip6$grp.yea <- as.numeric(df_nfl6$nof.l6[match(df_pip6$grp.yea,df_nfl6$grp.y6)])
+#make community matrix
+m_comp6 <- sapply(df_pip6[,1:ncol(df_pip6)],as.numeric)
+# ensure the row names in the matrix are as in the data frame
+row.names(m_comp6) <- row.names(df_pip6)
+# group by site
+df_comp6 <- as.data.frame(m_comp6)
+# remove all non duplicated rows - the ANOSIM test requires that there are
+# multiple representations per group
+df_comp6 <- df_comp6[duplicated(df_comp6[c('grp.yea')]), ]
+# make a sequence of years, and use this to subset the data frame to only 
+# the recent sampling
+sq_yrs <- seq(2017,2019,1)
+sq_yrs_ts <- paste(sq_yrs,collapse = "|")
+df_comp6 <- df_comp6[grepl(sq_yrs_ts,row.names(df_comp6)),]
+#row.names(df_comp6)
+slpip6 <- strsplit(as.character(row.names(df_comp6)), "_")
+# get third elements
+grp6 <- as.factor(sapply(slpip6, "[[", 3))
+# make it a matrix
+m_comp6 <- as.matrix(df_comp6)
+
+# make the ANOSIM test
+pip6.ano <- anosim(m_comp6,grp6)
+
+dev.off()
+# plot the test
+# define name for outpu plot file
+figname08 <- "Fig08_v05_ANOSIMplot_year_for_only_2017_2019_NEA_samples.jpg"
+pthfignm08 <- paste(wd00_wd05,"/",figname08,sep="")
+# set to save plot as pdf file with dimensions 8.26 to 2.9
+# 8.26 inches and 2.9 inhes equals 210 mm and 74.25 mm
+# and 210 mm and 74.25 mm matches 1/4 of a A4 page
+#pdf(pthfignm01,width=(1.6*2.9),height=(0.8*8.26))
+jpeg(pthfignm08,width = 3600, height = 2400, res =300)#,width=(1.6*2.9),height=(0.8*8.26))
+
+#summary(pip5.ano)
+par(mar=c(4, 5, 1, 1), xpd=FALSE,
+    oma=c(0,0,0,0),
+    mfrow = c(1, 1))
+
+plot(pip6.ano,
+     xlab="Sampling year",
+     ylab="Dissimilarity ranks between \n and within classes")
+# end plot
+dev.off()
+#reset this parameter
+par(mfrow = c(1, 1)) 
+
+#_______________________________________________________________________________
+# ANOSIM test on year for only NEA samples for only 2017-2019 samples - end
+#_______________________________________________________________________________
+
+
 
 # make the dnabin object a phydata object
 phyd_pip4 <- as.phyDat(dnb_pip4)
@@ -5008,6 +5565,19 @@ p.nmds.p5.2
 p.nmds.p5.2 <- p.nmds.p5.2 + labs(fill='Location')
 p.nmds.p5.2 <- p.nmds.p5.2 + labs(color='Location')
 p.nmds.p5.2 <- p.nmds.p5.2 + labs(shape='Location')
+
+# https://stackoverflow.com/questions/66102618/ggplot-increasing-the-distance-between-axis-labels-and-axis-ticks
+p.nmds.p5.2 <- p.nmds.p5.2 + theme(axis.text.x = element_text(color="black", 
+                                                              size=12.4,
+                                                              margin = margin(t = 2, 
+                                                                              unit = "mm")
+),
+
+axis.text.y = element_text(color="black", 
+                           size=12.4,
+                           margin = margin(l = 0, r=2,
+                                           unit = "mm")))
+
 #make filename to save plot to
 figname15 <- paste0("Fig07_v06_smpl_loc_NMDS_",inpf01,".png")
 # define pathe and file together in a string
@@ -5142,6 +5712,20 @@ p.nmds.p4.2
 p.nmds.p4.2 <- p.nmds.p4.2 + labs(fill='Location')
 p.nmds.p4.2 <- p.nmds.p4.2 + labs(color='Location')
 p.nmds.p4.2 <- p.nmds.p4.2 + labs(shape='Location')
+
+
+# https://stackoverflow.com/questions/66102618/ggplot-increasing-the-distance-between-axis-labels-and-axis-ticks
+p.nmds.p4.2 <- p.nmds.p4.2 + theme(axis.text.x = element_text(color="black", 
+                                                              size=12.4,
+                                                              margin = margin(t = 2, 
+                                                                              unit = "mm")
+),
+
+axis.text.y = element_text(color="black", 
+                           size=12.4,
+                           margin = margin(l = 0, r=2,
+                                           unit = "mm")))
+
 #make filename to save plot to
 figname15 <- paste0("Fig07_v07_smpl_loc_NMDS_",inpf01,".jpg")
 # define pathe and file together in a string

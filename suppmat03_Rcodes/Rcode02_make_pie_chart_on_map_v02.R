@@ -127,35 +127,47 @@ nclhl05 <- ncol(df_hl05)
 df_hl06 <- df_hl05[,c(2:(nclhl05-4))]
 #make it a 'matrix array'
 ma <- as.matrix(df_hl06)
-if (!exists("zpfl"))
-{
-# Download the shapefile.
-  
-  download.file("http://thematicmapping.org/downloads/TM_WORLD_BORDERS_SIMPL-0.3.zip" 
-              , destfile=paste0(wd_out01,"/world_shape_file.zip"))
-  } #else {flnmshpfl <- paste0(wd00_wd05,"/TM_WORLD_BORDERS_SIMPL-0.3.shp")}
-# Make a full path to this file
 
+# if (!exists("zpfl"))
+# {
+# # Download the shapefile.
+#   
+#   download.file("http://thematicmapping.org/downloads/TM_WORLD_BORDERS_SIMPL-0.3.zip" 
+#               , destfile=paste0(wd_out01,"/world_shape_file.zip"))
+#   } #else {flnmshpfl <- paste0(wd00_wd05,"/TM_WORLD_BORDERS_SIMPL-0.3.shp")}
+# # Make a full path to this file
+# 
+# 
+# zpfl <- paste0(wd_out01,"/world_shape_file.zip")
+# # Unzip this file. You can do it with R (as below),
+# unzip(zpfl, exdir = wd_out01)
+# # get a list of the files inside the zip file
+# lzpfl <- unzip(zpfl,list=T)
+# #grep in the names of files inside the list of files
+# flnmshpfl <- lzpfl$Name[grepl("shp",lzpfl$Name)]
+# #  -- > You now have 4 files. One of these files is a .shp file! (TM_WORLD_BORDERS_SIMPL-0.3.shp)
+# # Read this shape file with the rgdal library. 
+# library(rgdal)
+# mspdf <- rgdal::readOGR( 
+#   dsn= paste0(wd_out01,"/",flnmshpfl) , 
+#   layer="TM_WORLD_BORDERS_SIMPL-0.3",
+#   verbose=FALSE
+# )
 
-zpfl <- paste0(wd_out01,"/world_shape_file.zip")
-# Unzip this file. You can do it with R (as below),
-unzip(zpfl, exdir = wd_out01)
-# get a list of the files inside the zip file
-lzpfl <- unzip(zpfl,list=T)
-#grep in the names of files inside the list of files
-flnmshpfl <- lzpfl$Name[grepl("shp",lzpfl$Name)]
-#  -- > You now have 4 files. One of these files is a .shp file! (TM_WORLD_BORDERS_SIMPL-0.3.shp)
-# Read this shape file with the rgdal library. 
-library(rgdal)
-mspdf <- rgdal::readOGR( 
-  dsn= paste0(wd_out01,"/",flnmshpfl) , 
-  layer="TM_WORLD_BORDERS_SIMPL-0.3",
-  verbose=FALSE
-)
-#
-library(shapefiles)
-sfl<- gsub(".shp","",paste0(wd_out01,"/",flnmshpfl))
-wlshpfl <- shapefiles::read.shapefile(sfl)
+# # 
+library("rnaturalearth")
+library("rnaturalearthdata")
+library("rnaturalearthhires")
+# # Get a map, use a high number for 'scale' for a coarse resolution
+# use a low number for scale for a high resolution
+# if the map 'world' does not exist, then download it
+world2 <- ne_countries(scale = 10, returnclass = "sf")
+
+# #
+# library(shapefiles)
+# sfl<- gsub(".shp","",paste0(wd_out01,"/",flnmshpfl))
+
+#wlshpfl <- shapefiles::read.shapefile(sfl)
 # change the row names
 rownames(ma) <- df_hl05$smplloca
 # get package library
@@ -231,32 +243,33 @@ df_hl07$lnNm <- NULL
 df_hl08 <- as.data.frame(lapply(df_hl08,as.numeric))
 #make it a 'matrix array'
 ma <- as.matrix(df_hl08)
-# check if map exists , if not then get it
-if (!exists("zpfl"))
-{
-  # Download the shapefile.
-  download.file("http://thematicmapping.org/downloads/TM_WORLD_BORDERS_SIMPL-0.3.zip" 
-                , destfile=paste0(wd_out01,"/world_shape_file.zip"))
-} #else {flnmshpfl <- paste0(wd00_wd05,"/TM_WORLD_BORDERS_SIMPL-0.3.shp")}
-# Make a full path to this file
-zpfl <- paste0(wd_out01,"/world_shape_file.zip")
-# Unzip this file. You can do it with R (as below),
-unzip(zpfl, exdir = wd_out01)
-# get a list of the files inside the zip file
-lzpfl <- unzip(zpfl,list=T)
-#grep in the names of files inside the list of files
-flnmshpfl <- lzpfl$Name[grepl("shp",lzpfl$Name)]
-#  -- > You now have 4 files. One of these files is a .shp file! (TM_WORLD_BORDERS_SIMPL-0.3.shp)
-# Read this shape file with the rgdal library. 
-library(rgdal)
-mspdf <- rgdal::readOGR( 
-  dsn= paste0(wd_out01,"/",flnmshpfl) , 
-  layer="TM_WORLD_BORDERS_SIMPL-0.3",
-  verbose=FALSE
-)
-#
-sfl<- gsub(".shp","",paste0(wd_out01,"/",flnmshpfl))
-wlshpfl <- shapefiles::read.shapefile(sfl)
+
+# # check if map exists , if not then get it
+# if (!exists("zpfl"))
+# {
+#   # Download the shapefile.
+#   download.file("http://thematicmapping.org/downloads/TM_WORLD_BORDERS_SIMPL-0.3.zip" 
+#                 , destfile=paste0(wd_out01,"/world_shape_file.zip"))
+# } #else {flnmshpfl <- paste0(wd00_wd05,"/TM_WORLD_BORDERS_SIMPL-0.3.shp")}
+# # Make a full path to this file
+# zpfl <- paste0(wd_out01,"/world_shape_file.zip")
+# # Unzip this file. You can do it with R (as below),
+# unzip(zpfl, exdir = wd_out01)
+# # get a list of the files inside the zip file
+# lzpfl <- unzip(zpfl,list=T)
+# #grep in the names of files inside the list of files
+# flnmshpfl <- lzpfl$Name[grepl("shp",lzpfl$Name)]
+# #  -- > You now have 4 files. One of these files is a .shp file! (TM_WORLD_BORDERS_SIMPL-0.3.shp)
+# # Read this shape file with the rgdal library. 
+# library(rgdal)
+# mspdf <- rgdal::readOGR( 
+#   dsn= paste0(wd_out01,"/",flnmshpfl) , 
+#   layer="TM_WORLD_BORDERS_SIMPL-0.3",
+#   verbose=FALSE
+# )
+# #
+# sfl<- gsub(".shp","",paste0(wd_out01,"/",flnmshpfl))
+# wlshpfl <- shapefiles::read.shapefile(sfl)
 # change the row names
 rownames(ma) <- df_hl07$smplloca
 # define plot limits
@@ -646,6 +659,7 @@ colra7 <- rainbow(nHpt7)
 # try making a different colour range
 cbbPalette2 <- c("black","purple","blue","green","yellowgreen",
                  "yellow","white")
+cbbPalette2 <- c("white","yellow","orange","tomato","red","brown","black")
 # make a colour ramp
 colfunc <- colorRampPalette(cbbPalette2)
 #https://stackoverflow.com/questions/13353213/gradient-of-n-colors-ranging-from-color-1-and-color-2

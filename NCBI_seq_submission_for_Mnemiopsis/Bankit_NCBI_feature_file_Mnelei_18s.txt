@@ -1,0 +1,1680 @@
+>Feature Mnelei164
+  
+<1    154     gene
+                            gene          18Sr
+<1    154     mRNA
+                            product       18Sr ribosomal RNA
+
+155    387    gene
+                                          gene          its1
+155    387    CDS
+                                          product       internal transcribed spacer 1
+155    387    mRNA
+                                          product       internal transcribed spacer 1
+                                          transl_table     1
+                                          
+388    545    gene
+                                          gene          5.8Sr
+388    545    mRNA
+                                          product       5.8S ribosomal RNA
+                                          
+546    >790     gene
+                                   gene          its2
+546    >790     CDS
+                                   product       internal transcribed spacer 2
+546    >790     mRNA
+                                   product       internal transcribed spacer 2
+                                   transl_table     1
+                
+>Feature Mnelei163
+  
+<1    154     gene
+                            gene          18Sr
+<1    154     mRNA
+                            product       18Sr ribosomal RNA
+
+155    387    gene
+                                          gene          its1
+155    387    CDS
+                                          product       internal transcribed spacer 1
+155    387    mRNA
+                                          product       internal transcribed spacer 1
+                                          transl_table     1
+                                          
+388    545    gene
+                                          gene          5.8Sr
+388    545    mRNA
+                                          product       5.8S ribosomal RNA
+                                          
+546    >789     gene
+                                   gene          its2
+546    >789     CDS
+                                   product       internal transcribed spacer 2
+546    >789     mRNA
+                                   product       internal transcribed spacer 2
+                                   transl_table     1
+                
+>Feature Mnelei162
+  
+<1    154     gene
+                            gene          18Sr
+<1    154     mRNA
+                            product       18Sr ribosomal RNA
+
+155    387    gene
+                                          gene          its1
+155    387    CDS
+                                          product       internal transcribed spacer 1
+155    387    mRNA
+                                          product       internal transcribed spacer 1
+                                          transl_table     1
+                                          
+388    545    gene
+                                          gene          5.8Sr
+388    545    mRNA
+                                          product       5.8S ribosomal RNA
+                                          
+546    >789     gene
+                                   gene          its2
+546    >789     CDS
+                                   product       internal transcribed spacer 2
+546    >789     mRNA
+                                   product       internal transcribed spacer 2
+                                   transl_table     1
+                
+>Feature Mnelei159
+  
+<1    154     gene
+                            gene          18Sr
+<1    154     mRNA
+                            product       18Sr ribosomal RNA
+
+155    387    gene
+                                          gene          its1
+155    387    CDS
+                                          product       internal transcribed spacer 1
+155    387    mRNA
+                                          product       internal transcribed spacer 1
+                                          transl_table     1
+                                          
+388    545    gene
+                                          gene          5.8Sr
+388    545    mRNA
+                                          product       5.8S ribosomal RNA
+                                          
+546    >789     gene
+                                   gene          its2
+546    >789     CDS
+                                   product       internal transcribed spacer 2
+546    >789     mRNA
+                                   product       internal transcribed spacer 2
+                                   transl_table     1
+                
+>Feature Mnelei158
+  
+<1    154     gene
+                            gene          18Sr
+<1    154     mRNA
+                            product       18Sr ribosomal RNA
+
+155    387    gene
+                                          gene          its1
+155    387    CDS
+                                          product       internal transcribed spacer 1
+155    387    mRNA
+                                          product       internal transcribed spacer 1
+                                          transl_table     1
+                                          
+388    545    gene
+                                          gene          5.8Sr
+388    545    mRNA
+                                          product       5.8S ribosomal RNA
+                                          
+546    >789     gene
+                                   gene          its2
+546    >789     CDS
+                                   product       internal transcribed spacer 2
+546    >789     mRNA
+                                   product       internal transcribed spacer 2
+                                   transl_table     1
+                
+>Feature Mnelei157
+  
+<1    127     gene
+                            gene          18Sr
+<1    127     mRNA
+                            product       18Sr ribosomal RNA
+
+128    360    gene
+                                          gene          its1
+128    360    CDS
+                                          product       internal transcribed spacer 1
+128    360    mRNA
+                                          product       internal transcribed spacer 1
+                                          transl_table     1
+                                          
+361    518    gene
+                                          gene          5.8Sr
+361    518    mRNA
+                                          product       5.8S ribosomal RNA
+                                          
+519    >762     gene
+                                   gene          its2
+519    >762     CDS
+                                   product       internal transcribed spacer 2
+519    >762     mRNA
+                                   product       internal transcribed spacer 2
+                                   transl_table     1
+                
+>Feature Mnelei156
+  
+<1    152     gene
+                            gene          18Sr
+<1    152     mRNA
+                            product       18Sr ribosomal RNA
+
+153    385    gene
+                                          gene          its1
+153    385    CDS
+                                          product       internal transcribed spacer 1
+153    385    mRNA
+                                          product       internal transcribed spacer 1
+                                          transl_table     1
+                                          
+386    543    gene
+                                          gene          5.8Sr
+386    543    mRNA
+                                          product       5.8S ribosomal RNA
+                                          
+544    >787     gene
+                                   gene          its2
+544    >787     CDS
+                                   product       internal transcribed spacer 2
+544    >787     mRNA
+                                   product       internal transcribed spacer 2
+                                   transl_table     1
+                
+>Feature Mnelei155
+  
+<1    154     gene
+                            gene          18Sr
+<1    154     mRNA
+                            product       18Sr ribosomal RNA
+
+155    387    gene
+                                          gene          its1
+155    387    CDS
+                                          product       internal transcribed spacer 1
+155    387    mRNA
+                                          product       internal transcribed spacer 1
+                                          transl_table     1
+                                          
+388    545    gene
+                                          gene          5.8Sr
+388    545    mRNA
+                                          product       5.8S ribosomal RNA
+                                          
+546    >789     gene
+                                   gene          its2
+546    >789     CDS
+                                   product       internal transcribed spacer 2
+546    >789     mRNA
+                                   product       internal transcribed spacer 2
+                                   transl_table     1
+                
+>Feature Mnelei154
+  
+<1    153     gene
+                            gene          18Sr
+<1    153     mRNA
+                            product       18Sr ribosomal RNA
+
+154    386    gene
+                                          gene          its1
+154    386    CDS
+                                          product       internal transcribed spacer 1
+154    386    mRNA
+                                          product       internal transcribed spacer 1
+                                          transl_table     1
+                                          
+387    544    gene
+                                          gene          5.8Sr
+387    544    mRNA
+                                          product       5.8S ribosomal RNA
+                                          
+545    >785     gene
+                                   gene          its2
+545    >785     CDS
+                                   product       internal transcribed spacer 2
+545    >785     mRNA
+                                   product       internal transcribed spacer 2
+                                   transl_table     1
+                
+>Feature Mnelei152
+  
+<1    153     gene
+                            gene          18Sr
+<1    153     mRNA
+                            product       18Sr ribosomal RNA
+
+154    386    gene
+                                          gene          its1
+154    386    CDS
+                                          product       internal transcribed spacer 1
+154    386    mRNA
+                                          product       internal transcribed spacer 1
+                                          transl_table     1
+                                          
+387    544    gene
+                                          gene          5.8Sr
+387    544    mRNA
+                                          product       5.8S ribosomal RNA
+                                          
+545    >769     gene
+                                   gene          its2
+545    >769     CDS
+                                   product       internal transcribed spacer 2
+545    >769     mRNA
+                                   product       internal transcribed spacer 2
+                                   transl_table     1
+                
+>Feature Mnelei151
+  
+<1    150     gene
+                            gene          18Sr
+<1    150     mRNA
+                            product       18Sr ribosomal RNA
+
+151    383    gene
+                                          gene          its1
+151    383    CDS
+                                          product       internal transcribed spacer 1
+151    383    mRNA
+                                          product       internal transcribed spacer 1
+                                          transl_table     1
+                                          
+384    541    gene
+                                          gene          5.8Sr
+384    541    mRNA
+                                          product       5.8S ribosomal RNA
+                                          
+542    >786     gene
+                                   gene          its2
+542    >786     CDS
+                                   product       internal transcribed spacer 2
+542    >786     mRNA
+                                   product       internal transcribed spacer 2
+                                   transl_table     1
+                
+>Feature Mnelei150
+  
+<1    147     gene
+                            gene          18Sr
+<1    147     mRNA
+                            product       18Sr ribosomal RNA
+
+148    380    gene
+                                          gene          its1
+148    380    CDS
+                                          product       internal transcribed spacer 1
+148    380    mRNA
+                                          product       internal transcribed spacer 1
+                                          transl_table     1
+                                          
+381    538    gene
+                                          gene          5.8Sr
+381    538    mRNA
+                                          product       5.8S ribosomal RNA
+                                          
+539    >782     gene
+                                   gene          its2
+539    >782     CDS
+                                   product       internal transcribed spacer 2
+539    >782     mRNA
+                                   product       internal transcribed spacer 2
+                                   transl_table     1
+                
+>Feature Mnelei149
+  
+<1    154     gene
+                            gene          18Sr
+<1    154     mRNA
+                            product       18Sr ribosomal RNA
+
+155    387    gene
+                                          gene          its1
+155    387    CDS
+                                          product       internal transcribed spacer 1
+155    387    mRNA
+                                          product       internal transcribed spacer 1
+                                          transl_table     1
+                                          
+388    545    gene
+                                          gene          5.8Sr
+388    545    mRNA
+                                          product       5.8S ribosomal RNA
+                                          
+546    >789     gene
+                                   gene          its2
+546    >789     CDS
+                                   product       internal transcribed spacer 2
+546    >789     mRNA
+                                   product       internal transcribed spacer 2
+                                   transl_table     1
+                
+>Feature Mnelei147
+  
+<1    150     gene
+                            gene          18Sr
+<1    150     mRNA
+                            product       18Sr ribosomal RNA
+
+151    383    gene
+                                          gene          its1
+151    383    CDS
+                                          product       internal transcribed spacer 1
+151    383    mRNA
+                                          product       internal transcribed spacer 1
+                                          transl_table     1
+                                          
+384    541    gene
+                                          gene          5.8Sr
+384    541    mRNA
+                                          product       5.8S ribosomal RNA
+                                          
+542    >785     gene
+                                   gene          its2
+542    >785     CDS
+                                   product       internal transcribed spacer 2
+542    >785     mRNA
+                                   product       internal transcribed spacer 2
+                                   transl_table     1
+                
+>Feature Mnelei136
+  
+<1    154     gene
+                            gene          18Sr
+<1    154     mRNA
+                            product       18Sr ribosomal RNA
+
+155    387    gene
+                                          gene          its1
+155    387    CDS
+                                          product       internal transcribed spacer 1
+155    387    mRNA
+                                          product       internal transcribed spacer 1
+                                          transl_table     1
+                                          
+388    545    gene
+                                          gene          5.8Sr
+388    545    mRNA
+                                          product       5.8S ribosomal RNA
+                                          
+546    >789     gene
+                                   gene          its2
+546    >789     CDS
+                                   product       internal transcribed spacer 2
+546    >789     mRNA
+                                   product       internal transcribed spacer 2
+                                   transl_table     1
+                
+>Feature Mnelei135
+  
+<1    147     gene
+                            gene          18Sr
+<1    147     mRNA
+                            product       18Sr ribosomal RNA
+
+148    380    gene
+                                          gene          its1
+148    380    CDS
+                                          product       internal transcribed spacer 1
+148    380    mRNA
+                                          product       internal transcribed spacer 1
+                                          transl_table     1
+                                          
+381    538    gene
+                                          gene          5.8Sr
+381    538    mRNA
+                                          product       5.8S ribosomal RNA
+                                          
+539    >781     gene
+                                   gene          its2
+539    >781     CDS
+                                   product       internal transcribed spacer 2
+539    >781     mRNA
+                                   product       internal transcribed spacer 2
+                                   transl_table     1
+                
+>Feature Mnelei134
+  
+<1    145     gene
+                            gene          18Sr
+<1    145     mRNA
+                            product       18Sr ribosomal RNA
+
+146    378    gene
+                                          gene          its1
+146    378    CDS
+                                          product       internal transcribed spacer 1
+146    378    mRNA
+                                          product       internal transcribed spacer 1
+                                          transl_table     1
+                                          
+379    536    gene
+                                          gene          5.8Sr
+379    536    mRNA
+                                          product       5.8S ribosomal RNA
+                                          
+537    >778     gene
+                                   gene          its2
+537    >778     CDS
+                                   product       internal transcribed spacer 2
+537    >778     mRNA
+                                   product       internal transcribed spacer 2
+                                   transl_table     1
+                
+>Feature Mnelei133
+  
+<1    108     gene
+                            gene          18Sr
+<1    108     mRNA
+                            product       18Sr ribosomal RNA
+
+109    341    gene
+                                          gene          its1
+109    341    CDS
+                                          product       internal transcribed spacer 1
+109    341    mRNA
+                                          product       internal transcribed spacer 1
+                                          transl_table     1
+                                          
+342    499    gene
+                                          gene          5.8Sr
+342    499    mRNA
+                                          product       5.8S ribosomal RNA
+                                          
+500    >750     gene
+                                   gene          its2
+500    >750     CDS
+                                   product       internal transcribed spacer 2
+500    >750     mRNA
+                                   product       internal transcribed spacer 2
+                                   transl_table     1
+                
+>Feature Mnelei132
+  
+<1    154     gene
+                            gene          18Sr
+<1    154     mRNA
+                            product       18Sr ribosomal RNA
+
+155    387    gene
+                                          gene          its1
+155    387    CDS
+                                          product       internal transcribed spacer 1
+155    387    mRNA
+                                          product       internal transcribed spacer 1
+                                          transl_table     1
+                                          
+388    545    gene
+                                          gene          5.8Sr
+388    545    mRNA
+                                          product       5.8S ribosomal RNA
+                                          
+546    >786     gene
+                                   gene          its2
+546    >786     CDS
+                                   product       internal transcribed spacer 2
+546    >786     mRNA
+                                   product       internal transcribed spacer 2
+                                   transl_table     1
+                
+>Feature Mnelei131
+  
+<1    154     gene
+                            gene          18Sr
+<1    154     mRNA
+                            product       18Sr ribosomal RNA
+
+155    387    gene
+                                          gene          its1
+155    387    CDS
+                                          product       internal transcribed spacer 1
+155    387    mRNA
+                                          product       internal transcribed spacer 1
+                                          transl_table     1
+                                          
+388    545    gene
+                                          gene          5.8Sr
+388    545    mRNA
+                                          product       5.8S ribosomal RNA
+                                          
+546    >786     gene
+                                   gene          its2
+546    >786     CDS
+                                   product       internal transcribed spacer 2
+546    >786     mRNA
+                                   product       internal transcribed spacer 2
+                                   transl_table     1
+                
+>Feature Mnelei130
+  
+<1    152     gene
+                            gene          18Sr
+<1    152     mRNA
+                            product       18Sr ribosomal RNA
+
+153    385    gene
+                                          gene          its1
+153    385    CDS
+                                          product       internal transcribed spacer 1
+153    385    mRNA
+                                          product       internal transcribed spacer 1
+                                          transl_table     1
+                                          
+386    543    gene
+                                          gene          5.8Sr
+386    543    mRNA
+                                          product       5.8S ribosomal RNA
+                                          
+544    >787     gene
+                                   gene          its2
+544    >787     CDS
+                                   product       internal transcribed spacer 2
+544    >787     mRNA
+                                   product       internal transcribed spacer 2
+                                   transl_table     1
+                
+>Feature Mnelei129
+  
+<1    153     gene
+                            gene          18Sr
+<1    153     mRNA
+                            product       18Sr ribosomal RNA
+
+154    386    gene
+                                          gene          its1
+154    386    CDS
+                                          product       internal transcribed spacer 1
+154    386    mRNA
+                                          product       internal transcribed spacer 1
+                                          transl_table     1
+                                          
+387    544    gene
+                                          gene          5.8Sr
+387    544    mRNA
+                                          product       5.8S ribosomal RNA
+                                          
+545    >788     gene
+                                   gene          its2
+545    >788     CDS
+                                   product       internal transcribed spacer 2
+545    >788     mRNA
+                                   product       internal transcribed spacer 2
+                                   transl_table     1
+                
+>Feature Mnelei127
+  
+<1    153     gene
+                            gene          18Sr
+<1    153     mRNA
+                            product       18Sr ribosomal RNA
+
+154    386    gene
+                                          gene          its1
+154    386    CDS
+                                          product       internal transcribed spacer 1
+154    386    mRNA
+                                          product       internal transcribed spacer 1
+                                          transl_table     1
+                                          
+387    544    gene
+                                          gene          5.8Sr
+387    544    mRNA
+                                          product       5.8S ribosomal RNA
+                                          
+545    >788     gene
+                                   gene          its2
+545    >788     CDS
+                                   product       internal transcribed spacer 2
+545    >788     mRNA
+                                   product       internal transcribed spacer 2
+                                   transl_table     1
+                
+>Feature Mnelei126
+  
+<1    147     gene
+                            gene          18Sr
+<1    147     mRNA
+                            product       18Sr ribosomal RNA
+
+148    380    gene
+                                          gene          its1
+148    380    CDS
+                                          product       internal transcribed spacer 1
+148    380    mRNA
+                                          product       internal transcribed spacer 1
+                                          transl_table     1
+                                          
+381    538    gene
+                                          gene          5.8Sr
+381    538    mRNA
+                                          product       5.8S ribosomal RNA
+                                          
+539    >782     gene
+                                   gene          its2
+539    >782     CDS
+                                   product       internal transcribed spacer 2
+539    >782     mRNA
+                                   product       internal transcribed spacer 2
+                                   transl_table     1
+                
+>Feature Mnelei125
+  
+<1    132     gene
+                            gene          18Sr
+<1    132     mRNA
+                            product       18Sr ribosomal RNA
+
+133    365    gene
+                                          gene          its1
+133    365    CDS
+                                          product       internal transcribed spacer 1
+133    365    mRNA
+                                          product       internal transcribed spacer 1
+                                          transl_table     1
+                                          
+366    523    gene
+                                          gene          5.8Sr
+366    523    mRNA
+                                          product       5.8S ribosomal RNA
+                                          
+524    >767     gene
+                                   gene          its2
+524    >767     CDS
+                                   product       internal transcribed spacer 2
+524    >767     mRNA
+                                   product       internal transcribed spacer 2
+                                   transl_table     1
+                
+>Feature Mnelei122
+  
+<1    150     gene
+                            gene          18Sr
+<1    150     mRNA
+                            product       18Sr ribosomal RNA
+
+151    383    gene
+                                          gene          its1
+151    383    CDS
+                                          product       internal transcribed spacer 1
+151    383    mRNA
+                                          product       internal transcribed spacer 1
+                                          transl_table     1
+                                          
+384    541    gene
+                                          gene          5.8Sr
+384    541    mRNA
+                                          product       5.8S ribosomal RNA
+                                          
+542    >785     gene
+                                   gene          its2
+542    >785     CDS
+                                   product       internal transcribed spacer 2
+542    >785     mRNA
+                                   product       internal transcribed spacer 2
+                                   transl_table     1
+                
+>Feature Mnelei121
+  
+<1    151     gene
+                            gene          18Sr
+<1    151     mRNA
+                            product       18Sr ribosomal RNA
+
+152    384    gene
+                                          gene          its1
+152    384    CDS
+                                          product       internal transcribed spacer 1
+152    384    mRNA
+                                          product       internal transcribed spacer 1
+                                          transl_table     1
+                                          
+385    542    gene
+                                          gene          5.8Sr
+385    542    mRNA
+                                          product       5.8S ribosomal RNA
+                                          
+543    >786     gene
+                                   gene          its2
+543    >786     CDS
+                                   product       internal transcribed spacer 2
+543    >786     mRNA
+                                   product       internal transcribed spacer 2
+                                   transl_table     1
+                
+>Feature Mnelei120
+  
+<1    154     gene
+                            gene          18Sr
+<1    154     mRNA
+                            product       18Sr ribosomal RNA
+
+155    387    gene
+                                          gene          its1
+155    387    CDS
+                                          product       internal transcribed spacer 1
+155    387    mRNA
+                                          product       internal transcribed spacer 1
+                                          transl_table     1
+                                          
+388    545    gene
+                                          gene          5.8Sr
+388    545    mRNA
+                                          product       5.8S ribosomal RNA
+                                          
+546    >789     gene
+                                   gene          its2
+546    >789     CDS
+                                   product       internal transcribed spacer 2
+546    >789     mRNA
+                                   product       internal transcribed spacer 2
+                                   transl_table     1
+                
+>Feature Mnelei109
+  
+<1    152     gene
+                            gene          18Sr
+<1    152     mRNA
+                            product       18Sr ribosomal RNA
+
+153    385    gene
+                                          gene          its1
+153    385    CDS
+                                          product       internal transcribed spacer 1
+153    385    mRNA
+                                          product       internal transcribed spacer 1
+                                          transl_table     1
+                                          
+386    543    gene
+                                          gene          5.8Sr
+386    543    mRNA
+                                          product       5.8S ribosomal RNA
+                                          
+544    >788     gene
+                                   gene          its2
+544    >788     CDS
+                                   product       internal transcribed spacer 2
+544    >788     mRNA
+                                   product       internal transcribed spacer 2
+                                   transl_table     1
+                
+>Feature Mnelei108
+  
+<1    147     gene
+                            gene          18Sr
+<1    147     mRNA
+                            product       18Sr ribosomal RNA
+
+148    380    gene
+                                          gene          its1
+148    380    CDS
+                                          product       internal transcribed spacer 1
+148    380    mRNA
+                                          product       internal transcribed spacer 1
+                                          transl_table     1
+                                          
+381    538    gene
+                                          gene          5.8Sr
+381    538    mRNA
+                                          product       5.8S ribosomal RNA
+                                          
+539    >782     gene
+                                   gene          its2
+539    >782     CDS
+                                   product       internal transcribed spacer 2
+539    >782     mRNA
+                                   product       internal transcribed spacer 2
+                                   transl_table     1
+                
+>Feature Mnelei107
+  
+<1    154     gene
+                            gene          18Sr
+<1    154     mRNA
+                            product       18Sr ribosomal RNA
+
+155    387    gene
+                                          gene          its1
+155    387    CDS
+                                          product       internal transcribed spacer 1
+155    387    mRNA
+                                          product       internal transcribed spacer 1
+                                          transl_table     1
+                                          
+388    545    gene
+                                          gene          5.8Sr
+388    545    mRNA
+                                          product       5.8S ribosomal RNA
+                                          
+546    >789     gene
+                                   gene          its2
+546    >789     CDS
+                                   product       internal transcribed spacer 2
+546    >789     mRNA
+                                   product       internal transcribed spacer 2
+                                   transl_table     1
+                
+>Feature Mnelei106
+  
+<1    148     gene
+                            gene          18Sr
+<1    148     mRNA
+                            product       18Sr ribosomal RNA
+
+149    381    gene
+                                          gene          its1
+149    381    CDS
+                                          product       internal transcribed spacer 1
+149    381    mRNA
+                                          product       internal transcribed spacer 1
+                                          transl_table     1
+                                          
+382    539    gene
+                                          gene          5.8Sr
+382    539    mRNA
+                                          product       5.8S ribosomal RNA
+                                          
+540    >774     gene
+                                   gene          its2
+540    >774     CDS
+                                   product       internal transcribed spacer 2
+540    >774     mRNA
+                                   product       internal transcribed spacer 2
+                                   transl_table     1
+                
+>Feature Mnelei105
+  
+<1    154     gene
+                            gene          18Sr
+<1    154     mRNA
+                            product       18Sr ribosomal RNA
+
+155    387    gene
+                                          gene          its1
+155    387    CDS
+                                          product       internal transcribed spacer 1
+155    387    mRNA
+                                          product       internal transcribed spacer 1
+                                          transl_table     1
+                                          
+388    545    gene
+                                          gene          5.8Sr
+388    545    mRNA
+                                          product       5.8S ribosomal RNA
+                                          
+546    >765     gene
+                                   gene          its2
+546    >765     CDS
+                                   product       internal transcribed spacer 2
+546    >765     mRNA
+                                   product       internal transcribed spacer 2
+                                   transl_table     1
+                
+>Feature Mnelei104
+  
+<1    130     gene
+                            gene          18Sr
+<1    130     mRNA
+                            product       18Sr ribosomal RNA
+
+131    363    gene
+                                          gene          its1
+131    363    CDS
+                                          product       internal transcribed spacer 1
+131    363    mRNA
+                                          product       internal transcribed spacer 1
+                                          transl_table     1
+                                          
+364    521    gene
+                                          gene          5.8Sr
+364    521    mRNA
+                                          product       5.8S ribosomal RNA
+                                          
+522    >765     gene
+                                   gene          its2
+522    >765     CDS
+                                   product       internal transcribed spacer 2
+522    >765     mRNA
+                                   product       internal transcribed spacer 2
+                                   transl_table     1
+                
+>Feature Mnelei103
+  
+<1    154     gene
+                            gene          18Sr
+<1    154     mRNA
+                            product       18Sr ribosomal RNA
+
+155    387    gene
+                                          gene          its1
+155    387    CDS
+                                          product       internal transcribed spacer 1
+155    387    mRNA
+                                          product       internal transcribed spacer 1
+                                          transl_table     1
+                                          
+388    545    gene
+                                          gene          5.8Sr
+388    545    mRNA
+                                          product       5.8S ribosomal RNA
+                                          
+546    >763     gene
+                                   gene          its2
+546    >763     CDS
+                                   product       internal transcribed spacer 2
+546    >763     mRNA
+                                   product       internal transcribed spacer 2
+                                   transl_table     1
+                
+>Feature Mnelei102
+  
+<1    147     gene
+                            gene          18Sr
+<1    147     mRNA
+                            product       18Sr ribosomal RNA
+
+148    380    gene
+                                          gene          its1
+148    380    CDS
+                                          product       internal transcribed spacer 1
+148    380    mRNA
+                                          product       internal transcribed spacer 1
+                                          transl_table     1
+                                          
+381    538    gene
+                                          gene          5.8Sr
+381    538    mRNA
+                                          product       5.8S ribosomal RNA
+                                          
+539    >784     gene
+                                   gene          its2
+539    >784     CDS
+                                   product       internal transcribed spacer 2
+539    >784     mRNA
+                                   product       internal transcribed spacer 2
+                                   transl_table     1
+                
+>Feature Mnelei101
+  
+<1    152     gene
+                            gene          18Sr
+<1    152     mRNA
+                            product       18Sr ribosomal RNA
+
+153    385    gene
+                                          gene          its1
+153    385    CDS
+                                          product       internal transcribed spacer 1
+153    385    mRNA
+                                          product       internal transcribed spacer 1
+                                          transl_table     1
+                                          
+386    543    gene
+                                          gene          5.8Sr
+386    543    mRNA
+                                          product       5.8S ribosomal RNA
+                                          
+544    >787     gene
+                                   gene          its2
+544    >787     CDS
+                                   product       internal transcribed spacer 2
+544    >787     mRNA
+                                   product       internal transcribed spacer 2
+                                   transl_table     1
+                
+>Feature Mnelei099
+  
+<1    154     gene
+                            gene          18Sr
+<1    154     mRNA
+                            product       18Sr ribosomal RNA
+
+155    387    gene
+                                          gene          its1
+155    387    CDS
+                                          product       internal transcribed spacer 1
+155    387    mRNA
+                                          product       internal transcribed spacer 1
+                                          transl_table     1
+                                          
+388    545    gene
+                                          gene          5.8Sr
+388    545    mRNA
+                                          product       5.8S ribosomal RNA
+                                          
+546    >789     gene
+                                   gene          its2
+546    >789     CDS
+                                   product       internal transcribed spacer 2
+546    >789     mRNA
+                                   product       internal transcribed spacer 2
+                                   transl_table     1
+                
+>Feature Mnelei079
+  
+<1    152     gene
+                            gene          18Sr
+<1    152     mRNA
+                            product       18Sr ribosomal RNA
+
+153    385    gene
+                                          gene          its1
+153    385    CDS
+                                          product       internal transcribed spacer 1
+153    385    mRNA
+                                          product       internal transcribed spacer 1
+                                          transl_table     1
+                                          
+386    543    gene
+                                          gene          5.8Sr
+386    543    mRNA
+                                          product       5.8S ribosomal RNA
+                                          
+544    >787     gene
+                                   gene          its2
+544    >787     CDS
+                                   product       internal transcribed spacer 2
+544    >787     mRNA
+                                   product       internal transcribed spacer 2
+                                   transl_table     1
+                
+>Feature Mnelei078
+  
+<1    153     gene
+                            gene          18Sr
+<1    153     mRNA
+                            product       18Sr ribosomal RNA
+
+154    386    gene
+                                          gene          its1
+154    386    CDS
+                                          product       internal transcribed spacer 1
+154    386    mRNA
+                                          product       internal transcribed spacer 1
+                                          transl_table     1
+                                          
+387    544    gene
+                                          gene          5.8Sr
+387    544    mRNA
+                                          product       5.8S ribosomal RNA
+                                          
+545    >788     gene
+                                   gene          its2
+545    >788     CDS
+                                   product       internal transcribed spacer 2
+545    >788     mRNA
+                                   product       internal transcribed spacer 2
+                                   transl_table     1
+                
+>Feature Mnelei077
+  
+<1    154     gene
+                            gene          18Sr
+<1    154     mRNA
+                            product       18Sr ribosomal RNA
+
+155    387    gene
+                                          gene          its1
+155    387    CDS
+                                          product       internal transcribed spacer 1
+155    387    mRNA
+                                          product       internal transcribed spacer 1
+                                          transl_table     1
+                                          
+388    545    gene
+                                          gene          5.8Sr
+388    545    mRNA
+                                          product       5.8S ribosomal RNA
+                                          
+546    >789     gene
+                                   gene          its2
+546    >789     CDS
+                                   product       internal transcribed spacer 2
+546    >789     mRNA
+                                   product       internal transcribed spacer 2
+                                   transl_table     1
+                
+>Feature Mnelei076
+  
+<1    154     gene
+                            gene          18Sr
+<1    154     mRNA
+                            product       18Sr ribosomal RNA
+
+155    387    gene
+                                          gene          its1
+155    387    CDS
+                                          product       internal transcribed spacer 1
+155    387    mRNA
+                                          product       internal transcribed spacer 1
+                                          transl_table     1
+                                          
+388    545    gene
+                                          gene          5.8Sr
+388    545    mRNA
+                                          product       5.8S ribosomal RNA
+                                          
+546    >789     gene
+                                   gene          its2
+546    >789     CDS
+                                   product       internal transcribed spacer 2
+546    >789     mRNA
+                                   product       internal transcribed spacer 2
+                                   transl_table     1
+                
+>Feature Mnelei075
+  
+<1    152     gene
+                            gene          18Sr
+<1    152     mRNA
+                            product       18Sr ribosomal RNA
+
+153    385    gene
+                                          gene          its1
+153    385    CDS
+                                          product       internal transcribed spacer 1
+153    385    mRNA
+                                          product       internal transcribed spacer 1
+                                          transl_table     1
+                                          
+386    543    gene
+                                          gene          5.8Sr
+386    543    mRNA
+                                          product       5.8S ribosomal RNA
+                                          
+544    >787     gene
+                                   gene          its2
+544    >787     CDS
+                                   product       internal transcribed spacer 2
+544    >787     mRNA
+                                   product       internal transcribed spacer 2
+                                   transl_table     1
+                
+>Feature Mnelei074
+  
+<1    154     gene
+                            gene          18Sr
+<1    154     mRNA
+                            product       18Sr ribosomal RNA
+
+155    387    gene
+                                          gene          its1
+155    387    CDS
+                                          product       internal transcribed spacer 1
+155    387    mRNA
+                                          product       internal transcribed spacer 1
+                                          transl_table     1
+                                          
+388    545    gene
+                                          gene          5.8Sr
+388    545    mRNA
+                                          product       5.8S ribosomal RNA
+                                          
+546    >789     gene
+                                   gene          its2
+546    >789     CDS
+                                   product       internal transcribed spacer 2
+546    >789     mRNA
+                                   product       internal transcribed spacer 2
+                                   transl_table     1
+                
+>Feature Mnelei073
+  
+<1    154     gene
+                            gene          18Sr
+<1    154     mRNA
+                            product       18Sr ribosomal RNA
+
+155    387    gene
+                                          gene          its1
+155    387    CDS
+                                          product       internal transcribed spacer 1
+155    387    mRNA
+                                          product       internal transcribed spacer 1
+                                          transl_table     1
+                                          
+388    545    gene
+                                          gene          5.8Sr
+388    545    mRNA
+                                          product       5.8S ribosomal RNA
+                                          
+546    >789     gene
+                                   gene          its2
+546    >789     CDS
+                                   product       internal transcribed spacer 2
+546    >789     mRNA
+                                   product       internal transcribed spacer 2
+                                   transl_table     1
+                
+>Feature Mnelei072
+  
+<1    151     gene
+                            gene          18Sr
+<1    151     mRNA
+                            product       18Sr ribosomal RNA
+
+152    384    gene
+                                          gene          its1
+152    384    CDS
+                                          product       internal transcribed spacer 1
+152    384    mRNA
+                                          product       internal transcribed spacer 1
+                                          transl_table     1
+                                          
+385    542    gene
+                                          gene          5.8Sr
+385    542    mRNA
+                                          product       5.8S ribosomal RNA
+                                          
+543    >786     gene
+                                   gene          its2
+543    >786     CDS
+                                   product       internal transcribed spacer 2
+543    >786     mRNA
+                                   product       internal transcribed spacer 2
+                                   transl_table     1
+                
+>Feature Mnelei071
+  
+<1    140     gene
+                            gene          18Sr
+<1    140     mRNA
+                            product       18Sr ribosomal RNA
+
+141    373    gene
+                                          gene          its1
+141    373    CDS
+                                          product       internal transcribed spacer 1
+141    373    mRNA
+                                          product       internal transcribed spacer 1
+                                          transl_table     1
+                                          
+374    531    gene
+                                          gene          5.8Sr
+374    531    mRNA
+                                          product       5.8S ribosomal RNA
+                                          
+532    >752     gene
+                                   gene          its2
+532    >752     CDS
+                                   product       internal transcribed spacer 2
+532    >752     mRNA
+                                   product       internal transcribed spacer 2
+                                   transl_table     1
+                
+>Feature Mnelei070
+  
+<1    154     gene
+                            gene          18Sr
+<1    154     mRNA
+                            product       18Sr ribosomal RNA
+
+155    387    gene
+                                          gene          its1
+155    387    CDS
+                                          product       internal transcribed spacer 1
+155    387    mRNA
+                                          product       internal transcribed spacer 1
+                                          transl_table     1
+                                          
+388    545    gene
+                                          gene          5.8Sr
+388    545    mRNA
+                                          product       5.8S ribosomal RNA
+                                          
+546    >789     gene
+                                   gene          its2
+546    >789     CDS
+                                   product       internal transcribed spacer 2
+546    >789     mRNA
+                                   product       internal transcribed spacer 2
+                                   transl_table     1
+                
+>Feature Mnelei069
+  
+<1    154     gene
+                            gene          18Sr
+<1    154     mRNA
+                            product       18Sr ribosomal RNA
+
+155    387    gene
+                                          gene          its1
+155    387    CDS
+                                          product       internal transcribed spacer 1
+155    387    mRNA
+                                          product       internal transcribed spacer 1
+                                          transl_table     1
+                                          
+388    545    gene
+                                          gene          5.8Sr
+388    545    mRNA
+                                          product       5.8S ribosomal RNA
+                                          
+546    >789     gene
+                                   gene          its2
+546    >789     CDS
+                                   product       internal transcribed spacer 2
+546    >789     mRNA
+                                   product       internal transcribed spacer 2
+                                   transl_table     1
+                
+>Feature Mnelei068
+  
+<1    151     gene
+                            gene          18Sr
+<1    151     mRNA
+                            product       18Sr ribosomal RNA
+
+152    384    gene
+                                          gene          its1
+152    384    CDS
+                                          product       internal transcribed spacer 1
+152    384    mRNA
+                                          product       internal transcribed spacer 1
+                                          transl_table     1
+                                          
+385    542    gene
+                                          gene          5.8Sr
+385    542    mRNA
+                                          product       5.8S ribosomal RNA
+                                          
+543    >786     gene
+                                   gene          its2
+543    >786     CDS
+                                   product       internal transcribed spacer 2
+543    >786     mRNA
+                                   product       internal transcribed spacer 2
+                                   transl_table     1
+                
+>Feature Mnelei067
+  
+<1    152     gene
+                            gene          18Sr
+<1    152     mRNA
+                            product       18Sr ribosomal RNA
+
+153    385    gene
+                                          gene          its1
+153    385    CDS
+                                          product       internal transcribed spacer 1
+153    385    mRNA
+                                          product       internal transcribed spacer 1
+                                          transl_table     1
+                                          
+386    543    gene
+                                          gene          5.8Sr
+386    543    mRNA
+                                          product       5.8S ribosomal RNA
+                                          
+544    >787     gene
+                                   gene          its2
+544    >787     CDS
+                                   product       internal transcribed spacer 2
+544    >787     mRNA
+                                   product       internal transcribed spacer 2
+                                   transl_table     1
+                
+>Feature Mnelei066
+  
+<1    153     gene
+                            gene          18Sr
+<1    153     mRNA
+                            product       18Sr ribosomal RNA
+
+154    386    gene
+                                          gene          its1
+154    386    CDS
+                                          product       internal transcribed spacer 1
+154    386    mRNA
+                                          product       internal transcribed spacer 1
+                                          transl_table     1
+                                          
+387    544    gene
+                                          gene          5.8Sr
+387    544    mRNA
+                                          product       5.8S ribosomal RNA
+                                          
+545    >788     gene
+                                   gene          its2
+545    >788     CDS
+                                   product       internal transcribed spacer 2
+545    >788     mRNA
+                                   product       internal transcribed spacer 2
+                                   transl_table     1
+                
+>Feature Mnelei060
+  
+<1    154     gene
+                            gene          18Sr
+<1    154     mRNA
+                            product       18Sr ribosomal RNA
+
+155    387    gene
+                                          gene          its1
+155    387    CDS
+                                          product       internal transcribed spacer 1
+155    387    mRNA
+                                          product       internal transcribed spacer 1
+                                          transl_table     1
+                                          
+388    545    gene
+                                          gene          5.8Sr
+388    545    mRNA
+                                          product       5.8S ribosomal RNA
+                                          
+546    >789     gene
+                                   gene          its2
+546    >789     CDS
+                                   product       internal transcribed spacer 2
+546    >789     mRNA
+                                   product       internal transcribed spacer 2
+                                   transl_table     1
+                
+>Feature Mnelei059
+  
+<1    154     gene
+                            gene          18Sr
+<1    154     mRNA
+                            product       18Sr ribosomal RNA
+
+155    387    gene
+                                          gene          its1
+155    387    CDS
+                                          product       internal transcribed spacer 1
+155    387    mRNA
+                                          product       internal transcribed spacer 1
+                                          transl_table     1
+                                          
+388    545    gene
+                                          gene          5.8Sr
+388    545    mRNA
+                                          product       5.8S ribosomal RNA
+                                          
+546    >789     gene
+                                   gene          its2
+546    >789     CDS
+                                   product       internal transcribed spacer 2
+546    >789     mRNA
+                                   product       internal transcribed spacer 2
+                                   transl_table     1
+                
+>Feature Mnelei058
+  
+<1    135     gene
+                            gene          18Sr
+<1    135     mRNA
+                            product       18Sr ribosomal RNA
+
+136    368    gene
+                                          gene          its1
+136    368    CDS
+                                          product       internal transcribed spacer 1
+136    368    mRNA
+                                          product       internal transcribed spacer 1
+                                          transl_table     1
+                                          
+369    526    gene
+                                          gene          5.8Sr
+369    526    mRNA
+                                          product       5.8S ribosomal RNA
+                                          
+527    >770     gene
+                                   gene          its2
+527    >770     CDS
+                                   product       internal transcribed spacer 2
+527    >770     mRNA
+                                   product       internal transcribed spacer 2
+                                   transl_table     1
+                
+>Feature Mnelei057
+  
+<1    154     gene
+                            gene          18Sr
+<1    154     mRNA
+                            product       18Sr ribosomal RNA
+
+155    387    gene
+                                          gene          its1
+155    387    CDS
+                                          product       internal transcribed spacer 1
+155    387    mRNA
+                                          product       internal transcribed spacer 1
+                                          transl_table     1
+                                          
+388    545    gene
+                                          gene          5.8Sr
+388    545    mRNA
+                                          product       5.8S ribosomal RNA
+                                          
+546    >782     gene
+                                   gene          its2
+546    >782     CDS
+                                   product       internal transcribed spacer 2
+546    >782     mRNA
+                                   product       internal transcribed spacer 2
+                                   transl_table     1
+                
+>Feature Mnelei056
+  
+<1    153     gene
+                            gene          18Sr
+<1    153     mRNA
+                            product       18Sr ribosomal RNA
+
+154    386    gene
+                                          gene          its1
+154    386    CDS
+                                          product       internal transcribed spacer 1
+154    386    mRNA
+                                          product       internal transcribed spacer 1
+                                          transl_table     1
+                                          
+387    544    gene
+                                          gene          5.8Sr
+387    544    mRNA
+                                          product       5.8S ribosomal RNA
+                                          
+545    >786     gene
+                                   gene          its2
+545    >786     CDS
+                                   product       internal transcribed spacer 2
+545    >786     mRNA
+                                   product       internal transcribed spacer 2
+                                   transl_table     1
+                
+>Feature Mnelei053
+  
+<1    115     gene
+                            gene          18Sr
+<1    115     mRNA
+                            product       18Sr ribosomal RNA
+
+116    343    gene
+                                          gene          its1
+116    343    CDS
+                                          product       internal transcribed spacer 1
+116    343    mRNA
+                                          product       internal transcribed spacer 1
+                                          transl_table     1
+                                          
+344    501    gene
+                                          gene          5.8Sr
+344    501    mRNA
+                                          product       5.8S ribosomal RNA
+                                          
+502    >729     gene
+                                   gene          its2
+502    >729     CDS
+                                   product       internal transcribed spacer 2
+502    >729     mRNA
+                                   product       internal transcribed spacer 2
+                                   transl_table     1
+                
+>Feature Mnelei052
+  
+<1    140     gene
+                            gene          18Sr
+<1    140     mRNA
+                            product       18Sr ribosomal RNA
+
+141    368    gene
+                                          gene          its1
+141    368    CDS
+                                          product       internal transcribed spacer 1
+141    368    mRNA
+                                          product       internal transcribed spacer 1
+                                          transl_table     1
+                                          
+369    526    gene
+                                          gene          5.8Sr
+369    526    mRNA
+                                          product       5.8S ribosomal RNA
+                                          
+527    >778     gene
+                                   gene          its2
+527    >778     CDS
+                                   product       internal transcribed spacer 2
+527    >778     mRNA
+                                   product       internal transcribed spacer 2
+                                   transl_table     1
+                
+>Feature Mnelei051
+  
+<1    107     gene
+                            gene          18Sr
+<1    107     mRNA
+                            product       18Sr ribosomal RNA
+
+108    335    gene
+                                          gene          its1
+108    335    CDS
+                                          product       internal transcribed spacer 1
+108    335    mRNA
+                                          product       internal transcribed spacer 1
+                                          transl_table     1
+                                          
+336    493    gene
+                                          gene          5.8Sr
+336    493    mRNA
+                                          product       5.8S ribosomal RNA
+                                          
+494    >706     gene
+                                   gene          its2
+494    >706     CDS
+                                   product       internal transcribed spacer 2
+494    >706     mRNA
+                                   product       internal transcribed spacer 2
+                                   transl_table     1
+                

@@ -1,0 +1,301 @@
+Sequence Name,Name,Type,Minimum,Maximum,Length
+Mnelei053_Fyn_Kerteminde_2017_May,28S rRNA,rRNA,777,>815,>39
+Mnelei052_Fyn_Kerteminde_2017_May,28S rRNA,rRNA,777,>815,>39
+Mnelei051_Fyn_Kerteminde_2017_May,28S rRNA,rRNA,777,>815,>39
+Mnelei102_Fyn_Kerteminde_2017_Oct,28S rRNA,rRNA,776,>814,>39
+Mnelei164_NWGermany_NSeaHelgolandRds_2018_Aug,28S rRNA,rRNA,775,>813,>39
+Mnelei151_NGermany_MecklenburgerBuchtWismarBucht_2018_Aug,28S rRNA,rRNA,775,>813,>39
+Mnelei135_Limfjord_Loegstoer_2018_Jul,28S rRNA,rRNA,775,>813,>39
+Mnelei109_NGermany_KielFjord_2018_Feb,28S rRNA,rRNA,775,>813,>39
+Mnelei105_NGermany_KielFjord_2018_Feb,28S rRNA,rRNA,775,>813,>39
+Mnelei103_Fyn_Kerteminde_2017_Oct,28S rRNA,rRNA,775,>813,>39
+Mnelei056_Limfjord_Loegstoer_2017,28S rRNA,rRNA,775,>813,>39
+Mnelei163_NWGermany_NSeaHelgolandRds_2018_Aug,28S rRNA,rRNA,774,>812,>39
+Mnelei162_NWGermany_NSeaHelgolandRds_2018_Aug,28S rRNA,rRNA,774,>812,>39
+Mnelei159_NWGermany_NSeaHelgolandRds_2018_Aug,28S rRNA,rRNA,774,>812,>39
+Mnelei158_NWGermany_NSeaHelgolandRds_2018_Aug,28S rRNA,rRNA,774,>812,>39
+Mnelei157_NWGermany_NSeaHelgolandRds_2018_Aug,28S rRNA,rRNA,774,>812,>39
+Mnelei156_NGermany_MecklenburgerBuchtWismarBucht_2018_Aug,28S rRNA,rRNA,774,>812,>39
+Mnelei155_NGermany_MecklenburgerBuchtWismarBucht_2018_Aug,28S rRNA,rRNA,774,>812,>39
+Mnelei152_NGermany_MecklenburgerBuchtWismarBucht_2018_Aug,28S rRNA,rRNA,774,>812,>39
+Mnelei150_NGermany_MecklenburgerBuchtWismarBucht_2018_Aug,28S rRNA,rRNA,774,>812,>39
+Mnelei149_NGermany_MecklenburgerBuchtWismarBucht_2018_Aug,28S rRNA,rRNA,774,>812,>39
+Mnelei147_NWGermany_WaddenSeaBussumHaupstr_2018_jul,28S rRNA,rRNA,774,>812,>39
+Mnelei136_Limfjord_Loegstoer_2018_Jul,28S rRNA,rRNA,774,>812,>39
+Mnelei134_Limfjord_Loegstoer_2018_Jul,28S rRNA,rRNA,774,>812,>39
+Mnelei132_Limfjord_Loegstoer_2018_Jul,28S rRNA,rRNA,774,>812,>39
+Mnelei131_Samsoe_Ballen_2018_Aug,28S rRNA,rRNA,774,>812,>39
+Mnelei130_Samsoe_Ballen_2018_Aug,28S rRNA,rRNA,774,>812,>39
+Mnelei129_Samsoe_Ballen_2018_Aug,28S rRNA,rRNA,774,>812,>39
+Mnelei127_Samsoe_Ballen_2018_Aug,28S rRNA,rRNA,774,>812,>39
+Mnelei126_Samsoe_Ballen_2018_Aug,28S rRNA,rRNA,774,>812,>39
+Mnelei122_Fyn_Bogense_2017_Nov,28S rRNA,rRNA,774,>812,>39
+Mnelei121_Fyn_Bogense_2017_Nov,28S rRNA,rRNA,774,>812,>39
+Mnelei120_Fyn_Bogense_2017_Nov,28S rRNA,rRNA,774,>812,>39
+Mnelei108_NGermany_KielFjord_2018_Feb,28S rRNA,rRNA,774,>812,>39
+Mnelei107_NGermany_KielFjord_2018_Feb,28S rRNA,rRNA,774,>812,>39
+Mnelei106_NGermany_KielFjord_2018_Feb,28S rRNA,rRNA,774,>812,>39
+Mnelei104_Fyn_Kerteminde_2017_Oct,28S rRNA,rRNA,774,>812,>39
+Mnelei101_Fyn_Kerteminde_2017_Oct,28S rRNA,rRNA,774,>812,>39
+Mnelei099_SEDenmark_MecklenburgerBucht_2017_Jul,28S rRNA,rRNA,774,>812,>39
+Mnelei079_Fyn_Kerteminde_2017_Aug,28S rRNA,rRNA,774,>812,>39
+Mnelei078_Fyn_Kerteminde_2017_Aug,28S rRNA,rRNA,774,>812,>39
+Mnelei077_Fyn_Kerteminde_2017_Aug,28S rRNA,rRNA,774,>812,>39
+Mnelei076_Fyn_Kerteminde_2017_Aug,28S rRNA,rRNA,774,>812,>39
+Mnelei075_Jylland_Mariagerfjord_2017_Sep,28S rRNA,rRNA,774,>812,>39
+Mnelei074_Jylland_Mariagerfjord_2017_Sep,28S rRNA,rRNA,774,>812,>39
+Mnelei073_Jylland_Mariagerfjord_2017_Sep,28S rRNA,rRNA,774,>812,>39
+Mnelei072_Jylland_Mariagerfjord_2017_Sep,28S rRNA,rRNA,774,>812,>39
+Mnelei071_Jylland_Mariagerfjord_2017_Sep,28S rRNA,rRNA,774,>812,>39
+Mnelei070_Sjaelland_Skovshoved_2017_Sep,28S rRNA,rRNA,774,>812,>39
+Mnelei069_Sjaelland_Skovshoved_2017_Sep,28S rRNA,rRNA,774,>812,>39
+Mnelei068_Sjaelland_Skovshoved_2017_Sep,28S rRNA,rRNA,774,>812,>39
+Mnelei067_Sjaelland_Skovshoved_2017_Sep,28S rRNA,rRNA,774,>812,>39
+Mnelei066_Sjaelland_Skovshoved_2017_Sep,28S rRNA,rRNA,774,>812,>39
+Mnelei060_Limfjord_Loegstoer_2017,28S rRNA,rRNA,774,>812,>39
+Mnelei059_Limfjord_Loegstoer_2017,28S rRNA,rRNA,774,>812,>39
+Mnelei058_Limfjord_Loegstoer_2017,28S rRNA,rRNA,774,>812,>39
+Mnelei057_Limfjord_Loegstoer_2017,28S rRNA,rRNA,774,>812,>39
+Mnelei154_NGermany_MecklenburgerBuchtWismarBucht_2018_Aug,28S rRNA,rRNA,773,>811,>39
+Mnelei125_Samsoe_Ballen_2018_Aug,28S rRNA,rRNA,773,>811,>39
+Mnelei133_Limfjord_Loegstoer_2018_Jul,28S rRNA,rRNA,736,>774,>39
+Mnelei164_NWGermany_NSeaHelgolandRds_2018_Aug,internal transcribed spacer 2,misc_RNA,546,774,229
+Mnelei163_NWGermany_NSeaHelgolandRds_2018_Aug,internal transcribed spacer 2,misc_RNA,546,773,228
+Mnelei162_NWGermany_NSeaHelgolandRds_2018_Aug,internal transcribed spacer 2,misc_RNA,546,773,228
+Mnelei159_NWGermany_NSeaHelgolandRds_2018_Aug,internal transcribed spacer 2,misc_RNA,546,773,228
+Mnelei158_NWGermany_NSeaHelgolandRds_2018_Aug,internal transcribed spacer 2,misc_RNA,546,773,228
+Mnelei157_NWGermany_NSeaHelgolandRds_2018_Aug,internal transcribed spacer 2,misc_RNA,546,773,228
+Mnelei156_NGermany_MecklenburgerBuchtWismarBucht_2018_Aug,internal transcribed spacer 2,misc_RNA,546,773,228
+Mnelei155_NGermany_MecklenburgerBuchtWismarBucht_2018_Aug,internal transcribed spacer 2,misc_RNA,546,773,228
+Mnelei152_NGermany_MecklenburgerBuchtWismarBucht_2018_Aug,internal transcribed spacer 2,misc_RNA,546,773,228
+Mnelei151_NGermany_MecklenburgerBuchtWismarBucht_2018_Aug,internal transcribed spacer 2,misc_RNA,546,774,229
+Mnelei150_NGermany_MecklenburgerBuchtWismarBucht_2018_Aug,internal transcribed spacer 2,misc_RNA,546,773,228
+Mnelei149_NGermany_MecklenburgerBuchtWismarBucht_2018_Aug,internal transcribed spacer 2,misc_RNA,546,773,228
+Mnelei147_NWGermany_WaddenSeaBussumHaupstr_2018_jul,internal transcribed spacer 2,misc_RNA,546,773,228
+Mnelei136_Limfjord_Loegstoer_2018_Jul,internal transcribed spacer 2,misc_RNA,546,773,228
+Mnelei135_Limfjord_Loegstoer_2018_Jul,internal transcribed spacer 2,misc_RNA,546,774,229
+Mnelei134_Limfjord_Loegstoer_2018_Jul,internal transcribed spacer 2,misc_RNA,546,773,228
+Mnelei132_Limfjord_Loegstoer_2018_Jul,internal transcribed spacer 2,misc_RNA,546,773,228
+Mnelei131_Samsoe_Ballen_2018_Aug,internal transcribed spacer 2,misc_RNA,546,773,228
+Mnelei130_Samsoe_Ballen_2018_Aug,internal transcribed spacer 2,misc_RNA,546,773,228
+Mnelei129_Samsoe_Ballen_2018_Aug,internal transcribed spacer 2,misc_RNA,546,773,228
+Mnelei127_Samsoe_Ballen_2018_Aug,internal transcribed spacer 2,misc_RNA,546,773,228
+Mnelei126_Samsoe_Ballen_2018_Aug,internal transcribed spacer 2,misc_RNA,546,773,228
+Mnelei122_Fyn_Bogense_2017_Nov,internal transcribed spacer 2,misc_RNA,546,773,228
+Mnelei121_Fyn_Bogense_2017_Nov,internal transcribed spacer 2,misc_RNA,546,773,228
+Mnelei120_Fyn_Bogense_2017_Nov,internal transcribed spacer 2,misc_RNA,546,773,228
+Mnelei109_NGermany_KielFjord_2018_Feb,internal transcribed spacer 2,misc_RNA,546,774,229
+Mnelei108_NGermany_KielFjord_2018_Feb,internal transcribed spacer 2,misc_RNA,546,773,228
+Mnelei107_NGermany_KielFjord_2018_Feb,internal transcribed spacer 2,misc_RNA,546,773,228
+Mnelei106_NGermany_KielFjord_2018_Feb,internal transcribed spacer 2,misc_RNA,546,773,228
+Mnelei105_NGermany_KielFjord_2018_Feb,internal transcribed spacer 2,misc_RNA,546,773,228
+Mnelei104_Fyn_Kerteminde_2017_Oct,internal transcribed spacer 2,misc_RNA,546,773,228
+Mnelei103_Fyn_Kerteminde_2017_Oct,internal transcribed spacer 2,misc_RNA,546,774,229
+Mnelei102_Fyn_Kerteminde_2017_Oct,internal transcribed spacer 2,misc_RNA,546,775,230
+Mnelei101_Fyn_Kerteminde_2017_Oct,internal transcribed spacer 2,misc_RNA,546,773,228
+Mnelei099_SEDenmark_MecklenburgerBucht_2017_Jul,internal transcribed spacer 2,misc_RNA,546,773,228
+Mnelei079_Fyn_Kerteminde_2017_Aug,internal transcribed spacer 2,misc_RNA,546,773,228
+Mnelei078_Fyn_Kerteminde_2017_Aug,internal transcribed spacer 2,misc_RNA,546,773,228
+Mnelei077_Fyn_Kerteminde_2017_Aug,internal transcribed spacer 2,misc_RNA,546,773,228
+Mnelei076_Fyn_Kerteminde_2017_Aug,internal transcribed spacer 2,misc_RNA,546,773,228
+Mnelei075_Jylland_Mariagerfjord_2017_Sep,internal transcribed spacer 2,misc_RNA,546,773,228
+Mnelei074_Jylland_Mariagerfjord_2017_Sep,internal transcribed spacer 2,misc_RNA,546,773,228
+Mnelei073_Jylland_Mariagerfjord_2017_Sep,internal transcribed spacer 2,misc_RNA,546,773,228
+Mnelei072_Jylland_Mariagerfjord_2017_Sep,internal transcribed spacer 2,misc_RNA,546,773,228
+Mnelei071_Jylland_Mariagerfjord_2017_Sep,internal transcribed spacer 2,misc_RNA,546,773,228
+Mnelei070_Sjaelland_Skovshoved_2017_Sep,internal transcribed spacer 2,misc_RNA,546,773,228
+Mnelei069_Sjaelland_Skovshoved_2017_Sep,internal transcribed spacer 2,misc_RNA,546,773,228
+Mnelei068_Sjaelland_Skovshoved_2017_Sep,internal transcribed spacer 2,misc_RNA,546,773,228
+Mnelei067_Sjaelland_Skovshoved_2017_Sep,internal transcribed spacer 2,misc_RNA,546,773,228
+Mnelei066_Sjaelland_Skovshoved_2017_Sep,internal transcribed spacer 2,misc_RNA,546,773,228
+Mnelei060_Limfjord_Loegstoer_2017,internal transcribed spacer 2,misc_RNA,546,773,228
+Mnelei059_Limfjord_Loegstoer_2017,internal transcribed spacer 2,misc_RNA,546,773,228
+Mnelei058_Limfjord_Loegstoer_2017,internal transcribed spacer 2,misc_RNA,546,773,228
+Mnelei057_Limfjord_Loegstoer_2017,internal transcribed spacer 2,misc_RNA,546,773,228
+Mnelei056_Limfjord_Loegstoer_2017,internal transcribed spacer 2,misc_RNA,546,773,228
+Mnelei154_NGermany_MecklenburgerBuchtWismarBucht_2018_Aug,internal transcribed spacer 2,misc_RNA,545,772,228
+Mnelei125_Samsoe_Ballen_2018_Aug,internal transcribed spacer 2,misc_RNA,545,772,228
+Mnelei053_Fyn_Kerteminde_2017_May,internal transcribed spacer 2,misc_RNA,541,776,236
+Mnelei052_Fyn_Kerteminde_2017_May,internal transcribed spacer 2,misc_RNA,541,776,236
+Mnelei051_Fyn_Kerteminde_2017_May,internal transcribed spacer 2,misc_RNA,541,776,236
+Mnelei133_Limfjord_Loegstoer_2018_Jul,internal transcribed spacer 2,misc_RNA,501,735,235
+Mnelei164_NWGermany_NSeaHelgolandRds_2018_Aug,5.8S rRNA,rRNA,388,545,158
+Mnelei163_NWGermany_NSeaHelgolandRds_2018_Aug,5.8S rRNA,rRNA,388,545,158
+Mnelei162_NWGermany_NSeaHelgolandRds_2018_Aug,5.8S rRNA,rRNA,388,545,158
+Mnelei159_NWGermany_NSeaHelgolandRds_2018_Aug,5.8S rRNA,rRNA,388,545,158
+Mnelei158_NWGermany_NSeaHelgolandRds_2018_Aug,5.8S rRNA,rRNA,388,545,158
+Mnelei157_NWGermany_NSeaHelgolandRds_2018_Aug,5.8S rRNA,rRNA,388,545,158
+Mnelei156_NGermany_MecklenburgerBuchtWismarBucht_2018_Aug,5.8S rRNA,rRNA,388,545,158
+Mnelei155_NGermany_MecklenburgerBuchtWismarBucht_2018_Aug,5.8S rRNA,rRNA,388,545,158
+Mnelei152_NGermany_MecklenburgerBuchtWismarBucht_2018_Aug,5.8S rRNA,rRNA,388,545,158
+Mnelei151_NGermany_MecklenburgerBuchtWismarBucht_2018_Aug,5.8S rRNA,rRNA,388,545,158
+Mnelei150_NGermany_MecklenburgerBuchtWismarBucht_2018_Aug,5.8S rRNA,rRNA,388,545,158
+Mnelei149_NGermany_MecklenburgerBuchtWismarBucht_2018_Aug,5.8S rRNA,rRNA,388,545,158
+Mnelei147_NWGermany_WaddenSeaBussumHaupstr_2018_jul,5.8S rRNA,rRNA,388,545,158
+Mnelei136_Limfjord_Loegstoer_2018_Jul,5.8S rRNA,rRNA,388,545,158
+Mnelei135_Limfjord_Loegstoer_2018_Jul,5.8S rRNA,rRNA,388,545,158
+Mnelei134_Limfjord_Loegstoer_2018_Jul,5.8S rRNA,rRNA,388,545,158
+Mnelei132_Limfjord_Loegstoer_2018_Jul,5.8S rRNA,rRNA,388,545,158
+Mnelei131_Samsoe_Ballen_2018_Aug,5.8S rRNA,rRNA,388,545,158
+Mnelei130_Samsoe_Ballen_2018_Aug,5.8S rRNA,rRNA,388,545,158
+Mnelei129_Samsoe_Ballen_2018_Aug,5.8S rRNA,rRNA,388,545,158
+Mnelei127_Samsoe_Ballen_2018_Aug,5.8S rRNA,rRNA,388,545,158
+Mnelei126_Samsoe_Ballen_2018_Aug,5.8S rRNA,rRNA,388,545,158
+Mnelei122_Fyn_Bogense_2017_Nov,5.8S rRNA,rRNA,388,545,158
+Mnelei121_Fyn_Bogense_2017_Nov,5.8S rRNA,rRNA,388,545,158
+Mnelei120_Fyn_Bogense_2017_Nov,5.8S rRNA,rRNA,388,545,158
+Mnelei109_NGermany_KielFjord_2018_Feb,5.8S rRNA,rRNA,388,545,158
+Mnelei108_NGermany_KielFjord_2018_Feb,5.8S rRNA,rRNA,388,545,158
+Mnelei107_NGermany_KielFjord_2018_Feb,5.8S rRNA,rRNA,388,545,158
+Mnelei106_NGermany_KielFjord_2018_Feb,5.8S rRNA,rRNA,388,545,158
+Mnelei105_NGermany_KielFjord_2018_Feb,5.8S rRNA,rRNA,388,545,158
+Mnelei104_Fyn_Kerteminde_2017_Oct,5.8S rRNA,rRNA,388,545,158
+Mnelei103_Fyn_Kerteminde_2017_Oct,5.8S rRNA,rRNA,388,545,158
+Mnelei102_Fyn_Kerteminde_2017_Oct,5.8S rRNA,rRNA,388,545,158
+Mnelei101_Fyn_Kerteminde_2017_Oct,5.8S rRNA,rRNA,388,545,158
+Mnelei099_SEDenmark_MecklenburgerBucht_2017_Jul,5.8S rRNA,rRNA,388,545,158
+Mnelei079_Fyn_Kerteminde_2017_Aug,5.8S rRNA,rRNA,388,545,158
+Mnelei078_Fyn_Kerteminde_2017_Aug,5.8S rRNA,rRNA,388,545,158
+Mnelei077_Fyn_Kerteminde_2017_Aug,5.8S rRNA,rRNA,388,545,158
+Mnelei076_Fyn_Kerteminde_2017_Aug,5.8S rRNA,rRNA,388,545,158
+Mnelei075_Jylland_Mariagerfjord_2017_Sep,5.8S rRNA,rRNA,388,545,158
+Mnelei074_Jylland_Mariagerfjord_2017_Sep,5.8S rRNA,rRNA,388,545,158
+Mnelei073_Jylland_Mariagerfjord_2017_Sep,5.8S rRNA,rRNA,388,545,158
+Mnelei072_Jylland_Mariagerfjord_2017_Sep,5.8S rRNA,rRNA,388,545,158
+Mnelei071_Jylland_Mariagerfjord_2017_Sep,5.8S rRNA,rRNA,388,545,158
+Mnelei070_Sjaelland_Skovshoved_2017_Sep,5.8S rRNA,rRNA,388,545,158
+Mnelei069_Sjaelland_Skovshoved_2017_Sep,5.8S rRNA,rRNA,388,545,158
+Mnelei068_Sjaelland_Skovshoved_2017_Sep,5.8S rRNA,rRNA,388,545,158
+Mnelei067_Sjaelland_Skovshoved_2017_Sep,5.8S rRNA,rRNA,388,545,158
+Mnelei066_Sjaelland_Skovshoved_2017_Sep,5.8S rRNA,rRNA,388,545,158
+Mnelei060_Limfjord_Loegstoer_2017,5.8S rRNA,rRNA,388,545,158
+Mnelei059_Limfjord_Loegstoer_2017,5.8S rRNA,rRNA,388,545,158
+Mnelei058_Limfjord_Loegstoer_2017,5.8S rRNA,rRNA,388,545,158
+Mnelei057_Limfjord_Loegstoer_2017,5.8S rRNA,rRNA,388,545,158
+Mnelei056_Limfjord_Loegstoer_2017,5.8S rRNA,rRNA,388,545,158
+Mnelei154_NGermany_MecklenburgerBuchtWismarBucht_2018_Aug,5.8S rRNA,rRNA,387,544,158
+Mnelei125_Samsoe_Ballen_2018_Aug,5.8S rRNA,rRNA,387,544,158
+Mnelei053_Fyn_Kerteminde_2017_May,5.8S rRNA,rRNA,383,540,158
+Mnelei052_Fyn_Kerteminde_2017_May,5.8S rRNA,rRNA,383,540,158
+Mnelei051_Fyn_Kerteminde_2017_May,5.8S rRNA,rRNA,383,540,158
+Mnelei133_Limfjord_Loegstoer_2018_Jul,5.8S rRNA,rRNA,343,500,158
+Mnelei164_NWGermany_NSeaHelgolandRds_2018_Aug,internal transcribed spacer 1,misc_RNA,155,387,233
+Mnelei163_NWGermany_NSeaHelgolandRds_2018_Aug,internal transcribed spacer 1,misc_RNA,155,387,233
+Mnelei162_NWGermany_NSeaHelgolandRds_2018_Aug,internal transcribed spacer 1,misc_RNA,155,387,233
+Mnelei159_NWGermany_NSeaHelgolandRds_2018_Aug,internal transcribed spacer 1,misc_RNA,155,387,233
+Mnelei158_NWGermany_NSeaHelgolandRds_2018_Aug,internal transcribed spacer 1,misc_RNA,155,387,233
+Mnelei157_NWGermany_NSeaHelgolandRds_2018_Aug,internal transcribed spacer 1,misc_RNA,155,387,233
+Mnelei156_NGermany_MecklenburgerBuchtWismarBucht_2018_Aug,internal transcribed spacer 1,misc_RNA,155,387,233
+Mnelei155_NGermany_MecklenburgerBuchtWismarBucht_2018_Aug,internal transcribed spacer 1,misc_RNA,155,387,233
+Mnelei152_NGermany_MecklenburgerBuchtWismarBucht_2018_Aug,internal transcribed spacer 1,misc_RNA,155,387,233
+Mnelei151_NGermany_MecklenburgerBuchtWismarBucht_2018_Aug,internal transcribed spacer 1,misc_RNA,155,387,233
+Mnelei150_NGermany_MecklenburgerBuchtWismarBucht_2018_Aug,internal transcribed spacer 1,misc_RNA,155,387,233
+Mnelei149_NGermany_MecklenburgerBuchtWismarBucht_2018_Aug,internal transcribed spacer 1,misc_RNA,155,387,233
+Mnelei147_NWGermany_WaddenSeaBussumHaupstr_2018_jul,internal transcribed spacer 1,misc_RNA,155,387,233
+Mnelei136_Limfjord_Loegstoer_2018_Jul,internal transcribed spacer 1,misc_RNA,155,387,233
+Mnelei135_Limfjord_Loegstoer_2018_Jul,internal transcribed spacer 1,misc_RNA,155,387,233
+Mnelei134_Limfjord_Loegstoer_2018_Jul,internal transcribed spacer 1,misc_RNA,155,387,233
+Mnelei132_Limfjord_Loegstoer_2018_Jul,internal transcribed spacer 1,misc_RNA,155,387,233
+Mnelei131_Samsoe_Ballen_2018_Aug,internal transcribed spacer 1,misc_RNA,155,387,233
+Mnelei130_Samsoe_Ballen_2018_Aug,internal transcribed spacer 1,misc_RNA,155,387,233
+Mnelei129_Samsoe_Ballen_2018_Aug,internal transcribed spacer 1,misc_RNA,155,387,233
+Mnelei127_Samsoe_Ballen_2018_Aug,internal transcribed spacer 1,misc_RNA,155,387,233
+Mnelei126_Samsoe_Ballen_2018_Aug,internal transcribed spacer 1,misc_RNA,155,387,233
+Mnelei122_Fyn_Bogense_2017_Nov,internal transcribed spacer 1,misc_RNA,155,387,233
+Mnelei121_Fyn_Bogense_2017_Nov,internal transcribed spacer 1,misc_RNA,155,387,233
+Mnelei120_Fyn_Bogense_2017_Nov,internal transcribed spacer 1,misc_RNA,155,387,233
+Mnelei109_NGermany_KielFjord_2018_Feb,internal transcribed spacer 1,misc_RNA,155,387,233
+Mnelei108_NGermany_KielFjord_2018_Feb,internal transcribed spacer 1,misc_RNA,155,387,233
+Mnelei107_NGermany_KielFjord_2018_Feb,internal transcribed spacer 1,misc_RNA,155,387,233
+Mnelei106_NGermany_KielFjord_2018_Feb,internal transcribed spacer 1,misc_RNA,155,387,233
+Mnelei105_NGermany_KielFjord_2018_Feb,internal transcribed spacer 1,misc_RNA,155,387,233
+Mnelei104_Fyn_Kerteminde_2017_Oct,internal transcribed spacer 1,misc_RNA,155,387,233
+Mnelei103_Fyn_Kerteminde_2017_Oct,internal transcribed spacer 1,misc_RNA,155,387,233
+Mnelei102_Fyn_Kerteminde_2017_Oct,internal transcribed spacer 1,misc_RNA,155,387,233
+Mnelei101_Fyn_Kerteminde_2017_Oct,internal transcribed spacer 1,misc_RNA,155,387,233
+Mnelei099_SEDenmark_MecklenburgerBucht_2017_Jul,internal transcribed spacer 1,misc_RNA,155,387,233
+Mnelei079_Fyn_Kerteminde_2017_Aug,internal transcribed spacer 1,misc_RNA,155,387,233
+Mnelei078_Fyn_Kerteminde_2017_Aug,internal transcribed spacer 1,misc_RNA,155,387,233
+Mnelei077_Fyn_Kerteminde_2017_Aug,internal transcribed spacer 1,misc_RNA,155,387,233
+Mnelei076_Fyn_Kerteminde_2017_Aug,internal transcribed spacer 1,misc_RNA,155,387,233
+Mnelei075_Jylland_Mariagerfjord_2017_Sep,internal transcribed spacer 1,misc_RNA,155,387,233
+Mnelei074_Jylland_Mariagerfjord_2017_Sep,internal transcribed spacer 1,misc_RNA,155,387,233
+Mnelei073_Jylland_Mariagerfjord_2017_Sep,internal transcribed spacer 1,misc_RNA,155,387,233
+Mnelei072_Jylland_Mariagerfjord_2017_Sep,internal transcribed spacer 1,misc_RNA,155,387,233
+Mnelei071_Jylland_Mariagerfjord_2017_Sep,internal transcribed spacer 1,misc_RNA,155,387,233
+Mnelei070_Sjaelland_Skovshoved_2017_Sep,internal transcribed spacer 1,misc_RNA,155,387,233
+Mnelei069_Sjaelland_Skovshoved_2017_Sep,internal transcribed spacer 1,misc_RNA,155,387,233
+Mnelei068_Sjaelland_Skovshoved_2017_Sep,internal transcribed spacer 1,misc_RNA,155,387,233
+Mnelei067_Sjaelland_Skovshoved_2017_Sep,internal transcribed spacer 1,misc_RNA,155,387,233
+Mnelei066_Sjaelland_Skovshoved_2017_Sep,internal transcribed spacer 1,misc_RNA,155,387,233
+Mnelei060_Limfjord_Loegstoer_2017,internal transcribed spacer 1,misc_RNA,155,387,233
+Mnelei059_Limfjord_Loegstoer_2017,internal transcribed spacer 1,misc_RNA,155,387,233
+Mnelei058_Limfjord_Loegstoer_2017,internal transcribed spacer 1,misc_RNA,155,387,233
+Mnelei057_Limfjord_Loegstoer_2017,internal transcribed spacer 1,misc_RNA,155,387,233
+Mnelei056_Limfjord_Loegstoer_2017,internal transcribed spacer 1,misc_RNA,155,387,233
+Mnelei053_Fyn_Kerteminde_2017_May,internal transcribed spacer 1,misc_RNA,155,382,228
+Mnelei052_Fyn_Kerteminde_2017_May,internal transcribed spacer 1,misc_RNA,155,382,228
+Mnelei051_Fyn_Kerteminde_2017_May,internal transcribed spacer 1,misc_RNA,155,382,228
+Mnelei154_NGermany_MecklenburgerBuchtWismarBucht_2018_Aug,internal transcribed spacer 1,misc_RNA,154,386,233
+Mnelei125_Samsoe_Ballen_2018_Aug,internal transcribed spacer 1,misc_RNA,154,386,233
+Mnelei133_Limfjord_Loegstoer_2018_Jul,internal transcribed spacer 1,misc_RNA,110,342,233
+Mnelei164_NWGermany_NSeaHelgolandRds_2018_Aug,18S rRNA,rRNA,"-1,648",154,"1,803"
+Mnelei163_NWGermany_NSeaHelgolandRds_2018_Aug,18S rRNA,rRNA,"-1,648",154,"1,803"
+Mnelei162_NWGermany_NSeaHelgolandRds_2018_Aug,18S rRNA,rRNA,"-1,648",154,"1,803"
+Mnelei159_NWGermany_NSeaHelgolandRds_2018_Aug,18S rRNA,rRNA,"-1,648",154,"1,803"
+Mnelei158_NWGermany_NSeaHelgolandRds_2018_Aug,18S rRNA,rRNA,"-1,648",154,"1,803"
+Mnelei157_NWGermany_NSeaHelgolandRds_2018_Aug,18S rRNA,rRNA,"-1,648",154,"1,803"
+Mnelei156_NGermany_MecklenburgerBuchtWismarBucht_2018_Aug,18S rRNA,rRNA,"-1,648",154,"1,803"
+Mnelei155_NGermany_MecklenburgerBuchtWismarBucht_2018_Aug,18S rRNA,rRNA,"-1,648",154,"1,803"
+Mnelei154_NGermany_MecklenburgerBuchtWismarBucht_2018_Aug,18S rRNA,rRNA,"-1,648",153,"1,802"
+Mnelei152_NGermany_MecklenburgerBuchtWismarBucht_2018_Aug,18S rRNA,rRNA,"-1,648",154,"1,803"
+Mnelei151_NGermany_MecklenburgerBuchtWismarBucht_2018_Aug,18S rRNA,rRNA,"-1,648",154,"1,803"
+Mnelei150_NGermany_MecklenburgerBuchtWismarBucht_2018_Aug,18S rRNA,rRNA,"-1,648",154,"1,803"
+Mnelei149_NGermany_MecklenburgerBuchtWismarBucht_2018_Aug,18S rRNA,rRNA,"-1,648",154,"1,803"
+Mnelei147_NWGermany_WaddenSeaBussumHaupstr_2018_jul,18S rRNA,rRNA,"-1,648",154,"1,803"
+Mnelei136_Limfjord_Loegstoer_2018_Jul,18S rRNA,rRNA,"-1,648",154,"1,803"
+Mnelei135_Limfjord_Loegstoer_2018_Jul,18S rRNA,rRNA,"-1,648",154,"1,803"
+Mnelei134_Limfjord_Loegstoer_2018_Jul,18S rRNA,rRNA,"-1,648",154,"1,803"
+Mnelei132_Limfjord_Loegstoer_2018_Jul,18S rRNA,rRNA,"-1,648",154,"1,803"
+Mnelei131_Samsoe_Ballen_2018_Aug,18S rRNA,rRNA,"-1,648",154,"1,803"
+Mnelei130_Samsoe_Ballen_2018_Aug,18S rRNA,rRNA,"-1,648",154,"1,803"
+Mnelei129_Samsoe_Ballen_2018_Aug,18S rRNA,rRNA,"-1,648",154,"1,803"
+Mnelei127_Samsoe_Ballen_2018_Aug,18S rRNA,rRNA,"-1,648",154,"1,803"
+Mnelei126_Samsoe_Ballen_2018_Aug,18S rRNA,rRNA,"-1,648",154,"1,803"
+Mnelei125_Samsoe_Ballen_2018_Aug,18S rRNA,rRNA,"-1,648",153,"1,802"
+Mnelei122_Fyn_Bogense_2017_Nov,18S rRNA,rRNA,"-1,648",154,"1,803"
+Mnelei121_Fyn_Bogense_2017_Nov,18S rRNA,rRNA,"-1,648",154,"1,803"
+Mnelei120_Fyn_Bogense_2017_Nov,18S rRNA,rRNA,"-1,648",154,"1,803"
+Mnelei109_NGermany_KielFjord_2018_Feb,18S rRNA,rRNA,"-1,648",154,"1,803"
+Mnelei108_NGermany_KielFjord_2018_Feb,18S rRNA,rRNA,"-1,648",154,"1,803"
+Mnelei107_NGermany_KielFjord_2018_Feb,18S rRNA,rRNA,"-1,648",154,"1,803"
+Mnelei106_NGermany_KielFjord_2018_Feb,18S rRNA,rRNA,"-1,648",154,"1,803"
+Mnelei105_NGermany_KielFjord_2018_Feb,18S rRNA,rRNA,"-1,648",154,"1,803"
+Mnelei104_Fyn_Kerteminde_2017_Oct,18S rRNA,rRNA,"-1,648",154,"1,803"
+Mnelei103_Fyn_Kerteminde_2017_Oct,18S rRNA,rRNA,"-1,648",154,"1,803"
+Mnelei102_Fyn_Kerteminde_2017_Oct,18S rRNA,rRNA,"-1,648",154,"1,803"
+Mnelei101_Fyn_Kerteminde_2017_Oct,18S rRNA,rRNA,"-1,648",154,"1,803"
+Mnelei099_SEDenmark_MecklenburgerBucht_2017_Jul,18S rRNA,rRNA,"-1,648",154,"1,803"
+Mnelei079_Fyn_Kerteminde_2017_Aug,18S rRNA,rRNA,"-1,648",154,"1,803"
+Mnelei078_Fyn_Kerteminde_2017_Aug,18S rRNA,rRNA,"-1,648",154,"1,803"
+Mnelei077_Fyn_Kerteminde_2017_Aug,18S rRNA,rRNA,"-1,648",154,"1,803"
+Mnelei076_Fyn_Kerteminde_2017_Aug,18S rRNA,rRNA,"-1,648",154,"1,803"
+Mnelei075_Jylland_Mariagerfjord_2017_Sep,18S rRNA,rRNA,"-1,648",154,"1,803"
+Mnelei074_Jylland_Mariagerfjord_2017_Sep,18S rRNA,rRNA,"-1,648",154,"1,803"
+Mnelei073_Jylland_Mariagerfjord_2017_Sep,18S rRNA,rRNA,"-1,648",154,"1,803"
+Mnelei072_Jylland_Mariagerfjord_2017_Sep,18S rRNA,rRNA,"-1,648",154,"1,803"
+Mnelei071_Jylland_Mariagerfjord_2017_Sep,18S rRNA,rRNA,"-1,648",154,"1,803"
+Mnelei070_Sjaelland_Skovshoved_2017_Sep,18S rRNA,rRNA,"-1,648",154,"1,803"
+Mnelei069_Sjaelland_Skovshoved_2017_Sep,18S rRNA,rRNA,"-1,648",154,"1,803"
+Mnelei068_Sjaelland_Skovshoved_2017_Sep,18S rRNA,rRNA,"-1,648",154,"1,803"
+Mnelei067_Sjaelland_Skovshoved_2017_Sep,18S rRNA,rRNA,"-1,648",154,"1,803"
+Mnelei066_Sjaelland_Skovshoved_2017_Sep,18S rRNA,rRNA,"-1,648",154,"1,803"
+Mnelei060_Limfjord_Loegstoer_2017,18S rRNA,rRNA,"-1,648",154,"1,803"
+Mnelei059_Limfjord_Loegstoer_2017,18S rRNA,rRNA,"-1,648",154,"1,803"
+Mnelei058_Limfjord_Loegstoer_2017,18S rRNA,rRNA,"-1,648",154,"1,803"
+Mnelei057_Limfjord_Loegstoer_2017,18S rRNA,rRNA,"-1,648",154,"1,803"
+Mnelei056_Limfjord_Loegstoer_2017,18S rRNA,rRNA,"-1,648",154,"1,803"
+Mnelei053_Fyn_Kerteminde_2017_May,18S rRNA,rRNA,"-1,648",154,"1,803"
+Mnelei052_Fyn_Kerteminde_2017_May,18S rRNA,rRNA,"-1,648",154,"1,803"
+Mnelei051_Fyn_Kerteminde_2017_May,18S rRNA,rRNA,"-1,648",154,"1,803"
+Mnelei133_Limfjord_Loegstoer_2018_Jul,18S rRNA,rRNA,"-1,693",109,"1,803"

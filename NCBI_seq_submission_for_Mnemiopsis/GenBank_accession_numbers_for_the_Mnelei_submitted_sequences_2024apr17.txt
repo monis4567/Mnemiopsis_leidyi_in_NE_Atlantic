@@ -1,0 +1,102 @@
+We have provided GenBank accession number(s) for your nucleotide sequence(s):
+
+SUB14383741 Mnelei164   PP669718
+SUB14383741 Mnelei163   PP669719
+SUB14383741 Mnelei162   PP669720
+SUB14383741 Mnelei159   PP669721
+SUB14383741 Mnelei158   PP669722
+SUB14383741 Mnelei157   PP669723
+SUB14383741 Mnelei156   PP669724
+SUB14383741 Mnelei155   PP669725
+SUB14383741 Mnelei154   PP669726
+SUB14383741 Mnelei152   PP669727
+SUB14383741 Mnelei151   PP669728
+SUB14383741 Mnelei150   PP669729
+SUB14383741 Mnelei149   PP669730
+SUB14383741 Mnelei147   PP669731
+SUB14383741 Mnelei136   PP669732
+SUB14383741 Mnelei135   PP669733
+SUB14383741 Mnelei134   PP669734
+SUB14383741 Mnelei133   PP669735
+SUB14383741 Mnelei132   PP669736
+SUB14383741 Mnelei131   PP669737
+SUB14383741 Mnelei130   PP669738
+SUB14383741 Mnelei129   PP669739
+SUB14383741 Mnelei127   PP669740
+SUB14383741 Mnelei126   PP669741
+SUB14383741 Mnelei125   PP669742
+SUB14383741 Mnelei122   PP669743
+SUB14383741 Mnelei121   PP669744
+SUB14383741 Mnelei120   PP669745
+SUB14383741 Mnelei109   PP669746
+SUB14383741 Mnelei108   PP669747
+SUB14383741 Mnelei107   PP669748
+SUB14383741 Mnelei106   PP669749
+SUB14383741 Mnelei105   PP669750
+SUB14383741 Mnelei104   PP669751
+SUB14383741 Mnelei103   PP669752
+SUB14383741 Mnelei102   PP669753
+SUB14383741 Mnelei101   PP669754
+SUB14383741 Mnelei099   PP669755
+SUB14383741 Mnelei079   PP669756
+SUB14383741 Mnelei078   PP669757
+SUB14383741 Mnelei077   PP669758
+SUB14383741 Mnelei076   PP669759
+SUB14383741 Mnelei075   PP669760
+SUB14383741 Mnelei074   PP669761
+SUB14383741 Mnelei073   PP669762
+SUB14383741 Mnelei072   PP669763
+SUB14383741 Mnelei071   PP669764
+SUB14383741 Mnelei070   PP669765
+SUB14383741 Mnelei069   PP669766
+SUB14383741 Mnelei068   PP669767
+SUB14383741 Mnelei067   PP669768
+SUB14383741 Mnelei066   PP669769
+SUB14383741 Mnelei060   PP669770
+SUB14383741 Mnelei059   PP669771
+SUB14383741 Mnelei058   PP669772
+SUB14383741 Mnelei057   PP669773
+SUB14383741 Mnelei056   PP669774
+SUB14383741 Mnelei053   PP669775
+SUB14383741 Mnelei052   PP669776
+SUB14383741 Mnelei051   PP669777
+
+
+A copy of your revised files can be viewed at
+
+https://eur02.safelinks.protection.outlook.com/?url=https%3A%2F%2Fsubmit.ncbi.nlm.nih.gov%2Fsubs%2F%3Fsearch%3DSUB14383741&data=05%7C02%7Cswknudsen%40snm.ku.dk%7Cc02ab924171f44dc4cc808dc5eaa87ab%7Ca3927f91cda14696af898c9f1ceffa91%7C0%7C0%7C638489333716517466%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C0%7C%7C%7C&sdata=jt6yDK1Z%2BBNtpI9Qs6CvqQFjhz2RPm8fe0SHF5Bc%2BY4%3D&reserved=0
+
+The accession number link in the Submission Portal will not be active until
+a few days after the public release of the sequences.
+
+Changes may have been made to your original submission in order to conform to
+database annotation conventions. See the following for a list of possible
+modifications:
+https://eur02.safelinks.protection.outlook.com/?url=https%3A%2F%2Fncbi.nlm.nih.gov%2Fgenbank%2Fflatfile_changes%2F&data=05%7C02%7Cswknudsen%40snm.ku.dk%7Cc02ab924171f44dc4cc808dc5eaa87ab%7Ca3927f91cda14696af898c9f1ceffa91%7C0%7C0%7C638489333716517466%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C0%7C%7C%7C&sdata=B%2FSUmGvet7SUUzLBKzIeLxQ%2B0EcM6tbjkyfL552xmBo%3D&reserved=0
+
+If you need to revise your record(s), follow these directions to
+format your update request: https://eur02.safelinks.protection.outlook.com/?url=https%3A%2F%2Fwww.ncbi.nlm.nih.gov%2FGenbank%2Fupdate.html&data=05%7C02%7Cswknudsen%40snm.ku.dk%7Cc02ab924171f44dc4cc808dc5eaa87ab%7Ca3927f91cda14696af898c9f1ceffa91%7C0%7C0%7C638489333716517466%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C0%7C%7C%7C&sdata=Oh87%2FSp%2BNZPV8Z4xW5qrP0fdcRJlmRCjiwkINzpe4Y8%3D&reserved=0
+Send properly formatted updates to:  gb-admin@ncbi.nlm.nih.gov
+Do not make a new submission for an update request.
+
+Based on the data submitted to us, the scheduled release date
+for your submission is:
+
+May 17, 2025
+
+The entire sequence will be released when the article citing this accession
+number(s) is published or on the above release date, whichever comes first. If
+this date is not correct, please let us know as soon as possible, otherwise
+this submission will be released on the date indicated above. The data will
+become available from our different servers within a few days of release and
+are simultaneously made available to other INSDC databases, the European
+Nucleotide Archive (ENA) and the DNA Data Bank of Japan (DDBJ).
+
+Thank you for your submission of sequence data to GenBank, a contribution which
+will benefit the scientific community.
+
+Sincerely,
+
+
+GenBank Direct Submission Staff
+gb-admin@ncbi.nlm.nih.gov
