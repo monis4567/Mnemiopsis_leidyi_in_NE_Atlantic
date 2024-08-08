@@ -282,7 +282,11 @@ if(!require("kableExtra")){
   
 }
 library("kableExtra")
-
+# get the biogeo package
+if(!require(biogeo)){
+  install.packages("biogeo")
+}
+library("biogeo")
 
  # I installed the Bioconductor package  DECIPHER
 # some of the dependencies that came with the DECIPHER
