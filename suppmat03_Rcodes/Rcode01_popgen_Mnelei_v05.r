@@ -1000,13 +1000,21 @@ p2
 
 
 # Create all possible variants from ambiguities
-aITS2_vrs <- bioseq::seq_disambiguate_IUPAC(al02_ITS2)
 aITS1_vrs <- bioseq::seq_disambiguate_IUPAC(al02_ITS1)
-
+aITS2_vrs <- bioseq::seq_disambiguate_IUPAC(al02_ITS2)
 # the possible variants come nested in a list, unlist
 # them to be get them in DNA format for bioseq
-alvrsM <- bioseq::as_dna(unlist(aITS1_vrs))
+alvrs.M.ITS1 <- bioseq::as_dna(unlist(aITS1_vrs))
+alvrs.M.ITS2 <- bioseq::as_dna(unlist(aITS2_vrs))
 
+# define file name to write to
+outF.ITS1 <- paste0(wd00_wd05,"/algn_Mnelei_ITS1_v02_all_IUPACode_vars.fasta")
+outF.ITS2 <- paste0(wd00_wd05,"/algn_Mnelei_ITS2_v02_all_IUPACode_vars.fasta")
+#write the  alignment as a fasta file
+bioseq::write_fasta(alvrs.M.ITS1,file=outF.ITS1,line_length = Inf,block_length = Inf)
+bioseq::write_fasta(alvrs.M.ITS2,file=outF.ITS2,line_length = Inf,block_length = Inf)
+
+alvrsM <- alvrs.M.ITS1
 # also get the labels on the sequences
 LalvrsM <- labels(alvrsM)
 alvrsM <- bioseq::as_DNAbin(alvrsM)
