@@ -100,6 +100,11 @@ pth_inpf04 <- paste(wd00_wd01,"/",inpf04,sep="")
 #read in csv file
 df_lN02 <- read.csv(pth_inpf03,sep=";")
 df_MneCl01 <- read.csv(pth_inpf04,sep=";")
+
+#_______________________________________________________________________________
+# section 01 -  start - substitute in names and input files
+#_______________________________________________________________________________
+
 # change incorrect location names
 df_lN02$location[grepl("taxon",df_lN02$location)] <- NA
 df_lN02$location[grepl("[0-9]+.*",df_lN02$location)] <- NA
@@ -121,7 +126,6 @@ df_lN02$latlonpos_nd <- NA
 # add a non decimal degree to the French point 
 df_lN02$latlonpos_nd[df_lN02$location=="France Villefranche_sur_mer"] <- "43 39 N 17 20 E"
 df_lN02$location[df_lN02$location=="France Villefranche_sur_mer"] <- "Mediterranean"
-#View(df_lN02)
 # see https://www.sciencedirect.com/science/article/pii/S2352485519303366
 # add non decimal coordinates for Colombian samples
 df_lN02$latlonpos_nd[grepl("Multiple introductions",df_lN02$pubtitle)] <- "11 02 N 74 51 W"
@@ -230,8 +234,6 @@ Rta02.1$Accession_number_ <- gsub("_$","",Rta02.1$Accession_number_)
 Rta02.1$`Location,_sample_no._` <- gsub("Bornholm_Bassin","Bornholm_Basin",Rta02.1$`Location,_sample_no._`)
 Rta02.1$coordinates <- Rta01.1$`Co-ordinates_`[match(Rta02.1$`Location,_sample_no._`,Rta01.1$Sampling_site_)]
 
-#Rta01.1
-
 # Netherland sample is from https://www.vliz.be/imisdocs/publications/ocrd/132874.pdf
 #The identical M. leidyi sequences were deposited
 #in the NCBI Genbank database under the
@@ -250,7 +252,7 @@ llposUSAwh<- unique(df_lN02$latlonpos[grepl("USA: Woods Hole",df_lN02$location)]
 df_lN02$location[grepl("AF293700",df_lN02$accession_nmb)] <- "USA: Woods Hole" 
 # assign the Woods Hole position for the USA Woods Hole sample 'AF293700'
 df_lN02$latlonpos[grepl("AF293700",df_lN02$accession_nmb)] <- llposUSAwh
-# ovewrite the incorrect position for the USA Woods Hole sample 'AF293700'
+# overwrite the incorrect position for the USA Woods Hole sample 'AF293700'
 df_lN02$latlonpos_nd2[grepl("AF293700",df_lN02$accession_nmb)] <- NA
 df_lN02$latlonpos_nd[grepl("AF293700",df_lN02$accession_nmb)] <- NA
 # use grep to get KF435 accession numbers
@@ -309,7 +311,9 @@ df_lN02$lon01<- paste0( df_lN02$ll4,"º",
                         df_lN02$ll5,"'",
                         df_lN02$ll6)
 
-
+#_______________________________________________________________________________
+# function : 'dms2dec' - start
+#_______________________________________________________________________________
 # get function from this website
 # https://www.r-bloggers.com/2022/02/degree-minute-second-to-decimal-coordinates/
 dms2dec <- function(dms, separators = c("º", "°", "\'", "’", "’’", "\"", "\'\'", "\\?")) {
@@ -347,7 +351,9 @@ dms2dec <- function(dms, separators = c("º", "°", "\'", "’", "’’", "\"",
   dec <- sign * dec
   return(dec)
 }  
-# end 'dms2dec' function
+#_______________________________________________________________________________
+# function : 'dms2dec' - end
+#_______________________________________________________________________________
 # Use the 'dms2dec' function on the DMS pasted coordinates
 df_lN02$lat02 <- dms2dec(df_lN02$lat01)
 df_lN02$lon02 <- dms2dec(df_lN02$lon01)
@@ -364,16 +370,13 @@ wd00_wd05_flnm3 <- paste(wd00_wd05,"/df_lN02.csv",sep="")
 # write the data frame as a csv file
 write.csv(df_lN02,file=wd00_wd05_flnm3)
 
-#:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 #define input file
 fl1 <- "collect_loc_Mnelei_smpls01.csv"
 #paste path and filename together
 pth_fl01 <- paste(wd00_wd01,"/",fl1,sep="")
 #read in a csv file with positions for sampling locations
 df_clo <- as.data.frame(read.csv(pth_fl01,sep = ";"))
-
 df_clo$locality4 <-  df_clo$locality
-#View(df_clo)
 #Modify location names
 df_clo$locality4 <- gsub("FynBogense","Funen, Bogense", df_clo$locality4 )
 df_clo$locality4 <- gsub("FynKerteminde","Funen, Kerteminde", df_clo$locality4 )
@@ -385,7 +388,6 @@ df_clo$locality4 <- gsub("NJyllandLimfjordLogstoer","Jutland, Limfjord" , df_clo
 df_clo$locality4 <- gsub("NWGermanyNSeaHelgolandRds", "North Sea, Helgoland Roads", df_clo$locality4 )
 df_clo$locality4 <- gsub("NWGermanyWaddenSeaBussumHaupstr","Germany, Büsum", df_clo$locality4 )
 df_clo$locality4 <- gsub("SamsoeBallen","Samsøe, Ballen", df_clo$locality4 )
-#df_clo$locality4 <- gsub("SEDenmarkMecklenburgerBucht","", df_clo$locality4 )
 df_clo$locality4 <- gsub("SjaellandSkovshoved","Sealand, Skovshoved", df_clo$locality4 )
 
 # paste together to get DMS coordinates
@@ -510,8 +512,6 @@ df_clo03$locality7 <- df_clo03$locality2
 df_lN02$declat2 <- round(df_lN02$declat,3)
 df_lN02$declon2 <- round(df_lN02$declon,3)
 df_lN02$latlonpos3 <- paste(df_lN02$declat2,"; ",df_lN02$declon2,sep="")
-#match back lat lon positions to data frame
-#df_ihpt03$latlon3 <- df_lN02$latlonpos3[match(df_ihpt03$spcAccn1,df_lN02$accession_nmb)]
 # # round decimals in lat lon positions to and paste together
 df_clo03$dec_lat2 <-  round(as.numeric(df_clo03$dec_lat),3)
 df_clo03$dec_lon2 <-  round(as.numeric(df_clo03$dec_lon),3)
@@ -525,8 +525,6 @@ df_lN02$smplyear2[grepl("GU",df_lN02$accession_nmb)] <- "2009"
 df_lN02$smplyear <- df_lN02$smplyear2
 # reduce to only having 4 characters
 df_lN02$smplyear2 <- gsub("unknown","unkn",df_lN02$smplyear2)
-
-
 # write the df_lN02 data frame to a csv file
 write.csv(df_lN02,paste0(wd00_wd05,"/df_lN02.csv"))
 # substitute in locality names
@@ -578,7 +576,6 @@ llabbr <- c("GKie", "SBal", "GHel",
 df_4LtabbrNm <- as.data.frame(cbind(llongNm,llabbr))
 # match to get the 4 letter abbreviation added to the data frame
 df_clo04$loc4Lett<- df_4LtabbrNm$llabbr[match(df_clo04$locality4,df_4LtabbrNm$llongNm)]
-#View(df_clo04)
 # use the four letter abbreviation data frame to get the 
 # short names for the NCBI collected sequences
 df_lN02$llabbr <- df_4LtabbrNm$llabbr[match(df_lN02$location,df_4LtabbrNm$llongNm)]
@@ -588,154 +585,28 @@ df_lN02$lngsqNm <- paste(   df_lN02$accession_nmb,
                     df_lN02$llabbr,
                     df_lN02$smplyear2,
                     "Nmn",sep="_")
-
 #_______________________________________________________________________________
-#_______________________________________________________________________________
-#_______________________________________________________________________________
-# Read in the fasta file
-#_______________________________________________________________________________
-#_______________________________________________________________________________
-#read FASTA as dna.bin
-pip <- ape::read.dna(pth_inpf01, format = "fasta")
-nrow(pip)
-ncol(pip)
-
-#make the DNAbin object a genind object
-geni_pip <- adegenet::DNAbin2genind(pip)
-#make the genind object a dataframe
-df_pip <- adegenet::genind2df(geni_pip)
-# replace with gsub to get unique rows only
-rwNm <- gsub("_$","",rownames(df_pip))
-unqrwNm <- unique(rwNm)
-df_pip <- df_pip[!is.na(match(rownames(df_pip),unqrwNm)),]
-
-#get the row names
-orig_rwnm <- row.names(df_pip)
-#substitute in the row names
-mdf_rnm01 <- gsub("_consensus_sequence","",orig_rwnm)
-mdf_rnm02 <- gsub("Mnelei","Mne_lei", mdf_rnm01)
-mdf_rnm03 <- gsub("Mnemiopsis_leidyi","Mne_lei", mdf_rnm02)
-#substitute to get year and month
-df_pip$rwnm04 <- gsub("(.*)_(.*)_(.*)$","\\2_\\3",mdf_rnm03)
-#replace 
-df_pip$rwnm04 <- gsub("Loegstoer_","",df_pip$rwnm04)
-#substitute to get year 
-df_pip$rwnm06 <- gsub("(.*)_(.*)$","\\1",df_pip$rwnm04)
-#substitute to get location
-df_pip$rwnm05 <- gsub("(.*)_(.*)_(.*)_(.*)_(.*)$","\\2_\\3",mdf_rnm03)
-#substitute to get specific number
-mdf_rnm04 <- gsub("Mne_lei_","Mne_lei",mdf_rnm03)
-mdf_rnm04  <- gsub("Mne_lei","Mnelei",mdf_rnm03)
-df_pip$rwnm07 <- gsub("(.*)_(.*)_(.*)_(.*)_(.*)$","\\1\\2",mdf_rnm04)
-df_pip$rwnm07 <- gsub("(Mnelei[0-9]{3})(.*)$","\\1",df_pip$rwnm07)
-df_pip$rwnm07 <- gsub("_","",df_pip$rwnm07)
-df_pip$rwnm05 <- gsub("Mne_lei_","",df_pip$rwnm05)
-#substitute some of the odd names
-df_pip$rwnm05[grepl("_Limfjord", df_pip$rwnm05)] <- gsub("Limfjord","NJylland_Limfjord",df_pip$rwnm05[grepl("_Limfjord", df_pip$rwnm05)])
-df_pip$rwnm05[grepl("Limfjord", df_pip$rwnm05)] <- gsub("Limfjord_Loegstoer","NJylland_LimfjordLogstoer",df_pip$rwnm05[grepl("Limfjord", df_pip$rwnm05)])
-df_pip$rwnm05 <- gsub("lei[0-9]{3}_","",df_pip$rwnm05)
-# make the synonym sample locations identical in name
-df_pip$rwnm05 <- gsub("SEDenmark_MecklenburgerBucht","NGermany_MecklenburgerBuchtWismarBucht",df_pip$rwnm05)
-df_pip$rwnm05 <- gsub("NJyllandLimfjordLogstoer","NJyllandLimfjord",df_pip$rwnm05)
-df_pip$rwnm05 <- gsub("Limfjord_Loegstoer","Limfjord",df_pip$rwnm05)
-df_pip$rwnm04 <- gsub("_","",df_pip$rwnm04)
-df_pip$rwnm05 <- gsub("_","",df_pip$rwnm05)
-df_pip$rwnm06 <- gsub("_","",df_pip$rwnm06)
-df_pip$rwnm07 <- gsub("_","",df_pip$rwnm07)
-df_pip$rwnm09 <- df_pip$rwnm05
-df_pip$rwnm10 <- df_pip$rwnm06
-#match accesion numbers with sample location and sample year
-df_pip$rwnm09[grepl("[0-9]{5}",df_pip$rwnm09)] <- df_lN02$location[match(df_pip$rwnm09[grepl("[0-9]{5}",df_pip$rwnm09)],df_lN02$accession_nmb)]
-df_pip$rwnm10[grepl("[0-9]{5}",df_pip$rwnm10)] <- df_lN02$smplyear2[match(df_pip$rwnm10[grepl("[0-9]{5}",df_pip$rwnm10)],df_lN02$accession_nmb)]
-df_pip$rwnm09 <- gsub("Germany:KielFjord" ,"NGermanyKielFjord" ,df_pip$rwnm09)
-df_pip$rwnm09 <- gsub("Germany:Helgoland" ,"NWGermanyNSeaHelgolandRds",df_pip$rwnm09)
-df_pip$rwnm09 <- gsub("USA:GalvestonBay" ,"USA:WoodsHole",df_pip$rwnm09)
-df_pip$rwnm09 <- gsub("USA:Panacea" ,"USA:WoodsHole",df_pip$rwnm09)
-df_pip$rwnm05 <- df_pip$rwnm09 
-df_pip$rwnm06 <- df_pip$rwnm10
-df_pip$rwnm06 <- gsub("(HM)(.*)$","\\1NCBI",df_pip$rwnm06)
-df_pip$rwnm06 <- gsub("(JQ)(.*)$","\\1NCBI",df_pip$rwnm06)
-df_pip$rwnm06 <- gsub("(GU)(.*)$","\\1NCBI",df_pip$rwnm06)
-df_pip$rwnm06 <- gsub("(AF)(.*)$","\\1NCBI",df_pip$rwnm06)
-df_pip$rwnm06 <- gsub("(JX)(.*)$","\\1NCBI",df_pip$rwnm06)
-df_pip$rwnm06 <- gsub("(EF)(.*)$","\\1NCBI",df_pip$rwnm06)
-df_pip$rwnm06 <- gsub("(KF)(.*)$","\\1NCBI",df_pip$rwnm06)
-df_pip$rwnm06 <- gsub("(KJ)(.*)$","\\1NCBI",df_pip$rwnm06)
-df_pip$rwnm06 <- gsub("(KY)(.*)$","\\1NCBI",df_pip$rwnm06)
-df_pip$rwnm06 <- gsub("(OM)(.*)$","\\1NCBI",df_pip$rwnm06)
-df_pip$rwnm06 <- gsub("(OU)(.*)$","\\1NCBI",df_pip$rwnm06)
-df_pip$rwnm05 <- gsub("(HM)(.*)$","\\1NCBI",df_pip$rwnm05)
-df_pip$rwnm05 <- gsub("(JQ)(.*)$","\\1NCBI",df_pip$rwnm05)
-df_pip$rwnm05 <- gsub("(GU)(.*)$","\\1NCBI",df_pip$rwnm05)
-df_pip$rwnm05 <- gsub("(AF)(.*)$","\\1NCBI",df_pip$rwnm05)
-df_pip$rwnm05 <- gsub("(EF)(.*)$","\\1NCBI",df_pip$rwnm05)
-df_pip$rwnm05 <- gsub("(JX)(.*)$","\\1NCBI",df_pip$rwnm05)
-df_pip$rwnm05 <- gsub("(KF)(.*)$","\\1NCBI",df_pip$rwnm05)
-df_pip$rwnm05 <- gsub("(KJ)(.*)$","\\1NCBI",df_pip$rwnm05)
-df_pip$rwnm05 <- gsub("(KY)(.*)$","\\1NCBI",df_pip$rwnm05)
-df_pip$rwnm05 <- gsub("(OM)(.*)$","\\1NCBI",df_pip$rwnm05)
-df_pip$rwnm05 <- gsub("(OU)(.*)$","\\1NCBI",df_pip$rwnm05)
-df_pip$rwnm04 <- gsub("(HM)(.*)$","\\1NCBI",df_pip$rwnm04)
-df_pip$rwnm04 <- gsub("(JQ)(.*)$","\\1NCBI",df_pip$rwnm04)
-df_pip$rwnm04 <- gsub("(GU)(.*)$","\\1NCBI",df_pip$rwnm04)
-df_pip$rwnm04 <- gsub("(AF)(.*)$","\\1NCBI",df_pip$rwnm04)
-df_pip$rwnm04 <- gsub("(EF)(.*)$","\\1NCBI",df_pip$rwnm04)
-df_pip$rwnm04 <- gsub("(JX)(.*)$","\\1NCBI",df_pip$rwnm04)
-df_pip$rwnm04 <- gsub("(KF)(.*)$","\\1NCBI",df_pip$rwnm04)
-df_pip$rwnm04 <- gsub("(KJ)(.*)$","\\1NCBI",df_pip$rwnm04)
-df_pip$rwnm04 <- gsub("(KY)(.*)$","\\1NCBI",df_pip$rwnm04)
-df_pip$rwnm04 <- gsub("(OM)(.*)$","\\1NCBI",df_pip$rwnm04)
-df_pip$rwnm04 <- gsub("(OU)(.*)$","\\1NCBI",df_pip$rwnm04)
-df_pip$rwnm08 <- paste(df_pip$rwnm07,df_pip$rwnm05,df_pip$rwnm06,df_pip$rwnm04,sep="_")
-df_pip$rwnm08 <- gsub("NJyllandLimfjordLogstoer","NJyllandLimfjord",df_pip$rwnm08)
-#replace the row names in the data frame
-row.names(df_pip) <- mdf_rnm03
-row.names(df_pip) <- df_pip$rwnm08
-df_pip$rwnm02 <- row.names(df_pip)
-# subset to only include the rows that match
-df_pip02 <- subset(df_pip, grepl("Mnelei", rwnm02))
-#delete the column no longer needed
-df_pip02$rwnm02 <- NULL
-df_pip02$rwnm03 <- NULL
-df_pip02$rwnm04 <- NULL
-df_pip02$rwnm05 <- NULL
-df_pip02$rwnm06 <- NULL
-df_pip02$rwnm07 <- NULL
-df_pip02$rwnm08 <- NULL
-# replace all NAs
-df_pip02 <- df_pip02 %>% replace(is.na(.), "-")
-
-nrow(df_pip02)
-ncol(df_pip02)
-#make the date frame a matrix and a DNAbin object again
-dnb_pip02 <- as.DNAbin(as.matrix(df_pip02))
-
-# define a filename to write the data frame to as a csv file
-wd00_wd05_flnm2 <- paste(wd00_wd05,"/dnb_pip02_df.csv",sep="")
-# write the data frame as a csv file
-write.csv(df_pip02,file=wd00_wd05_flnm2)
-# copy the data frame to a new object
-pip <- dnb_pip02
-#View(df_pip02)
-
-#_______________________________________________________________________________
-#
+# section 01 -  end - substitute in names and input files
 #_______________________________________________________________________________
 
-# #define input file as variable
-# inpf01 <- "Mnelei_seq_2024_aug_06_v01.fasta"
-# inpf02 <- "individual_seq_regions_for_ITS_and_SrRNA_in_Mnemiopsis_leydi_v01.fasta"
-
-
+#_______________________________________________________________________________
+# section 02 -  start - read in fasta file with alignment, identify coding
+# regions, trim alignment, and save only coding regions alignments
+#_______________________________________________________________________________
 # read in the alignment with sequences
 al01 <- bioseq::read_fasta(pth_inpf01)
+# remove any sequences that have been given the term 'copy' in the 
+# sequence name
+al01 <- al01[(!grepl("Copy|copy",names(al01)))]
+# remove any sequence-names that appear in duplicates
+al01 <- al01[!duplicated(names(al01))]
 # Read in a fasta file with gene regions
 Fas_Ref_seq <- bioseq::read_fasta(pth_inpf02)
 # substitute the sequence names
 lb01 <- labels(al01)
 lb01 <- gsub("Mnemiopsis_leidyi_","",lb01)
 lb01 <- gsub("_$","",lb01)
-lb01 <- gsub("__Copy$","",lb01)
+#lb01 <- gsub("__Copy$","",lb01)
 lb01 <- gsub("_consensus_sequence","",lb01)
 # identify the Mnelei sequences collected for this study
 DGsmp <- lb01[grepl("Mnelei[0-9]{+}",lb01)]
@@ -755,14 +626,13 @@ lb01[grepl("Mnelei[0-9]{+}",lb01)] <- rplcNms_DGsmp
 
 # identify the Mnelei sequences collected for this study
 NCBIsmp <- lb01[!grepl("Mnelei[0-9]{+}",lb01)]
-# mathc the accession number to get the long sequence names
+# match the accession number to get the long sequence names
 NCBIsmp <- df_lN02$lngsqNm[match(NCBIsmp,df_lN02$accession_nmb)]
 # and replace the NCBI labels
 lb01[!grepl("Mnelei[0-9]{+}",lb01)] <- NCBIsmp
 # use all the modified sequence names to get new 
 # sequence header in the bioseq fasta file alignment read in
 names(al01) <- lb01
-
 # subset to exclude the samples from 'FKer_2017_May'
 # as these stem from a different species
 al01 <- al01[!grepl("FKer_2017_May",names(al01))]
@@ -876,7 +746,6 @@ outF.ITS2 <- paste0(wd00_wd05,"/algn_Mnelei_ITS2_v01.fasta")
 bioseq::write_fasta(al02_ITS1,file=outF.ITS1,line_length = Inf,block_length = Inf)
 bioseq::write_fasta(al02_ITS2,file=outF.ITS2,line_length = Inf,block_length = Inf)
 
-
 #_______________________________________________________________________________
 # Trim the alignment -  start
 #_______________________________________________________________________________
@@ -892,7 +761,6 @@ min_grp_width <- 100 #
 # values not in the list will be marked "others"" in the plots
 valuelist <- c("a","g","c","t","n","-")
 valuelist <- c("A","G","C","T","N","-")
-#valuelist <- c("A","G","C","T","N","-")
 othervalues <- "Others" 
 # colours for plotting letters
 plotcolors <- c("red",     # A
@@ -991,21 +859,73 @@ p2 <- ggplot() +
 p2
 
 #____________________________________________________________
-# trim the alignment
+# END trim the alignment
+#____________________________________________________________
+#_______________________________________________________________________________
+# section 02 -  end - read in fasta file with alignment, identify coding
+# regions, trim alignment, and save only coding regions alignments
+#_______________________________________________________________________________
+
+#_______________________________________________________________________________
+# section 03 -  start - make all disambiguity variants, and rename
+#_______________________________________________________________________________
+
+
 #https://www.biostars.org/p/158250/
-
-
-
-
-
-
 # Create all possible variants from ambiguities
 aITS1_vrs <- bioseq::seq_disambiguate_IUPAC(al02_ITS1)
 aITS2_vrs <- bioseq::seq_disambiguate_IUPAC(al02_ITS2)
-# the possible variants come nested in a list, unlist
-# them to be get them in DNA format for bioseq
-alvrs.M.ITS1 <- bioseq::as_dna(unlist(aITS1_vrs))
-alvrs.M.ITS2 <- bioseq::as_dna(unlist(aITS2_vrs))
+#_______________________________________________________________________________
+# function : 'Rnm_seq_var' - start
+#_______________________________________________________________________________
+# make a function that can rename the sequence variants that 
+# was produced from the 'bioseq::seq_disambiguate_IUPAC' function
+Rnm_seq_var <- function(M.algn)
+{
+  # count the number of entries in the list of sequences
+  nsq <- length(M.algn)
+  # make series of number that covers this
+  # number of entries in the list of sequences
+  sqNoAlgn <- seq(1,nsq,1)
+  # make an empty list to add variants of sequences to
+  lst_vseq <- list()
+  # iterate over sequences
+  for (n in sqNoAlgn)
+  {
+    disam.s <- M.algn[n]
+    unldisam.s <- unlist(disam.s)
+    unldisam.s <- as.character(unldisam.s)
+    sqNm <- names(disam.s)
+    disam.s1 <- unlist(disam.s)
+    n.disam <- length(disam.s1)
+    sqn.disam <- seq(1,n.disam,1)
+    vrNms <- paste0(sqNm,"_var",LETTERS[sqn.disam])
+    df_vNmsq <- as.data.frame(cbind(vrNms,unldisam.s))
+    lst_vseq[[n]] <- df_vNmsq
+  }
+  #bind the rows in each list in to one data frame
+  df_disam <- data.table::rbindlist(lst_vseq, fill=T)
+  df_disam <- as.data.frame(df_disam)
+  # the data frame cannot be made a bioseq tibble directly
+  # use only the columns with the sequences to make a bioseq
+  # object with disambiguity sequences 
+  bsq_disam <- bioseq::as_dna(df_disam[,2])
+  # then make this a DNAbin object - however this DNAbin object need names
+  dnb_disam <- bioseq::as_DNAbin(bsq_disam)
+  # get the names from column 1 in the dataframe
+  names(dnb_disam) <- df_disam[,1]
+  # make the DNAbin object a bioseq-DNA-object
+  bsq_disam <- bioseq::as_dna(dnb_disam)
+  return(bsq_disam)
+}
+#_______________________________________________________________________________
+# function : 'Rnm_seq_var' - end
+#_______________________________________________________________________________
+
+# use this function to rename the disambiguity sequences prepared
+alvrs.M.ITS1 <- Rnm_seq_var(aITS1_vrs)
+alvrs.M.ITS2 <- Rnm_seq_var(aITS2_vrs)
+
 
 # define file name to write to
 outF.ITS1 <- paste0(wd00_wd05,"/algn_Mnelei_ITS1_v02_all_IUPACode_vars.fasta")
@@ -1014,55 +934,151 @@ outF.ITS2 <- paste0(wd00_wd05,"/algn_Mnelei_ITS2_v02_all_IUPACode_vars.fasta")
 bioseq::write_fasta(alvrs.M.ITS1,file=outF.ITS1,line_length = Inf,block_length = Inf)
 bioseq::write_fasta(alvrs.M.ITS2,file=outF.ITS2,line_length = Inf,block_length = Inf)
 
-alvrsM <- alvrs.M.ITS1
-# also get the labels on the sequences
-LalvrsM <- labels(alvrsM)
-alvrsM <- bioseq::as_DNAbin(alvrsM)
-names(alvrsM) <- LalvrsM
-# Try and plot a neighbour join tree
-mtr_dd_pip <- ape::dist.dna(alvrsM)
-dmtr_dd_pip <- as.data.frame(as.matrix(mtr_dd_pip))
-#View(dmtr_dd_pip)
-# replace NAn with zero
-mtr_dd_pip[is.na(mtr_dd_pip)] <- 0
-tre_pip <- ape::njs(mtr_dd_pip)
-#tre_pip <- ape::njs(mtr_dd_pip)
+#_______________________________________________________________________________
+# section 03 -  end - make all disambiguity variants, and rename
+#_______________________________________________________________________________
 
-plot(tre_pip)
-#sort the branches in the tree
-tre_pipr <- ape::ladderize(tre_pip, right = TRUE)
-#https://joey711.github.io/phyloseq/plot_tree-examples.html
-plot(tre_pipr, cex=0.4)
+#_______________________________________________________________________________
+# section 04 -  start - make trees from disambiguity variants
+#_______________________________________________________________________________
+#
+#combine the alignments in a list
+lst_alvrs.M.ITS <- list(alvrs.M.ITS1,alvrs.M.ITS2)
+# also make a vector with the gene names
+gene.nms <- c("ITS1","ITS2")
+# count the number of elements in the list with alignments
+n.alvrs.M <- length(lst_alvrs.M.ITS)
+#make a sequence of numbers that can reflect the genes for alignmetns
+n.f.alvrs.M <- seq(1,n.alvrs.M,1)
+#iterate over the  sequence of numbers that  reflect the genes 
+for (ng in n.f.alvrs.M)
+{
+  print(ng)
+  # get the corresponding element from the list of alignments
+  alvrsM <- lst_alvrs.M.ITS[[ng]]
+  #get the gene name
+  GnNm<- gene.nms[ng]
+  # Now the alignment has been picked from the list,
+  # Then prepare the NJ trees, and the label categories
+  # and a color range to assign the labels in the trees
+  # also get the labels on the sequences
+  LalvrsM <- names(alvrsM)
+  alvrsM <- bioseq::as_DNAbin(alvrsM)
+  names(alvrsM) <- LalvrsM
+  # Try and plot a neighbour join tree
+  mtr_dd_pip <- ape::dist.dna(alvrsM)
+  dmtr_dd_pip <- as.data.frame(as.matrix(mtr_dd_pip))
+  # replace NAn with zero
+  mtr_dd_pip[is.na(mtr_dd_pip)] <- 0
+  tre_pip <- ape::njs(mtr_dd_pip)
+  plot(tre_pip)
+  #sort the branches in the tree
+  tre_pipr <- ape::ladderize(tre_pip, right = TRUE)
+  #https://joey711.github.io/phyloseq/plot_tree-examples.html
+  plot(tre_pipr, cex=0.4)
+  
+  library(ggtree)
+  p <- ggtree(tre_pipr, right = TRUE,
+              options(ignore.negative.edge=TRUE)) + 
+    xlim(0, 0.025) + # to allow more space for labels
+    geom_treescale() # adds the scale
+  
+  df_tiplb01 <- as.data.frame(cbind(c(tre_pipr$tip.label)))
+  df_tiplb01$cat <- NA
+  colnames(df_tiplb01) <- c("seqNm", "cat")
+  
+  # arrange the sequence names as a data frame
+  df_tiplb02 <- data.frame(do.call('rbind', strsplit(as.character(df_tiplb01$seqNm),'_',fixed=TRUE)))
+  colnames(df_tiplb02) <- c("smplNm","LocNm","smplYer","smplMn","varNm")
+  seqNm <- df_tiplb01$seqNm
+  df_tiplb01 <- cbind(seqNm,df_tiplb02)
+  
+  #________________
+  # make a vector with the column names to color lables by as categories in the
+  # NJ tree
+  lblvars <- c("LocNm","varNm")
+  # also make a vector with longer and more descriptive names for the variables
+  # that are to be used in the legend title
+  lblvars.LngNm <- c("Locaction","Gene variant")
+  # make an empty list to put generated plots into
+  lst_plts <- list()
+  # iterate over the columns that are to be used as tip label categories
+  for (l in lblvars)
+  {
+    
+    #subset data frame
+    df_tiplb02 <- df_tiplb01[,c("seqNm",l)]
+    #rename columns
+    colnames(df_tiplb02) <- c("seqNm", "cat")
+    plt.idx.n <- which(grepl(l,lblvars))
+    # also get e legend title replacemnet
+    lg.title.rpl<- lblvars.LngNm[plt.idx.n]
+    # rename the data frame
+    tipcategories <- df_tiplb02
+    # make colors for the text inside the labels, this requires a small
+    # matrix with headers for text labels and values as colors
+    tpcats <- unique(tipcategories[,2])
+    tpcats <- tpcats[order(tpcats)]
+    n.tpcats <- length(tpcats)
+    # it is about 60% of the colurs in the color range that are
+    # dark colours and require a white text on the label
+    # by rounding the proportion, an amount of catagories can be
+    # assigned white text
+    no.white <- round(n.tpcats*0.6,digits = 0)
+    clfltxtlb <- rev(c(rep("black",(n.tpcats-no.white)),rep("white",no.white)))
+    # make the color categories a 
+    tplbcls <- rbind(tpcats,clfltxtlb)
+    colnames(tplbcls) <- tplbcls[1,]
+    txtlblcols <-tplbcls[-1,]
+    # make the tipcategories a dataframe
+    dd <- as.data.frame(tipcategories)
+    plt_titl_LET <- LETTERS[plt.idx.n]
+    # check out color scales here: https://sjspielman.github.io/introverse/articles/color_fill_scales.html
+    plt_n <- p %<+% dd + 
+      ggtree::geom_tiplab(aes(fill = factor(cat),
+                              color= factor(cat)),
+                          #color = "black", # color for label font
+                          geom = "label",  # labels not text
+                          label.padding = unit(0.09, "lines"), # amount of padding around the labels
+                          label.size = 0, # size of label border
+                          size=2.4) + 
+      #scale_fill_viridis_d(option = "cividis") +
+      scale_fill_viridis_d(option = "viridis") +
+      #scale_color_viridis_d(option = "G", direction = -1) +
+      scale_color_manual(values = txtlblcols) +
+      
+      labs(fill=lg.title.rpl) +
+      labs(color=lg.title.rpl) +
+      # theme(#legend.position = c(0.5,0.2),
+      #      legend.title = element_text("lege.Titl") ) +
+      #   #, #element_blank(), # no title
+      #      #legend.key = element_blank()) # no keys +
+      #use a title
+      ggtitle(plt_titl_LET)
+    # add the plot to the list that is for gathering plots
+    lst_plts[[plt.idx.n]] <- plt_n
+    # end iteration over columns to make variables from that are used
+    # to make plots
+}
 
-library(ggtree)
-p <- ggtree(tre_pipr, right = TRUE,
-            options(ignore.negative.edge=TRUE)) + 
-  xlim(0, 0.025) + # to allow more space for labels
-  geom_treescale() # adds the scale
-
-df_tiplb01 <- as.data.frame(cbind(c(tre_pipr$tip.label)))
-df_tiplb01$cat <- NA
-colnames(df_tiplb01) <- c("seqNm", "cat")
-
-# arrange the sequence names as a data frame
-df_tiplb02 <- data.frame(do.call('rbind', strsplit(as.character(df_tiplb01$seqNm),'_',fixed=TRUE)))
-colnames(df_tiplb02) <- c("smplNm","LocNm","smplYer","smplMn")
-seqNm <- df_tiplb01$seqNm
-df_tiplb01 <- cbind(seqNm,df_tiplb02)
-df_tiplb01 <- df_tiplb01[,c("seqNm","LocNm")]
-colnames(df_tiplb01) <- c("seqNm", "cat")
-
-tipcategories <- df_tiplb01
-dd <- as.data.frame(tipcategories)
-
-p %<+% dd + 
-  geom_tiplab(aes(fill = factor(cat)),
-              color = "black", # color for label font
-              geom = "label",  # labels not text
-              label.padding = unit(0.15, "lines"), # amount of padding around the labels
-              label.size = 0) + # size of label border
-  theme(legend.position = c(0.5,0.2), 
-        legend.title = element_blank(), # no title
-        legend.key = element_blank()) # no keys
+library(patchwork)
+# assemble plots with patchwork
+plt_assmbl <- lst_plts[[1]] + lst_plts[[2]]
+#make filename to save plot to
+flNm.Fig <- paste0(wd00_wd05,"/Fig01_NJ_tree_disambig_seq_",GnNm,"_v01.png")
+# make an if test to check whether the plot should be saved
+# i.e. set to FALSE if you do not want the plot to be saved
+bSaveFigures=T
+# if the 'bSaveFigures' is TRUE the plot will be saved
+if(bSaveFigures==T){
+  ggsave(plt_assmbl,file=flNm.Fig,
+         width=210,height=297,
+         #width=210,height=(297*0.5),
+         units="mm",dpi=150)
+}
 #________________
-
+# end iteration over alignments
+}
+#_______________________________________________________________________________
+# section 04 -  end - make trees from disambiguity variants
+#_______________________________________________________________________________
