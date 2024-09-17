@@ -735,7 +735,7 @@ cbbPalette5 <- rev(c("white",
                      "tomato","firebrick3","brown","cornflowerblue",
                      "deepskyblue3","grey34","orchid4"))
 
-
+cbbPalette6 <- c("white","yellow","orange","tomato","red","brown","black")
 # cbbPalette2 <- c("white","yellow","orange","tomato","red","brown","black")
 # make a colr function  based on the color palette
 colfunc <- colorRampPalette(cbbPalette2)
@@ -864,6 +864,7 @@ colfunc <- colorRampPalette(cbbPalette5)
 colf.Gva <- colfunc(nGv)
 # make the color categories for the names
 clfGvar <- rbind(paste0("var",LETTERS[seq(1,nGv,1,)]) ,colf.Gva)
+clfGvar <- rbind(paste0("var",seq(1,nGv,1)) ,colf.Gva)
 colnames(clfGvar) <- clfGvar[1,]
 clfGvar <-clfGvar[-1,]
 
@@ -1184,6 +1185,7 @@ Rnm_seq_var <- function(M.algn)
     n.disam <- length(disam.s1)
     sqn.disam <- seq(1,n.disam,1)
     vrNms <- paste0(sqNm,"_var",LETTERS[sqn.disam])
+    vrNms <- paste0(sqNm,"_var",sqn.disam)
     df_vNmsq <- as.data.frame(cbind(vrNms,unldisam.s))
     lst_vseq[[n]] <- df_vNmsq
   }
@@ -1251,10 +1253,11 @@ mtx_clfabNm<- matrix(clfabNm)
 # Get the number of gene variants
 nGv <- length(GenVar)
 # make a color function  based on the color palette
-colfunc <- colorRampPalette(cbbPalette5)
+colfunc <- colorRampPalette(cbbPalette6)
 colf.Gva <- colfunc(nGv)
 # make the color categories for the names
 clfGvar <- rbind(paste0("var",LETTERS[seq(1,nGv,1,)]) ,colf.Gva)
+clfGvar <- rbind(paste0("var",(seq(1,nGv,1))) ,colf.Gva)
 colnames(clfGvar) <- clfGvar[1,]
 clfGvar <-clfGvar[-1,]
 class(clfGvar)
@@ -1331,8 +1334,17 @@ for (ng in n.f.alvrs.M)
   colnames(df_tiplb02) <- c("smplNm","LocNm","smplYer","smplMn","varNm")
   seqNm <- df_tiplb01$seqNm
   df_tiplb01 <- cbind(seqNm,df_tiplb02)
-  
-  
+  # get the number of unique genetic variants in the alignment 
+  nGv <- length(unique(df_tiplb01$varNm))
+  # make a color function  based on the color palette
+  colfunc <- colorRampPalette(cbbPalette6)
+  colf.Gva <- colfunc(nGv)
+  colf.Gvafg <- colf.Gva[seq(1,nGv,1)]
+  # make the color categories for the names
+  clfGvar <- rbind(paste0("var",(seq(1,nGv,1))) ,colf.Gvafg)
+  colnames(clfGvar) <- clfGvar[1,]
+  clfGvar <-clfGvar[-1,]
+  class(clfGvar)
   
   #________________
   # make a vector with the column names to color lables by as categories in the
@@ -1366,7 +1378,7 @@ for (ng in n.f.alvrs.M)
     # by rounding the proportion, an amount of catagories can be
     # assigned white text
     no.white <- round(n.tpcats*0.6,digits = 0)
-    clfltxtlb <- rev(c(rep("black",(n.tpcats-no.white)),rep("white",no.white)))
+    clfltxtlb <- c(rep("black",(n.tpcats-no.white)),rep("white",no.white))
     # make the color categories a 
     tplbcls <- rbind(tpcats,clfltxtlb)
     colnames(tplbcls) <- tplbcls[1,]
@@ -1483,6 +1495,7 @@ cbbPalette4 <- c("gray40","gray65",#"orange",
 for (ng in n.f.alvrs.M)
 {
   print(ng)
+  #ng <- 1
   # get the corresponding element from the list of alignments
   alvrsM <- lst_alvrs.M.ITS[[ng]]
   #get the gene name
@@ -1552,6 +1565,18 @@ for (ng in n.f.alvrs.M)
   lrL.smplY <- length(rL.smplY)
   lrL.genVa <- length(rL.genVa)
   
+  # get the number of unique genetic variants in the alignment 
+  nGv <- lrL.genVa
+  # make a color function  based on the color palette
+  colfunc <- colorRampPalette(cbbPalette6)
+  colf.Gva <- colfunc(nGv)
+  colf.Gvafg <- colf.Gva[seq(1,nGv,1)]
+  # make the color categories for the names
+  clfGvar <- rbind(paste0("var",(seq(1,nGv,1))) ,colf.Gvafg)
+  colnames(clfGvar) <- clfGvar[1,]
+  clfGvar <-clfGvar[-1,]
+  
+  
   colf.locNm2 <- clfabNm[match(rL.locNm,names(clfabNm))]
   colf.smplY2 <- colfsmplYer[match(rL.smplY,names(colfsmplYer))]
   colf.genVa2 <- clfGvar[match(rL.genVa,names(clfGvar))]
@@ -1560,7 +1585,7 @@ for (ng in n.f.alvrs.M)
   # make a color range with 'colorRampPalette'
   colfunc1 <- colorRampPalette(cbbPalette1)
   colfunc2 <- colorRampPalette(cbbPalette5)
-  colfunc3 <- colorRampPalette(cbbPalette3)
+  colfunc3 <- colorRampPalette(cbbPalette6)
   #https://stackoverflow.com/questions/13353213/gradient-of-n-colors-ranging-from-color-1-and-color-2
   #for label categories
   colf.locNm <- colfunc1(lrL.locNm)
@@ -1746,7 +1771,8 @@ df_ovlNEA <- subset(df_ovl, ovloc=="NEA")
 NEAloc <- df_ovlNEA$uloc
 # this data frame prepared above will be used for identifying 
 # the North East Atlantic samples (the NEA samples) in the 
-
+#make a list to collect plots in
+lst.MLplts  <- list()
 # iteration below
 # iterate over the numbers for the alignments in the list of alignments 
 for (ng in n.f.alvrs.M)
@@ -1881,8 +1907,8 @@ for (ng in n.f.alvrs.M)
   p4.02 <- ggtree(tdtt_ml_alsM.wG, #it has to be the "treedata tidytree" object 
                   right =T, ladderize = T) + 
     geom_tippoint(aes(color=label),
-                  size=1.2 ) +
-    geom_tiplab(size=1.4, align=T) +
+                  size=2.2 ) +
+    #?geom_tiplab(size=1.4, align=T) +
     scale_color_manual(values = cr) +
     guides(col = "none") +
     
@@ -1929,17 +1955,48 @@ for (ng in n.f.alvrs.M)
     "green1"))
   p4.03 <- p4.03 + ggplot2::labs(fill='nt')
   
-  p4.03
+  lst.MLplts[[ng]] <- p4.03
   bSaveFigures=T
   # make an if test to check whether the plot should be saved
   # i.e. set to FALSE if you do not want the plot to be saved
   if(bSaveFigures==T){
     ggsave(p4.03,file=paste0(wd00_wd05,"/Fig04_v",pnng,"_MLtree_w_align_for_",GnNm,".png"),
            #width=210,height=297,
-           width=210,height=(297*0.5),
+           width=210*0.5,height=(297),
            units="mm",dpi=300)
   }
   # end iteration over the numbers for the alignments in the list of alignments 
+}
+
+
+
+library(patchwork)
+# see this example: https://www.datanovia.com/en/blog/ggplot-title-subtitle-and-caption/
+#caption = "Data source: ToothGrowth")
+p01t <- lst.MLplts[[1]] #+ labs(title = "a", face="bold")#,
+p02t <- lst.MLplts[[2]] #+ labs(title = "b", face="bold")#,
+#p03t <- p03 +   ggtitle('Plot 4', size =16) # (title = "c", face="bold")#,
+#p03t <- p03 + theme(plot.title = element_text(size = 12, face = "bold"))
+#p03t <- p03 + theme(plot.title = element_text(face="bold", size=18))
+
+pA <-   p01t + 
+        p02t +
+  plot_layout(nrow=2,byrow=T) + #xlab(xlabel) +
+  # see : https://stackoverflow.com/questions/63434957/how-to-adjust-the-font-style-of-tags-with-plot-annotation-in-figures-assembled-w
+  plot_annotation(tag_levels = 'a') &
+  theme(plot.tag = element_text(face = 'bold', size =22)) +
+  plot_layout(guides = "collect") #+
+#plot_annotation(caption=pthinf01) #& theme(legend.position = "bottom")
+#p
+bSaveFigures=T
+#make filename to save plot to
+figname01 <- paste0("Fig04_v05_MLtree_all_ITS1_and_ITS2.png")
+figname02 <- paste(wd00_wd05,"/",figname01,sep="")
+if(bSaveFigures==T){
+  ggsave(pA,file=figname02,
+         width=210,
+         height=297,
+         units="mm",dpi=300)
 }
 
 #_______________________________________________________________________________
@@ -3369,6 +3426,7 @@ for (ng in n.f.alvrs.M)
   #_____
   # replace the pop name column in the pca data frame with the sampling year
   h.pca.scores$pop <- as.character(popGvar)
+  
   #h.pca.scores$pop <- poploc
   
   library(ggplot2)
@@ -3387,6 +3445,17 @@ for (ng in n.f.alvrs.M)
   # color range from haplotype network pie diagrams for
   # locationyear sampled - used in Fig.2.
   #
+  # get the number of unique genetic variants in the alignment 
+  nGv <- length(unique(h.pca.scores$pop))
+  # make a color function  based on the color palette
+  colfunc <- colorRampPalette(cbbPalette6)
+  colf.Gva <- colfunc(nGv)
+  colf.Gvafg <- colf.Gva[seq(1,nGv,1)]
+  # make the color categories for the names
+  clfGvar <- rbind(paste0("var",(seq(1,nGv,1))) ,colf.Gvafg)
+  colnames(clfGvar) <- clfGvar[1,]
+  clfGvar <-clfGvar[-1,]
+  
   # set the color of the fill for lines and the fill for inside fill for the points
   p03 <- p03 + scale_color_manual(values = clfGvar) 
   p03 <- p03 + scale_fill_manual(values = clfGvar) 
@@ -3936,7 +4005,9 @@ n.alvrs.M <- length(lst_alvrs.M.ITS)
 #make a sequence of numbers that can reflect the genes for alignmetns
 n.f.alvrs.M <- seq(1,n.alvrs.M,1)
 
-lst_plts.G <-list()
+lst.plt12b <- list()
+lst.plt12c <- list()
+lst_plts.G <- list()
 #iterate over the  sequence of numbers that  reflect the genes 
 for (ng in n.f.alvrs.M)
 {
@@ -4193,6 +4264,8 @@ for (ng in n.f.alvrs.M)
                                     size=12.4,
                                     margin = margin(l = 0, r=2,
                                                     unit = "mm")))
+  # collect plot in a list
+  lst.plt12b[[ng]] <- p14
   #make filename to save plot to
   figname14 <- paste0("Fig12b_v",pnng,"_smpl_location_NMDS_",GnNm,".png")
   figname02 <- paste(wd00_wd05,"/",figname14,sep="")
@@ -4297,6 +4370,8 @@ for (ng in n.f.alvrs.M)
                                     size=12.4,
                                     margin = margin(l = 0, r=2,
                                                     unit = "mm")))
+  # collect plot in a list
+  lst.plt12c[[ng]] <- p15
   #make filename to save plot to
   figname15 <- paste0("Fig12c_v",pnng,"_smpl_year_NMDS_",GnNm,".png")
   # define pathe and file together in a string
@@ -4415,6 +4490,67 @@ for (ng in n.f.alvrs.M)
   #_______________________________________________________________________________
   # end iteration over alignments
 }
+
+
+library(patchwork)
+# see this example: https://www.datanovia.com/en/blog/ggplot-title-subtitle-and-caption/
+#caption = "Data source: ToothGrowth")
+p01t <- lst.plt12b[[1]] #+ labs(title = "a", face="bold")#,
+p02t <- lst.plt12b[[2]] #+ labs(title = "b", face="bold")#,
+#p03t <- p03 +   ggtitle('Plot 4', size =16) # (title = "c", face="bold")#,
+#p03t <- p03 + theme(plot.title = element_text(size = 12, face = "bold"))
+#p03t <- p03 + theme(plot.title = element_text(face="bold", size=18))
+
+pA <-   p01t + 
+  p02t +
+  plot_layout(nrow=2,byrow=T) + #xlab(xlabel) +
+  # see : https://stackoverflow.com/questions/63434957/how-to-adjust-the-font-style-of-tags-with-plot-annotation-in-figures-assembled-w
+  plot_annotation(tag_levels = 'a') &
+  theme(plot.tag = element_text(face = 'bold', size =22)) +
+  plot_layout(guides = "collect") #+
+#plot_annotation(caption=pthinf01) #& theme(legend.position = "bottom")
+#p
+bSaveFigures=T
+#make filename to save plot to
+figname01 <- paste0("Fig12b_v05_all_ITS1_and_ITS2_NMDS_all_smpl_regions.png")
+figname02 <- paste(wd00_wd05,"/",figname01,sep="")
+if(bSaveFigures==T){
+  ggsave(pA,file=figname02,
+         width=210,
+         height=297,
+         units="mm",dpi=300)
+}
+
+
+library(patchwork)
+# see this example: https://www.datanovia.com/en/blog/ggplot-title-subtitle-and-caption/
+#caption = "Data source: ToothGrowth")
+p01t <- lst.plt12c[[1]] #+ labs(title = "a", face="bold")#,
+p02t <- lst.plt12c[[2]] #+ labs(title = "b", face="bold")#,
+#p03t <- p03 +   ggtitle('Plot 4', size =16) # (title = "c", face="bold")#,
+#p03t <- p03 + theme(plot.title = element_text(size = 12, face = "bold"))
+#p03t <- p03 + theme(plot.title = element_text(face="bold", size=18))
+
+pA <-   p01t + 
+  p02t +
+  plot_layout(nrow=2,byrow=T) + #xlab(xlabel) +
+  # see : https://stackoverflow.com/questions/63434957/how-to-adjust-the-font-style-of-tags-with-plot-annotation-in-figures-assembled-w
+  plot_annotation(tag_levels = 'a') &
+  theme(plot.tag = element_text(face = 'bold', size =22)) +
+  plot_layout(guides = "collect") #+
+#plot_annotation(caption=pthinf01) #& theme(legend.position = "bottom")
+#p
+bSaveFigures=T
+#make filename to save plot to
+figname01 <- paste0("Fig12c_v05_all_ITS1_and_ITS2_NMDS_all_smpl_regions.png")
+figname02 <- paste(wd00_wd05,"/",figname01,sep="")
+if(bSaveFigures==T){
+  ggsave(pA,file=figname02,
+         width=210,
+         height=297,
+         units="mm",dpi=300)
+}
+#_______________________
 #_______________________________________________________________________________
 #_______________________________________________________________________________
 # section 17 -  end - Make NMDS plots - all samples
@@ -4435,6 +4571,7 @@ n.alvrs.M <- length(lst_alvrs.M.ITS)
 n.f.alvrs.M <- seq(1,n.alvrs.M,1)
 
 lst_plts.G <-list()
+lst.plt13b <- list()
 #iterate over the  sequence of numbers that  reflect the genes 
 for (ng in n.f.alvrs.M)
 {
@@ -4722,7 +4859,9 @@ for (ng in n.f.alvrs.M)
                                     size=12.4,
                                     margin = margin(l = 0, r=2,
                                                     unit = "mm")))
-  p14
+  # collect the plots in a list
+  lst.plt13b[[ng]] <- p14 
+  
   #make filename to save plot to
   figname14 <- paste0("Fig13b_v",pnng,"_smpl_location_NMDS_",GnNm,"_DK_Germ_smpls.png")
   figname02 <- paste(wd00_wd05,"/",figname14,sep="")
@@ -4732,6 +4871,8 @@ for (ng in n.f.alvrs.M)
            width=210,height=(297*0.5),
            units="mm",dpi=300)
   }
+  
+  
   #_______________________________________________________________________________
   
   #_______________________________________________________________________________
@@ -4839,6 +4980,35 @@ for (ng in n.f.alvrs.M)
   par(mfrow = c(1, 1)) 
   #_______________________________________________________________________________
   # end iteration over alignments
+}
+
+library(patchwork)
+# see this example: https://www.datanovia.com/en/blog/ggplot-title-subtitle-and-caption/
+#caption = "Data source: ToothGrowth")
+p01t <- lst.plt13b[[1]] #+ labs(title = "a", face="bold")#,
+p02t <- lst.plt13b[[2]] #+ labs(title = "b", face="bold")#,
+#p03t <- p03 +   ggtitle('Plot 4', size =16) # (title = "c", face="bold")#,
+#p03t <- p03 + theme(plot.title = element_text(size = 12, face = "bold"))
+#p03t <- p03 + theme(plot.title = element_text(face="bold", size=18))
+
+pA <-   p01t + 
+  p02t +
+  plot_layout(nrow=2,byrow=T) + #xlab(xlabel) +
+  # see : https://stackoverflow.com/questions/63434957/how-to-adjust-the-font-style-of-tags-with-plot-annotation-in-figures-assembled-w
+  plot_annotation(tag_levels = 'a') &
+  theme(plot.tag = element_text(face = 'bold', size =22)) +
+  plot_layout(guides = "collect") #+
+#plot_annotation(caption=pthinf01) #& theme(legend.position = "bottom")
+#p
+bSaveFigures=T
+#make filename to save plot to
+figname01 <- paste0("Fig13b_v05_all_ITS1_and_ITS2_NMDS.png")
+figname02 <- paste(wd00_wd05,"/",figname01,sep="")
+if(bSaveFigures==T){
+  ggsave(pA,file=figname02,
+         width=210,
+         height=297,
+         units="mm",dpi=300)
 }
 #_______________________________________________________________________________
 #_______________________________________________________________________________

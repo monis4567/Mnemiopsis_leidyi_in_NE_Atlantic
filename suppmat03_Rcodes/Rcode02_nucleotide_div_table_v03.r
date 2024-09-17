@@ -47,6 +47,27 @@ library(ape)
 library(dplyr)
 library(pegas)
 library(htmlTable)
+# define the directory with the NCBI accession numbers
+wd_ncbi <- "NCBI_seq_submission_for_Mnemiopsis"
+# define the file with the NCBI accession numbers
+inf_ncbi_accNo <- "GenBank_accession_numbers_for_the_Mnelei_submitted_sequences_2024apr17.txt"
+# read the file with the accession numbers
+pthinf_ncbi_accNo <- paste(wd00,wd_ncbi,inf_ncbi_accNo, sep="/")
+dlm_fl_ncbi  <- read.delim(pthinf_ncbi_accNo)
+# grep for "Mnelei" in the 1 st column
+df_fl_ncbi <- dlm_fl_ncbi[grepl("Mnelei",dlm_fl_ncbi[,1]),]
+# substitute a character that occurs more than 1 time
+# https://stackoverflow.com/questions/9562535/gsub-reduce-all-repeating-characters-to-one-instance
+df_fl_ncbi <- gsub("([ ])\\1+"," ",df_fl_ncbi)
+#split by delimiter
+#https://stackoverflow.com/questions/7069076/split-column-at-delimiter-in-data-frame
+df_no_ncbi <- data.frame(do.call('rbind', strsplit(as.character(df_fl_ncbi),' ',fixed=TRUE)))
+# alter the column names
+colnames(df_no_ncbi) <- c("SUBNo",
+                          "MneleiNo",
+                          "NCBIAccNo") 
+
+
 
 #combine the alignments in a list
 lst_aM.ITS <- list(alvrs.M.ITS1, alvrs.M.ITS2)
@@ -344,11 +365,20 @@ for (ng in n.f.alvrs.M)
   df_pip03$smplNm <- df_pip03$X1
   # order data frame by location name and then by individual sample name
   df_pip03.2 <- df_pip03[order(df_pip03$locality, df_pip03$smplNm), ]
+  # get  only the Mnelei sample numbers
+  Mnl_smpls  <- df_pip03.2$smplNm[grepl("Mnelei",df_pip03.2$smplNm)]
+  # get the corresponding NCBI accession numbers
+  Mnl_smpls <- df_no_ncbi$NCBIAccNo[match(Mnl_smpls,df_no_ncbi$MneleiNo)]
+  # add back in to the data frame
+  df_pip03.2$smplNm[grepl("Mnelei",df_pip03.2$smplNm)] <- Mnl_smpls
   # get lettercode in sample and get number code in samples
   df_pip03.2$ltc.smpl <- gsub("^([A-Za-z]{+})([0-9]{+})$", "\\1", df_pip03.2$smplNm)
   df_pip03.2$noc.smpl <- gsub("^([A-Za-z]{+})([0-9]{+})$", "\\2", df_pip03.2$smplNm)
   # make the number numeric, to be albe to find the maximum and the minimum
   df_pip03.2$noc.smpl <- as.numeric(df_pip03.2$noc.smpl)
+  
+  
+  
   # use dplyr to summarise upper and lower value of sample per group
   # to use later on in a table that holds all samples
   df_pip03.3 <- df_pip03.2 %>%
@@ -619,7 +649,7 @@ capt_tbl02 <-        paste0(
   "ITS1 and ITS 2",
   " regions of samples for Mnemiopsis leyidi. Abbreviations above columns are: Number of haplotypes per population (Nh), haplotypic diversity (h), and standard deviation for haplotypic diversity (h.sd), nucleotide diversity (nd), and standard deviation for nucleotide diversity (nd.sd), probability of Tajimas D (p.TD). Sampled locations are abbreviated: ",
   ablo9,
-  ". Additional sequences were obtained from M. leidyi from NBCI GenBank as indicated by accession numbers."
+  "."
 )
 
 # show the table
@@ -666,7 +696,7 @@ df_locations <- df_locations[,-c(idxnloc_clm)]
 capt_tbl02 <-        paste0(
   "Table 10. Samples for Mnemiopsis leyidi. Sampled locations are abbreviated: ",
   ablo9,
-  ". Additional sequences were obtained from M. leidyi from NBCI GenBank as indicated by accession numbers."
+  ". ‘Sample No’ refers to the NCBI Accession numbers. Sequences obtained in this study begins with ‘PP’."
 )
 
 # show the table
