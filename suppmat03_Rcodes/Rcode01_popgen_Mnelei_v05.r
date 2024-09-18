@@ -772,6 +772,9 @@ p04 <-
   #set the color of the points
   #use alpha to scale the intensity of the color
   scale_fill_manual(values=alpha( c(clfLngNm),   c(0.7) )) +
+  # alter the plot area size for the plot margin
+  # see: https://stackoverflow.com/questions/18252827/increasing-area-around-plot-area-in-ggplot2
+  theme(plot.margin = margin(0,0,0,0, "cm")) +
   #define limits of the plot
   ggplot2::coord_sf(xlim = c(4, 16.4),
                     ylim = c(53.4, 58.4),
@@ -804,7 +807,7 @@ bSaveFigures <- T
 if(bSaveFigures==T){
   ggsave(p04,
          file=fileNm.Fig,
-         width=210,height=297*0.5,
+         width=210,height=297*0.37,
          units="mm",
          dpi=300)
 }
@@ -4008,6 +4011,7 @@ n.f.alvrs.M <- seq(1,n.alvrs.M,1)
 lst.plt12b <- list()
 lst.plt12c <- list()
 lst_plts.G <- list()
+lst_fmMNDS <- list()
 #iterate over the  sequence of numbers that  reflect the genes 
 for (ng in n.f.alvrs.M)
 {
@@ -4409,10 +4413,21 @@ for (ng in n.f.alvrs.M)
   shNm3 <-  lcNm2
   #fmMDS$species <- lcNm4
   fmMDS$species <- shNm3
-  #row.names(fmMDS$points) <- lcNm4
+  fmMDS.glbl.loc <- fmMDS
+  # get overall locations 
+  lncd <- df_lnNm$lncd[match(shNm3,df_lnNm$lscd)]
+  # get the variables from the NMDS analysis
+  diss <- (fmMDS.glbl.loc$diss)
+  MDS1 <- (fmMDS.glbl.loc$points)[,1]
+  MDS2 <- (fmMDS.glbl.loc$points)[,2]
+  orig.sqNms <- row.names(fmMDS$points)
   row.names(fmMDS$points) <- shNm3
   strslvl2 <- fmMDS$stress
-  strslvl2 <- round(strslvl2,3)
+  strslvl2 <- round(strslvl2,7)
+  smpl.locNms <-  shNm3
+  # cmobine obtained variables in a data frame
+  df_fMDSglb.smpls <- as.data.frame(cbind(smpl.locNms,lncd,MDS1,MDS2,orig.sqNms,diss,ng,strslvl2,GnNm))
+  lst_fmMNDS[[ng]] <- df_fMDSglb.smpls  
   # define output file name for plot
   figname01 <- paste0("Fig12d_v",pnng,"_smpl_location_NMDS_plot",GnNm,".png")
   pthfignm01 <- paste(wd00_wd05,"/",figname01,sep="")
@@ -4487,71 +4502,103 @@ for (ng in n.f.alvrs.M)
   dev.off()
   #reset this parameter
   par(mfrow = c(1, 1)) 
+  
+  
+  
   #_______________________________________________________________________________
   # end iteration over alignments
 }
 
+#make the list a data frame
+tibl_fmMNDS <- bind_rows(lst_fmMNDS)
+# load the 'dplyr' package
+library(dplyr) 
+#convert specific columns to numeric
+tibl_fmMNDS <- tibl_fmMNDS %>% dplyr::mutate_at(c("MDS1",
+                                                  "MDS2",
+                                                  "diss",
+                                                  "ng",
+                                                  "strslvl2"), as.numeric)
+# get a subfigure letter
+tibl_fmMNDS$subfig.lett <- letters[tibl_fmMNDS$ng]
+# get shapes for the overall locations sampled
+lncd <- unique(tibl_fmMNDS$lncd)
+lncd <- lncd[order(lncd)]
+n.lncd<- length(lncd)
+shp.f.ovlocNm <- as.data.frame(rbind(lncd,(20+seq(1,n.lncd,1))))
+colnames(shp.f.ovlocNm) <- shp.f.ovlocNm[1,]
+shp.f.ovlocNm <- shp.f.ovlocNm[-1,]
+shp.f.pnt <- as.numeric(shp.f.ovlocNm[1,])
+# get the unique sampled location names, and get corresponding color
+lblNms <- unique(tibl_fmMNDS$smpl.locNms)
+lblNms <- lblNms[order(lblNms)]
+cf.Nm <- clfabNm[(match(lblNms,names(clfabNm)))]
 
-library(patchwork)
-# see this example: https://www.datanovia.com/en/blog/ggplot-title-subtitle-and-caption/
-#caption = "Data source: ToothGrowth")
-p01t <- lst.plt12b[[1]] #+ labs(title = "a", face="bold")#,
-p02t <- lst.plt12b[[2]] #+ labs(title = "b", face="bold")#,
-#p03t <- p03 +   ggtitle('Plot 4', size =16) # (title = "c", face="bold")#,
-#p03t <- p03 + theme(plot.title = element_text(size = 12, face = "bold"))
-#p03t <- p03 + theme(plot.title = element_text(face="bold", size=18))
+# make a columns with stress level as characters
+strslvl3 <- paste0("stress level: ",tibl_fmMNDS$strslvl2)
+tibl_fmMNDS$strslvl3 <-strslvl3
+sbflet <- unique(tibl_fmMNDS$subfig.lett)
+#https://stackoverflow.com/questions/35922406/in-ggplot2-how-to-add-text-by-group-in-facet-wrap
+# df_text <- data.frame(subfig.lett=rep(c(sbflet)), x=0.2, y=c(0.34),
+#                       f=rep(c(sbflet), each=1),
+#                       text=c(strslvl3))
 
-pA <-   p01t + 
-  p02t +
-  plot_layout(nrow=2,byrow=T) + #xlab(xlabel) +
-  # see : https://stackoverflow.com/questions/63434957/how-to-adjust-the-font-style-of-tags-with-plot-annotation-in-figures-assembled-w
-  plot_annotation(tag_levels = 'a') &
-  theme(plot.tag = element_text(face = 'bold', size =22)) +
-  plot_layout(guides = "collect") #+
-#plot_annotation(caption=pthinf01) #& theme(legend.position = "bottom")
-#p
-bSaveFigures=T
+# rename a column
+tibl_fmMNDS$ovrall.lcNm <- tibl_fmMNDS$lncd
+# make ggplot
+p <- ggplot(tibl_fmMNDS,
+            mapping = aes(x = MDS1,
+                          y = MDS2,
+                          fill = smpl.locNms,
+                          shape = ovrall.lcNm)) + 
+  theme_bw() +
+  geom_point(size=3) + 
+  #Arrange in facets
+  ggplot2::facet_wrap( ~ subfig.lett,
+                       drop=FALSE,
+                       dir="h",
+                       ncol = 1 ) +
+  # change the header on the facet wrap
+  # https://stackoverflow.com/questions/41631806/change-facet-label-text-and-background-colour
+  theme(strip.background =element_rect(colour = 'white',fill="white"))+
+  theme(strip.text = element_text(colour = 'black', face="bold", size=14 ,hjust=0.0) ) +
+  # Remove grid, background color, and top and right borders from ggplot2
+  # https://stackoverflow.com/questions/10861773/remove-grid-background-color-and-top-and-right-borders-from-ggplot2
+  theme(axis.line = element_line(colour = "black"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        #panel.border = element_blank(),
+        panel.background = element_blank()) +
+  # alter the plot area size for the plot margin
+  # see: https://stackoverflow.com/questions/18252827/increasing-area-around-plot-area-in-ggplot2
+  theme(plot.margin = margin(0,0,0,0, "cm")) +
+  
+  # show legend so that I do not call `scale_fill_identity()`
+  scale_fill_manual("sample location",values = cf.Nm,labels  = lblNms) +
+  scale_shape_manual("Ocean", values = shp.f.pnt, labels  =  lncd) +
+  # I had to use guides and two legends -  see :
+  # https://stackoverflow.com/questions/68402735/ggplot2-fill-legend-does-not-display-the-correct-fill-color
+  guides(fill = guide_legend("sample location", override.aes = list(shape = 21))) +
+  # alter the labels along the x- and y- axis
+  labs(y = "NMDS1", x = "NMDS2")
+
+p
+
+p <- p + geom_text(data = tibl_fmMNDS,label=tibl_fmMNDS$strslvl3, x=0.16,y=-0.27, size=3)
+
 #make filename to save plot to
-figname01 <- paste0("Fig12b_v05_all_ITS1_and_ITS2_NMDS_all_smpl_regions.png")
-figname02 <- paste(wd00_wd05,"/",figname01,sep="")
+flNm.Fig <- paste0(wd00_wd05,"/Fig17_v01_NMDSplot_all_global_samples.png")
+# make an if test to check whether the plot should be saved
+# i.e. set to FALSE if you do not want the plot to be saved
+bSaveFigures=T
+# if the 'bSaveFigures' is TRUE the plot will be saved
 if(bSaveFigures==T){
-  ggsave(pA,file=figname02,
-         width=210,
-         height=297,
+  ggsave(p,file=flNm.Fig,
+         width=210*0.8,
+         height=297*0.6,
+         #width=210,height=(297*0.5),
          units="mm",dpi=300)
 }
-
-
-library(patchwork)
-# see this example: https://www.datanovia.com/en/blog/ggplot-title-subtitle-and-caption/
-#caption = "Data source: ToothGrowth")
-p01t <- lst.plt12c[[1]] #+ labs(title = "a", face="bold")#,
-p02t <- lst.plt12c[[2]] #+ labs(title = "b", face="bold")#,
-#p03t <- p03 +   ggtitle('Plot 4', size =16) # (title = "c", face="bold")#,
-#p03t <- p03 + theme(plot.title = element_text(size = 12, face = "bold"))
-#p03t <- p03 + theme(plot.title = element_text(face="bold", size=18))
-
-pA <-   p01t + 
-  p02t +
-  plot_layout(nrow=2,byrow=T) + #xlab(xlabel) +
-  # see : https://stackoverflow.com/questions/63434957/how-to-adjust-the-font-style-of-tags-with-plot-annotation-in-figures-assembled-w
-  plot_annotation(tag_levels = 'a') &
-  theme(plot.tag = element_text(face = 'bold', size =22)) +
-  plot_layout(guides = "collect") #+
-#plot_annotation(caption=pthinf01) #& theme(legend.position = "bottom")
-#p
-bSaveFigures=T
-#make filename to save plot to
-figname01 <- paste0("Fig12c_v05_all_ITS1_and_ITS2_NMDS_all_smpl_regions.png")
-figname02 <- paste(wd00_wd05,"/",figname01,sep="")
-if(bSaveFigures==T){
-  ggsave(pA,file=figname02,
-         width=210,
-         height=297,
-         units="mm",dpi=300)
-}
-#_______________________
-#_______________________________________________________________________________
 #_______________________________________________________________________________
 # section 17 -  end - Make NMDS plots - all samples
 #_______________________________________________________________________________
@@ -4862,17 +4909,17 @@ for (ng in n.f.alvrs.M)
   # collect the plots in a list
   lst.plt13b[[ng]] <- p14 
   
-  #make filename to save plot to
-  figname14 <- paste0("Fig13b_v",pnng,"_smpl_location_NMDS_",GnNm,"_DK_Germ_smpls.png")
-  figname02 <- paste(wd00_wd05,"/",figname14,sep="")
-  if(bSaveFigures==T){
-    ggsave(p14,file=figname02,
-           #width=210,height=297,
-           width=210,height=(297*0.5),
-           units="mm",dpi=300)
-  }
-  
-  
+  # #make filename to save plot to
+  # figname14 <- paste0("Fig13b_v",pnng,"_smpl_location_NMDS_",GnNm,"_DK_Germ_smpls.png")
+  # figname02 <- paste(wd00_wd05,"/",figname14,sep="")
+  # if(bSaveFigures==T){
+  #   ggsave(p14,file=figname02,
+  #          #width=210,height=297,
+  #          width=210,height=(297*0.5),
+  #          units="mm",dpi=300)
+  # }
+  # 
+  # 
   #_______________________________________________________________________________
   
   #_______________________________________________________________________________
@@ -4982,34 +5029,34 @@ for (ng in n.f.alvrs.M)
   # end iteration over alignments
 }
 
-library(patchwork)
-# see this example: https://www.datanovia.com/en/blog/ggplot-title-subtitle-and-caption/
-#caption = "Data source: ToothGrowth")
-p01t <- lst.plt13b[[1]] #+ labs(title = "a", face="bold")#,
-p02t <- lst.plt13b[[2]] #+ labs(title = "b", face="bold")#,
-#p03t <- p03 +   ggtitle('Plot 4', size =16) # (title = "c", face="bold")#,
-#p03t <- p03 + theme(plot.title = element_text(size = 12, face = "bold"))
-#p03t <- p03 + theme(plot.title = element_text(face="bold", size=18))
-
-pA <-   p01t + 
-  p02t +
-  plot_layout(nrow=2,byrow=T) + #xlab(xlabel) +
-  # see : https://stackoverflow.com/questions/63434957/how-to-adjust-the-font-style-of-tags-with-plot-annotation-in-figures-assembled-w
-  plot_annotation(tag_levels = 'a') &
-  theme(plot.tag = element_text(face = 'bold', size =22)) +
-  plot_layout(guides = "collect") #+
-#plot_annotation(caption=pthinf01) #& theme(legend.position = "bottom")
-#p
-bSaveFigures=T
-#make filename to save plot to
-figname01 <- paste0("Fig13b_v05_all_ITS1_and_ITS2_NMDS.png")
-figname02 <- paste(wd00_wd05,"/",figname01,sep="")
-if(bSaveFigures==T){
-  ggsave(pA,file=figname02,
-         width=210,
-         height=297,
-         units="mm",dpi=300)
-}
+# library(patchwork)
+# # see this example: https://www.datanovia.com/en/blog/ggplot-title-subtitle-and-caption/
+# #caption = "Data source: ToothGrowth")
+# p01t <- lst.plt13b[[1]] #+ labs(title = "a", face="bold")#,
+# p02t <- lst.plt13b[[2]] #+ labs(title = "b", face="bold")#,
+# #p03t <- p03 +   ggtitle('Plot 4', size =16) # (title = "c", face="bold")#,
+# #p03t <- p03 + theme(plot.title = element_text(size = 12, face = "bold"))
+# #p03t <- p03 + theme(plot.title = element_text(face="bold", size=18))
+# 
+# pA <-   p01t + 
+#   p02t +
+#   plot_layout(nrow=2,byrow=T) + #xlab(xlabel) +
+#   # see : https://stackoverflow.com/questions/63434957/how-to-adjust-the-font-style-of-tags-with-plot-annotation-in-figures-assembled-w
+#   plot_annotation(tag_levels = 'a') &
+#   theme(plot.tag = element_text(face = 'bold', size =22)) +
+#   plot_layout(guides = "collect") #+
+# #plot_annotation(caption=pthinf01) #& theme(legend.position = "bottom")
+# #p
+# bSaveFigures=T
+# #make filename to save plot to
+# figname01 <- paste0("Fig13b_v05_all_ITS1_and_ITS2_NMDS.png")
+# figname02 <- paste(wd00_wd05,"/",figname01,sep="")
+# if(bSaveFigures==T){
+#   ggsave(pA,file=figname02,
+#          width=210,
+#          height=297,
+#          units="mm",dpi=300)
+# }
 #_______________________________________________________________________________
 #_______________________________________________________________________________
 # section 18 -  start - Make NMDS plots - only DK and Germany samples
